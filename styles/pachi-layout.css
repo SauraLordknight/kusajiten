@@ -183,3 +183,23 @@
  margin:0;
  flex-shrink:0;
 }
+/* Phone expansion fills the app viewport, including Safari's dynamic viewport. */
+@media(max-width:799px),(hover:none) and (pointer:coarse){
+ .base-theme #kusa-pachi-window.pachi-responsive-window.pachi-expanded{
+  position:fixed;inset:0;top:0;left:0;transform:none;margin:0;
+  width:100vw;width:100dvw;max-width:none;
+  height:100vh;height:100dvh;max-height:100vh;max-height:100dvh;
+  border:0;border-radius:0;
+ }
+ .base-theme #kusa-pachi-window.pachi-expanded>.game-window-head{
+  padding-top:calc(3px + env(safe-area-inset-top));
+  padding-left:calc(6px + env(safe-area-inset-left));
+  padding-right:calc(6px + env(safe-area-inset-right));
+ }
+ .base-theme #kusa-pachi-window.pachi-expanded>.screen-game-scroll{
+  scrollbar-gutter:auto;padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+  padding-bottom:env(safe-area-inset-bottom);
+ }
+ /* These symbols are projected with the cabinet, so use its authored size. */
+ .base-theme #kusa-pachi-window .pachi-reels span{font-size:32px}
+}

@@ -1,0 +1,19 @@
+/* More room for the profile and directory without scaling touch targets. */
+@media(max-width:799px){
+ .screen-shell .hero .hero-inner{min-height:48px;padding-block:2px 3px}
+ .screen-shell .hero .logo h1{font-size:25px;line-height:1.1}
+ .screen-shell main.wrap{padding:3px 5px;gap:4px}
+ .screen-shell #kusaProfile{padding:5px 6px}
+ .screen-shell #kusaProfile .kusa-profile-head{gap:4px}
+ .screen-shell #kusaProfile .kusa-profile-identity{gap:2px}
+ .screen-shell #kusaProfile .kusa-profile-identity strong{font-size:18px;line-height:1.2}
+ .screen-shell #kusaProfile .kusa-profile-status-row{margin-top:5px;gap:6px}
+ .screen-shell #kusaProfile .kusa-profile-rank strong{font-size:19px}
+ .screen-shell #kusaProfile .kusa-profile-level-panel{gap:3px 7px}
+ .screen-shell #kusaProfile .kusa-profile-resources{gap:3px;margin-top:4px}
+ .screen-shell #kusaProfile .kusa-profile-resources>span{min-height:32px;padding:2px 3px}
+ .screen-shell #kusaProfile .commemorative-medal-open{top:24px;right:6px;width:52px;min-height:60px}
+ .screen-shell #kusaProfile .commemorative-medal-preview{max-width:46px;max-height:46px}
+ .screen-shell .named-directory .directory-head{padding:3px 6px}
+ .screen-shell .screen-dock{gap:2px;padding-top:3px;padding-inline:4px}
+}
