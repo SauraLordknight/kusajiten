@@ -13,7 +13,7 @@
  function paint(){
   audio.volume=.85*(window.GlassVolume?.sfx??1);
   const real=!!state?.modeTransitionRemaining&&!state?.jackpotSession,active=visible()&&(!!trial||real);
-  canvas.hidden=!active;
+  if(canvas.hidden===active)canvas.hidden=!active;
   window.GlassHandleBgm?.setTransitionActive('white-film',active);
   if(!visible()){audio.pause();return;}
   if(!active){ctx.clearRect(0,0,720,860);lastFrame=-1;return;}

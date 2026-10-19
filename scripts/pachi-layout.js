@@ -44,7 +44,7 @@
  let scrollSettle=0;
  gameScroll?.addEventListener('scroll',()=>{
   if(machine.dataset.activeMachine!=='debug')return;
-  debugMachine.dataset.scrolling='true';
+  if(debugMachine.dataset.scrolling!=='true')debugMachine.dataset.scrolling='true';
   clearTimeout(scrollSettle);
   scrollSettle=setTimeout(()=>{
    debugMachine.dataset.scrolling='false';
@@ -65,7 +65,7 @@
  }
  expand.addEventListener('click',()=>{const enlarged=win.classList.toggle('pachi-expanded');expand.textContent=enlarged?'元に戻す':'台を拡大';expand.setAttribute('aria-pressed',String(enlarged));schedule();});
  document.body.append(settings);
- launcher.addEventListener('click',()=>{settings.showModal();settings.querySelector('button').focus();});
+ launcher.addEventListener('click',()=>{settings.showModal();window.dispatchEvent(new Event('pachi-settings-open'));settings.querySelector('button').focus();});
  settings.querySelector('header button').addEventListener('click',()=>settings.close());
  settings.addEventListener('close',()=>launcher.focus({preventScroll:true}));
  settings.addEventListener('click',event=>{if(event.target.closest('#pachiResultOpen,#pachiRankingOpen,#pachiShareOpen,#pachiSwitch,#pachiRename,#pachiMachineReselect'))settings.close();},true);

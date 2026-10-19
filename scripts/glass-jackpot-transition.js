@@ -19,7 +19,7 @@
   window.GlassHandleBgm?.setTransitionActive('black-film',active);
   const energy=t<1.5?.12*Math.sin(Math.PI*t/1.5):t<4?.03:t<6?.03+.97*((t-4)/2)**2:t<6.65?1:Math.max(0,1-(t-6.65)/.55);
   machine.style.setProperty('--glass-transition-light',String(energy));
-  film.hidden=!active;spill.hidden=!active||t<6||t>=6.65;
+  if(film.hidden===active)film.hidden=!active;const hideSpill=!active||t<6||t>=6.65;if(spill.hidden!==hideSpill)spill.hidden=hideSpill;
   if(!active){ctx.clearRect(0,0,480,624);outside.clearRect(0,0,521,809);lastFrame=-1;return;}
   if(lastFrame===index&&sheets.length)return;lastFrame=index;
   ctx.clearRect(0,0,480,624);outside.clearRect(0,0,521,809);
