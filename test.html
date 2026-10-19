@@ -2011,6 +2011,11 @@ filterNames();
     ballsCanvas.width = width + (activeMachine === 'debug' ? DEBUG_BALLS_PAD : 0); ballsCanvas.height = height;
     if(activeMachine === 'debug')Object.assign(ballsCanvas.style,{left:`${7-DEBUG_BALLS_PAD}px`,width:`${width+DEBUG_BALLS_PAD}px`});
     ballSprites.clear();
+    // Story entry may already have made this canvas visible before selection.
+    // Refresh synchronously: IntersectionObserver need not emit another entry.
+    const bounds=canvas.getBoundingClientRect();
+    boardVisible=bounds.width>0&&bounds.height>0&&bounds.bottom>0&&bounds.top<innerHeight&&bounds.right>0&&bounds.left<innerWidth;
+    boardVisibility.set(canvas,boardVisible);
   }
   const ballSprites = new Map();
   let activeMachine = 'kusa';
@@ -4459,10 +4464,11 @@ filterNames();
     ctx.textBaseline = 'alphabetic';
   }
   let boardVisible = true;
+  const boardVisibility = new Map();
   const boardObserver = new IntersectionObserver(entries => {
-    const activeEntry = entries.find(entry => entry.target === canvas);
-    if (!activeEntry) return;
-    boardVisible = activeEntry.isIntersecting;
+    // Retain both cabinets' entries even while the other canvas is selected.
+    for(const entry of entries)boardVisibility.set(entry.target,entry.isIntersecting);
+    boardVisible = boardVisibility.get(canvas) ?? boardVisible;
     if (boardVisible && !panel.hidden && !$('pachiGame').hidden) drawBoard();
   });
   boardObserver.observe(normalCanvas);
