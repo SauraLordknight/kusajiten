@@ -20,8 +20,9 @@ export async function onRequest({request, params}) {
   const response = await fetch(upstream.href, {
     method: request.method, headers,
     body: request.method === 'POST' ? request.body : undefined,
-    redirect: 'error'
+    redirect: 'manual'
   });
+  if (response.status >= 300 && response.status < 400) throw new Error('Unexpected ranking redirect');
   const output = new Headers(response.headers);
   output.delete('Access-Control-Allow-Origin');
   output.set('Cache-Control', 'no-store');
