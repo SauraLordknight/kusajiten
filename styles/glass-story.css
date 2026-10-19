@@ -20,3 +20,14 @@
 @keyframes glass-story-text-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:480px){#kusa-pachi-window .glass-story-dialog{inset:42px 0 0;padding:9px}.glass-story-panel{padding:13px;border-radius:10px}.glass-story-progress{margin-top:10px}.glass-story-advance{min-height:112px;padding:15px;border-radius:7px;gap:14px}#glassStoryText{font-size:14px;line-height:1.75}}
 @media(prefers-reduced-motion:reduce){.glass-story-progress b,.glass-story-advance{transition:none!important}#glassStoryText.is-entering{animation:none!important}}
+/* Keep the prologue readable even when site themes restyle every button. */
+#kusa-pachi-window #glassStoryDialog .glass-story-panel{background:#101d2b!important;color:#f2eee2!important;color-scheme:dark}
+#kusa-pachi-window #glassStoryDialog .glass-story-header{background:transparent!important;color:#fff4d5!important}
+#kusa-pachi-window #glassStoryDialog .glass-story-header h2{color:#fff4d5!important}
+#kusa-pachi-window #glassStoryDialog .glass-story-kicker{color:#d8c58c!important}
+#kusa-pachi-window #glassStoryDialog .glass-story-progress{color:#d8cfb2!important}
+#kusa-pachi-window #glassStoryDialog .glass-story-advance{background:#08131f!important;color:#f2eee2!important;text-shadow:none!important}
+#kusa-pachi-window #glassStoryDialog .glass-story-advance:hover{background:#0b1a29!important}
+#kusa-pachi-window #glassStoryDialog #glassStoryText{color:#f2eee2!important;text-shadow:none!important}
+#kusa-pachi-window #glassStoryDialog #glassStoryHint{color:#dfd0a1!important}
+#kusa-pachi-window #glassStoryDialog .glass-story-close{background:#081627!important;color:#e9faff!important;text-shadow:none!important}
