@@ -1,0 +1,68 @@
+{
+  "width": 720,
+  "height": 860,
+  "lcd": {
+    "x": 80,
+    "y": 118,
+    "width": 360,
+    "height": 430
+  },
+  "scale": 2,
+  "fps": 24,
+  "frames": 60,
+  "duration": 2.5,
+  "shatterFrame": 26,
+  "revealSeconds": 1.0416666666666667,
+  "columns": 4,
+  "rows": 3,
+  "sheets": 5,
+  "alpha": true,
+  "fractureCells": 75,
+  "audio": {
+    "file": "white-glass-transition.wav",
+    "duration": 4.1,
+    "source": "../transition-audio-v5/transition-mix.wav",
+    "sourceSha256": "eb085063090b76e1c6d62cd8b1685102e083af16462a6beec6356c65a52c7dec",
+    "licenseEvidence": "../transition-audio-v5/manifest.json",
+    "license": "CC0-1.0 sources + original DSP",
+    "segments": [
+      {
+        "source": [
+          1.5,
+          1.78
+        ],
+        "start": 0.02,
+        "speed": 1,
+        "role": "original first crack"
+      },
+      {
+        "source": [
+          2.04,
+          2.34
+        ],
+        "start": 0.3,
+        "speed": 1,
+        "role": "original second crack"
+      },
+      {
+        "source": [
+          2.63,
+          2.93
+        ],
+        "start": 0.62,
+        "speed": 1,
+        "role": "original third crack"
+      },
+      {
+        "source": [
+          6,
+          9
+        ],
+        "start": 1.0416666666666667,
+        "speed": 1,
+        "role": "same real pane smash and echo"
+      }
+    ],
+    "peak": 0.8399658203125
+  }
+}

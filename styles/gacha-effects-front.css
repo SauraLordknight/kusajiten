@@ -1,0 +1,48 @@
+/* Native modal dialogs enter the browser top layer, above game windows. */
+dialog.gacha-omega-overlay,
+dialog.gacha-god-overlay {
+  box-sizing: border-box;
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 24px;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  overscroll-behavior: contain;
+  isolation: isolate;
+}
+dialog.gacha-omega-overlay::backdrop,
+dialog.gacha-god-overlay::backdrop {
+  background: #01040d;
+}
+dialog.gacha-omega-overlay .gacha-omega-close,
+dialog.gacha-god-overlay .gacha-omega-close {
+  top: max(16px, env(safe-area-inset-top));
+  right: max(18px, env(safe-area-inset-right));
+  min-height: 44px;
+  min-width: 72px;
+}
+
+dialog.gacha-glass-overlay{background:radial-gradient(ellipse at 50% 46%,#183f62,#061321 60%,#010610)!important;padding:14px;overflow:auto}
+.gacha-glass-overlay::before{background:conic-gradient(from 45deg,transparent,#a9efff22,transparent 25%,#b7ddff11,transparent 60%)!important;animation:glass-arrival-orbit 20s linear infinite!important}
+.gacha-glass-overlay::after{display:none}
+.gacha-glass-arrival{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;width:min(620px,100%);margin:auto;gap:6px;text-shadow:0 2px 10px #000;animation:glass-arrival-focus 1.1s ease-out both}
+.gacha-glass-eyebrow{margin:0;color:#c5eaff;font-size:clamp(12px,2.5vw,16px);letter-spacing:.13em}
+.gacha-glass-art{position:relative;isolation:isolate;margin:0;width:min(100%,calc((100dvh - 225px)*.657));aspect-ratio:960/1462;background:#061525;box-shadow:0 0 55px #69beee44}
+.gacha-glass-poster,.gacha-glass-film,.gacha-glass-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.gacha-glass-film[hidden]{display:none}
+.gacha-glass-frame{z-index:2;pointer-events:none}
+.gacha-glass-rarity{margin:2px 0 0;color:#bbf0ff;font-size:13px;letter-spacing:.2em}
+.gacha-glass-title{margin:0;font-size:clamp(24px,5vw,34px);color:#fff;letter-spacing:.14em;animation:glass-arrival-title .9s .5s ease-out both}
+.gacha-glass-flavor{margin:0;font-size:12px;line-height:1.7;color:#d5ebf7;text-align:center;max-width:90%}
+.gacha-glass-crystal{position:absolute;z-index:3;pointer-events:none;width:8px;height:21px;background:linear-gradient(130deg,#dcfaffbb,#358bd83d);clip-path:polygon(50% 0,100% 45%,50% 100%,0 55%);filter:drop-shadow(0 0 7px #8aeeff);animation:glass-arrival-float 5s calc(var(--i)*-.27s) ease-in-out infinite alternate}
+@keyframes glass-arrival-focus{from{opacity:0;filter:blur(6px);transform:translateY(12px) scale(.96)}to{opacity:1;filter:blur(0);transform:none}}
+@keyframes glass-arrival-title{from{opacity:0;letter-spacing:.4em}to{opacity:1;letter-spacing:.14em}}
+@keyframes glass-arrival-float{from{transform:translateY(20px) rotate(-15deg);opacity:.2}to{transform:translateY(-45px) rotate(40deg);opacity:.8}}
+@keyframes glass-arrival-orbit{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.gacha-glass-overlay::before,.gacha-glass-arrival,.gacha-glass-title,.gacha-glass-crystal{animation:none!important}}
+@media(max-height:540px){.gacha-glass-art{width:150px}.gacha-glass-arrival{padding:25px 0}}

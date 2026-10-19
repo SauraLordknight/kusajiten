@@ -1,0 +1,166 @@
+/* Fixed outer shell, scrollable content panes; no scaling or unreadable miniature text. */
+body.screen-shell{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.screen-shell .hero,.screen-shell .site-nav{flex:none;width:100%}
+.screen-shell .hero-inner{min-height:76px;padding-block:5px 8px}
+.screen-shell .logo h1{font-size:44px}.screen-shell .logo p{font-size:11px}
+.screen-shell .site-nav{min-height:32px;padding-block:2px}
+.screen-shell main.wrap{position:relative;flex:1;min-height:0;width:100%;display:flex;flex-direction:column;padding-block:5px 6px;gap:5px}
+.screen-shell main.wrap>dialog,.screen-shell main.wrap>.theme-retired{flex:none}
+.screen-shell .screen-notice-bar{flex:none;display:flex;align-items:center;gap:8px;font-size:11px;min-height:32px;border:1px solid var(--theme-line);padding:3px 6px;background:var(--theme-panel)}
+.screen-notice-bar>span{flex:1}.screen-notice-bar .kusa-external{font-size:11px;min-height:26px;padding:4px 8px}
+.screen-button{font:inherit;cursor:pointer;min-height:32px;padding:5px 10px;background:var(--theme-panel);color:var(--theme-ink);border:1px solid var(--theme-line);border-radius:3px}
+.screen-button:focus-visible{outline:3px solid #5086d4;outline-offset:2px}
+.screen-shell .kusa-profile{flex:none;margin:0;padding:8px 12px}
+.screen-shell .kusa-profile h2{margin:-4px -8px 4px}.screen-shell .kusa-profile-identity strong{font-size:25px}
+.screen-shell .kusa-profile-resources{margin-top:5px}.screen-shell .kusa-profile-resources>span{min-height:44px;padding-block:4px}
+.screen-shell .screen-management-launch{flex:none;text-align:left;min-height:28px;padding:4px 10px;font-size:12px}
+.screen-shell .site-services{flex:none;margin:0;gap:10px;grid-template-columns:1fr 1fr}
+.screen-shell .site-shop-body{padding-block:3px;grid-template-columns:62px minmax(0,1fr) 110px}
+.screen-shell .shop-art{height:58px}.screen-shell .kusa-games-icons button{min-height:62px}
+.screen-shell .site-shop .service-caption,.screen-shell .kusa-games-hub>div>p{margin-block:2px}
+.screen-workspace{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+.screen-pane{min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;flex:1}
+.screen-pane[hidden]{display:none!important}
+.screen-panel-head{display:none;align-items:center;justify-content:space-between;flex:none;padding:5px 10px;background:linear-gradient(110deg,var(--theme-band),var(--theme-band-end));color:#fff}
+.screen-panel-head h2{font-size:16px;margin:0}.screen-panel-head .screen-button{min-height:32px}
+.screen-shell .directory-layout{height:100%;min-height:0;margin:0;align-items:stretch}
+.screen-shell .directory-sidebar{overflow:auto;min-height:0}
+.screen-shell .named-directory{overflow:auto;min-height:0;padding-bottom:5px;scrollbar-gutter:stable;overscroll-behavior:contain;scroll-behavior:auto}
+.screen-shell .directory-head{position:sticky;top:0;z-index:2}
+.screen-shell .screen-pane[data-pane=directory]{overflow:hidden}
+.screen-shell .screen-pane[data-pane=menu]>*{scroll-margin-top:12px}
+.screen-shell .screen-menu-links{display:flex;gap:8px;flex-wrap:wrap;padding:10px;background:var(--theme-panel);position:sticky;top:0;z-index:2}
+.screen-shell .screen-pane .migration-notice,.screen-shell .screen-pane .site-purpose{margin:8px}
+.screen-shell .screen-pane .kusa-profile-management{margin:0}.screen-shell .screen-pane .kusa-profile-management>summary{display:none}
+.screen-shell .screen-game-switches{display:flex;gap:8px;padding:8px;flex-wrap:wrap}
+.screen-shell .kusa-games-stage{margin:0}
+.screen-shell .screen-dock{display:none}
+/* Existing custom modals must sit above the new workspace, not behind its game controls. */
+.screen-shell .detail-modal,.screen-shell .news-modal,.screen-shell .commemorative-medal-modal,.screen-shell .encounter-overlay{z-index:1000}
+@media(min-width:800px){
+ .screen-shell:not([data-screen-view=directory]) .screen-workspace{position:absolute;inset:var(--screen-panel-top,220px) 20px 6px;z-index:20;background:var(--theme-panel);border:2px solid var(--theme-line);box-shadow:0 8px 30px #0003}
+ .screen-shell:not([data-screen-view=directory]) .screen-panel-head{display:flex}
+ .screen-shell[data-screen-view=shop] .screen-pane[data-pane=shop]::before{content:'ショップの専用画面を開いています。閉じると名鑑へ戻れます。';display:block;padding:20px}
+}
+@media(max-width:799px){
+ .screen-shell .hero-inner{min-height:58px;padding-block:3px 5px}.screen-shell .logo h1{font-size:28px}.screen-shell .logo p{font-size:9px}.screen-shell .hero-top::after{display:none}
+ .screen-shell .logo-mark{display:block;font-size:12px;width:43px}.screen-shell .site-menu-toggle{display:block;min-height:40px}
+ .screen-shell .site-nav{max-height:none!important;min-height:28px;padding:2px 8px;gap:3px 10px;flex-wrap:nowrap;overflow:auto!important;white-space:nowrap}
+ .screen-shell .site-nav a,.screen-shell .site-nav button{font-size:11px;flex-shrink:0}.screen-shell .site-menu-more{display:none!important}
+ .screen-shell main.wrap{padding:5px 8px;gap:5px}
+ .screen-shell .screen-management-launch,.screen-shell .site-services{display:none}
+ .screen-shell .screen-notice-bar{min-height:25px;padding:1px 4px;justify-content:space-between;font-size:10px}
+ .screen-shell .screen-notice-bar>span,.screen-shell .screen-notice-bar>.kusa-external{display:none}
+ .screen-shell .screen-notice-bar .screen-button{min-height:24px;font-size:10px;padding:2px 5px}
+ .screen-shell .kusa-profile{padding:7px 8px}.screen-shell .kusa-profile h2{font-size:12px;padding-block:2px;margin:-3px -4px 3px}
+ .screen-shell .kusa-profile-identity strong{font-size:20px;line-height:1.2}.screen-shell .kusa-profile-identity span{font-size:10px}
+ .screen-shell .kusa-profile-status-row{padding-right:66px}.screen-shell .kusa-profile-level-panel{grid-template-columns:auto minmax(0,1fr)!important}
+ .screen-shell .kusa-profile-rank strong{font-size:21px}.screen-shell .kusa-profile-rank small{font-size:9px}
+ .screen-shell .kusa-profile .commemorative-medal-open{width:57px;right:8px;top:26px;min-height:65px}
+ .screen-shell .commemorative-medal-preview{max-width:51px;max-height:51px}
+ .screen-shell .kusa-profile-resources{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:5px}
+ .screen-shell .kusa-profile-resources>span{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:3px 4px;min-height:37px}
+ .screen-shell .resource-label{display:flex;align-items:center;gap:2px;font-size:9px}
+ .screen-shell .resource-label i{width:14px!important;height:14px!important}.screen-shell .kusa-profile-resources strong{font-size:12px;line-height:1.25;max-width:100%}.screen-shell .kusa-profile-resources strong.has-long-value{font-size:10px}
+ .screen-shell .directory-layout{display:block}.screen-shell .directory-sidebar{display:none}
+ .screen-shell .named-directory{height:100%}.screen-shell .directory-head .search-box{width:min(60%,300px)}
+ .screen-shell .screen-panel-head{display:flex}.screen-shell[data-screen-view=directory] .screen-panel-head{display:none}
+ .screen-shell .screen-pane>.site-shop,.screen-shell .screen-pane>.kusa-games-hub{margin:0 0 8px}
+ .screen-shell .screen-game-switches{display:none}.screen-shell .kusa-games-icons button{min-height:75px}
+ .screen-shell .kusa-profile-grid{grid-template-columns:1fr;padding:8px}
+ .screen-shell .screen-dock{display:grid;flex:none;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:5px 6px calc(5px + env(safe-area-inset-bottom));background:var(--theme-panel);border-top:1px solid var(--theme-line)}
+ .screen-dock button{min-height:44px;padding:4px 1px;font-size:12px}.screen-dock button[aria-current=page]{background:#315e31;color:white;border-color:#315e31;font-weight:bold}
+ .screen-shell .screen-pane .site-purpose{grid-template-columns:1fr}
+}
+/* Readability wins on landscape phones and when text zoom consumes the fixed area. */
+body.screen-shell.screen-flow{height:auto;min-height:100dvh;overflow:auto}
+.screen-flow main.wrap{flex:none;min-height:400px}.screen-flow .screen-workspace{min-height:300px;flex:none}
+.screen-flow .directory-layout,.screen-flow .named-directory{height:auto;max-height:70dvh}
+.screen-flow .screen-pane{max-height:70dvh;flex:none}
+.screen-flow .screen-dock{position:sticky;bottom:0}
+.screen-flow:not([data-screen-view=directory]) .screen-workspace{position:relative;inset:auto;min-height:300px}
+@media(prefers-reduced-motion:reduce){.screen-shell *{scroll-behavior:auto!important}}
+
+/* A dedicated window: its toolbar stays visible while only the game body scrolls. */
+.screen-shell .screen-pane[data-pane=games]{display:flex;flex-direction:column;overflow:hidden;min-height:0}
+.screen-game-window{display:none;flex:1;min-height:0;flex-direction:column;border:1px solid var(--theme-line);border-radius:10px;background:var(--theme-panel);box-shadow:0 6px 18px #0002;overflow:hidden}
+.screen-game-active .screen-game-window{display:flex}
+.screen-game-active .screen-pane>.kusa-games-hub{display:none!important}
+.screen-shell .screen-game-window .screen-game-switches{display:flex;flex:none;align-items:center;margin:0;padding:5px 8px;border-bottom:1px solid var(--theme-line);background:var(--theme-panel)}
+.screen-game-switches button[aria-pressed=true]{background:#315e31;color:white}
+.screen-game-scroll-hint{margin-left:auto;font-size:11px;color:var(--theme-ink)}
+.screen-game-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;padding:8px;scroll-behavior:auto}
+.screen-game-scroll:focus-visible{outline:2px solid #5086d4;outline-offset:-2px}
+.screen-game-scroll{isolation:isolate;contain:layout style;transform:translateZ(0)}
+.screen-shell .screen-game-scroll #kusaGamesStage,.screen-shell .screen-game-scroll .kusa-play-corner{display:block;height:auto;max-height:none;overflow:visible;margin:0;min-height:0}
+.screen-shell .screen-game-scroll .gacha-card,.screen-shell .screen-game-scroll .pachi-card,.screen-shell .screen-game-scroll .medal-card{height:auto;max-height:none;overflow:visible;animation:none}
+.screen-shell .screen-game-scroll .gacha-panel,.screen-shell .screen-game-scroll .pachi-panel,.screen-shell .screen-game-scroll .medal-panel{height:auto;max-height:none;overflow:visible}
+.screen-game-playing .screen-workspace{border-radius:10px;overflow:hidden}
+.screen-game-playing .screen-panel-head{min-height:43px}
+.screen-effects-layer{position:fixed;inset:0;z-index:1100;pointer-events:none;overflow:visible}
+.screen-effects-layer>*{pointer-events:none!important}
+.screen-effects-layer .commerce-acquired,.screen-effects-layer .workshop-flying-material,.screen-effects-layer .offering-particle,.screen-effects-layer .offering-xp{position:fixed;z-index:auto}
+@media(max-width:799px){
+ .screen-game-playing .hero,.screen-game-playing .site-nav,.screen-game-playing .screen-notice-bar{display:none}
+ .screen-game-playing .kusa-profile{padding:6px 8px;background-position:center}
+ .screen-game-playing .kusa-profile h2,.screen-game-playing #profileTitle,.screen-game-playing #profileLevelNext{display:none}
+ .screen-game-playing .kusa-profile-head{padding-right:45px}
+ .screen-game-playing .kusa-profile-identity{max-width:100%}
+ .screen-game-playing .kusa-profile-identity strong{font-size:16px}
+ .screen-game-playing .kusa-profile-status-row{padding-right:45px;margin-top:2px}
+ .screen-game-playing .kusa-profile-rank strong{font-size:18px}
+ .screen-game-playing .kusa-profile .commemorative-medal-open{top:6px;right:8px;width:38px;min-height:38px}
+ .screen-game-playing .commemorative-medal-open small{display:none}
+ .screen-game-playing .commemorative-medal-preview:not(.is-displayed){width:32px!important;height:32px!important;line-height:25px!important;font-size:19px!important}
+ .screen-game-playing .commemorative-medal-preview.is-displayed{width:32px;height:32px}
+ .screen-shell .screen-game-window .screen-game-switches{gap:5px;padding:4px;flex-wrap:nowrap}
+ .screen-game-switches .screen-button{flex:1;font-size:12px;min-height:36px;padding:4px}
+ .screen-game-scroll-hint{display:none}.screen-game-scroll{padding:4px}
+ .screen-shell .screen-game-scroll .medal-card{padding:8px}
+}
+.screen-flow .screen-game-window{flex:none;min-height:300px;height:65dvh}
+@media(min-width:800px){.screen-shell .screen-game-window{display:flex}.screen-shell:not(.screen-game-active) .screen-game-scroll::before{content:'上のボタンから遊ぶゲームを選んでください。';display:block;padding:24px}}
+.screen-shell .screen-medal-settings{margin:10px 0;border:1px solid var(--theme-line);border-radius:8px;background:var(--theme-panel);color:var(--theme-ink);padding:8px}
+.screen-medal-settings>summary{cursor:pointer;font-size:13px;min-height:32px;padding:5px}
+.screen-shell .screen-medal-settings .medal-heading{margin:0;padding:12px;border-radius:6px}
+.screen-medal-aux-buttons{display:flex;gap:8px;flex-wrap:wrap}.screen-medal-aux-buttons button{flex:1;min-width:140px;min-height:44px}
+.screen-shell .screen-game-scroll #kusa-medal .medal-marquee{min-height:36px}
+.screen-shell .screen-game-scroll #kusa-medal .medal-marquee small{display:none}
+.screen-shell .screen-game-scroll #kusa-medal .medal-marquee strong{font-size:16px}
+.screen-shell .screen-game-scroll #kusa-medal .medal-sub-controls{grid-template-columns:1fr}
+@media(min-width:800px){
+ .screen-shell .screen-game-scroll #kusa-medal .medal-machine{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:8px;max-width:1100px;margin-inline:auto}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-marquee,.screen-shell .screen-game-scroll #kusa-medal .medal-hud{grid-column:1/-1;margin:0}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-stage-wrap{grid-column:1;height:clamp(240px,calc(var(--game-content-height,440px) - 105px),520px);min-height:0;aspect-ratio:auto}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-controls{grid-column:2;grid-row:3;margin:0;display:flex;flex-direction:column;gap:8px;justify-content:center;padding:6px}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-controls>*{width:100%;margin:0}.screen-shell .screen-game-scroll #kusa-medal .medal-drop{min-height:56px}
+}
+@media(max-width:799px){.screen-shell .screen-game-scroll #kusa-medal .medal-stage-wrap{height:clamp(230px,calc(var(--game-content-height,420px) - 185px),420px);min-height:0;aspect-ratio:auto}.screen-shell .screen-game-scroll #kusa-medal .medal-hud{gap:3px;margin:4px 0}.screen-shell .screen-game-scroll #kusa-medal .medal-hud>div{min-height:30px}.screen-shell .screen-game-scroll #kusa-medal .medal-controls{gap:6px;padding:6px}.screen-shell .screen-game-scroll #kusa-medal .medal-controls label{min-height:32px}}
+.screen-shell .screen-game-scroll .gacha-card:not(.is-collapsed)>.gacha-toggle,.screen-shell .screen-game-scroll .gacha-card:not(.is-collapsed)>.gacha-toggle-label,
+.screen-shell .screen-game-scroll .pachi-card:not(.is-collapsed)>.pachi-toggle,.screen-shell .screen-game-scroll .pachi-card:not(.is-collapsed)>.pachi-toggle-label,
+.screen-shell .screen-game-scroll .medal-card:not(.is-collapsed)>.medal-toggle,.screen-shell .screen-game-scroll .medal-card:not(.is-collapsed)>.medal-toggle-label,
+.screen-shell .screen-game-scroll .gacha-close,.screen-shell .screen-game-scroll .pachi-close,.screen-shell .screen-game-scroll .medal-close{display:none}
+@media(max-width:799px){
+ .screen-shell .screen-game-scroll #kusa-medal .medal-stage-wrap{height:clamp(230px,calc(var(--game-content-height,420px) - 255px),360px)}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-controls{grid-template-columns:1fr 1fr}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-aim-control{grid-column:1/-1}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-batch{min-width:0;grid-column:1;padding:4px}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-drop{grid-column:2;min-height:54px;font-size:16px}
+ .screen-shell .screen-game-scroll #kusa-medal #medalQueueStatus{grid-column:1/-1;font-size:10px;margin:0}
+ .screen-shell .screen-game-scroll #kusa-medal .medal-sub-controls{grid-column:1/-1;margin:0}
+}
+
+/* Native modal windows for site information and request links, like the shop. */
+.site-info-dialog{width:min(850px,calc(100vw - 28px));height:min(720px,calc(100vh - 40px));height:min(720px,calc(100dvh - 40px));max-width:none;max-height:none;margin:auto;padding:0;border:2px solid var(--theme-line);border-radius:14px;background:var(--theme-panel);color:var(--theme-ink);box-shadow:0 20px 80px #0006;overflow:hidden}
+.site-info-dialog[open]{display:flex;flex-direction:column}
+.site-info-dialog::backdrop{background:#061b1699;backdrop-filter:blur(3px)}
+.site-info-head{display:flex;flex:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:linear-gradient(110deg,var(--theme-band),var(--theme-band-end));color:#fff}
+.site-info-head h2{font-size:20px;line-height:1.4;margin:0;min-width:0;overflow-wrap:anywhere}
+.site-info-head .screen-button{flex:none;min-height:44px}
+.site-info-content{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:16px;scrollbar-gutter:stable}
+.site-info-content>[hidden]{display:none!important}
+.base-theme .site-info-content>.info-card,.base-theme .site-info-content>.policy-banner,.base-theme .site-info-content>.request-box,.base-theme .site-info-content>.migration-notice,.base-theme .site-info-content>.site-purpose,.base-theme .site-info-content>.admin-details{margin:0;width:100%;max-width:none;overflow-wrap:anywhere}
+.site-info-content .info-card{transform:none;opacity:1}.site-info-content>.info-card>h2,.site-info-content>.policy-banner>h2,.site-info-content>.request-box>h2{margin-top:0}
+.screen-shell .site-info-index{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px}
+.site-info-index button{text-align:left;min-height:48px;overflow-wrap:anywhere}
+@media(max-width:599px){.site-info-dialog{width:calc(100vw - 16px);height:calc(100vh - 24px);height:calc(100dvh - 24px);border-radius:10px}.site-info-head{padding:8px 10px;gap:8px}.site-info-head h2{font-size:16px}.site-info-head .screen-button{padding:5px 8px;font-size:12px}.site-info-content{padding:10px}.screen-shell .site-info-index{grid-template-columns:1fr}}

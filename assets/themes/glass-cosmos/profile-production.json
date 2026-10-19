@@ -1,0 +1,35 @@
+{
+  "source": "C:\\Users\\garag\\Desktop\\kusa名鑑\\theme-test\\assets\\glass-girl\\live2d-upgrade-v3\\glass-girl-deluxe.blend",
+  "sourceUnmodified": true,
+  "sourceFrames": 288,
+  "fps": 24,
+  "seconds": 12,
+  "outputSize": [
+    320,
+    488
+  ],
+  "preservedRigAndKeyframes": true,
+  "whiteHairChromaKeyed": false,
+  "exteriorPixels": 978612,
+  "method": "Original packed scene; exterior-connected underlay alpha, original hair alpha and original animation",
+  "webm": {
+    "file": "profile-normal.webm",
+    "alpha": true,
+    "size": [
+      320,
+      488
+    ],
+    "frames": 288,
+    "bytes": 1038884
+  },
+  "appleFallback": {
+    "file": "profile-loop.webp",
+    "alpha": true,
+    "size": [
+      240,
+      366
+    ],
+    "frames": 288,
+    "bytes": 5862588
+  }
+}

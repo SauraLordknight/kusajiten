@@ -1,0 +1,126 @@
+/* Reading surfaces only: preserve the current shared window frame and all content. */
+#siteInfoDialog .site-info-content {
+  --info-accent: var(--theme-band, #287f28);
+  --info-soft: color-mix(in srgb, var(--theme-panel, white) 93%, var(--info-accent));
+  padding: clamp(16px, 3vw, 32px);
+  color: var(--theme-ink, #203020);
+  background: var(--theme-panel, white);
+  font: 400 16px/1.9 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  overflow-wrap: anywhere;
+  text-align: start;
+  scroll-padding: 24px;
+}
+#siteInfoDialog .site-info-content > :is(.info-card, .policy-banner, .request-box, .migration-notice, .site-purpose, .admin-details) {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 74ch;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1.9;
+}
+#siteInfoDialog .site-info-content :is(h2, h3, strong, summary) { color: inherit; }
+#siteInfoDialog .site-info-content h2 {
+  margin: 0 0 24px;
+  padding: 0 0 15px;
+  border-bottom: 2px solid var(--theme-line, #caeabf);
+  font-size: clamp(21px, 2.6vw, 27px);
+  line-height: 1.5;
+  letter-spacing: .02em;
+}
+#siteInfoDialog .site-info-content h3 {
+  margin: 32px 0 12px;
+  padding-inline-start: 12px;
+  border-inline-start: 4px solid var(--info-accent);
+  font-size: 19px;
+  line-height: 1.6;
+}
+#siteInfoDialog .site-info-content p {
+  margin: 0 0 20px;
+  color: inherit;
+  font-size: 16px;
+  line-height: 1.95;
+}
+#siteInfoDialog .site-info-content :is(ul, ol) { padding-inline-start: 1.5em; margin: 16px 0 24px; }
+#siteInfoDialog .site-info-content li { padding-inline-start: 4px; margin-block: 12px; }
+#siteInfoDialog .site-info-content a:not(.kusa-external) {
+  color: var(--theme-link, #1544a0);
+  text-decoration: underline;
+  text-underline-offset: .23em;
+  text-decoration-thickness: 1px;
+}
+#siteInfoDialog .site-info-content :is(a, button, summary):focus-visible { outline: 3px solid var(--info-accent); outline-offset: 4px; }
+#siteInfoDialog .term-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 0 0 24px; }
+#siteInfoDialog .term-grid > :is(div, a) {
+  padding: 20px;
+  border: 1px solid var(--theme-line, #caeabf);
+  border-radius: 8px;
+  background: var(--info-soft);
+  color: inherit;
+  font-size: 16px;
+  line-height: 1.9;
+}
+#siteInfoDialog .term-grid strong { display: block; margin-bottom: 10px; font-size: 18px; line-height: 1.6; }
+/* Long tutorials read as full-width steps rather than cramped dictionary tiles. */
+#siteInfoDialog #how-to-use .term-grid { grid-template-columns: 1fr; counter-reset: info-step; }
+#siteInfoDialog #how-to-use .term-grid > div { counter-increment: info-step; }
+#siteInfoDialog #how-to-use .term-grid strong::before { content: counter(info-step, decimal-leading-zero) ' / '; color: var(--info-accent); font-variant-numeric: tabular-nums; }
+#siteInfoDialog .history-track { padding: 0; margin: 0; }
+#siteInfoDialog .era {
+  position: relative;
+  margin: 0 0 16px;
+  padding: 18px 20px;
+  border-inline-start: 3px solid var(--info-accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--info-soft);
+  font-size: 16px;
+  line-height: 1.85;
+}
+#siteInfoDialog .history-track .era::before { content: none; }
+#siteInfoDialog .era strong { display: block; margin-bottom: 8px; font-size: 17px; }
+#siteInfoDialog .era span { display: block; }
+#siteInfoDialog .detail-status { padding: 16px; border: 1px solid var(--theme-line); border-radius: 6px; background: var(--info-soft); }
+#siteInfoDialog .site-purpose { display: block; }
+#siteInfoDialog .site-purpose-copy { max-width: none; }
+#siteInfoDialog .purpose-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 24px; }
+#siteInfoDialog .kusa-external { display: inline-flex; padding: 12px 18px; min-height: 44px; align-items: center; box-sizing: border-box; }
+#siteInfoDialog .migration-notice-copy { min-width: 0; }
+#siteInfoDialog .site-info-content > .migration-notice:not([hidden]) {
+  display: block;
+  width: 100%;
+  max-width: 64ch;
+  min-width: 0;
+  writing-mode: horizontal-tb;
+}
+#siteInfoDialog .migration-notice :is(.migration-notice-copy,.migration-action) {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  writing-mode: horizontal-tb;
+}
+#siteInfoDialog .migration-action button { white-space: normal; word-break: normal; }
+#siteInfoDialog .migration-short { padding: 16px 20px; border-inline-start: 4px solid #a96c13; background: var(--info-soft); font-weight: 700; }
+#siteInfoDialog .migration-details { margin-block: 20px; border: 1px solid var(--theme-line); border-radius: 8px; padding: 16px 20px; }
+#siteInfoDialog .migration-details > summary { cursor: pointer; min-height: 32px; font-size: 17px; font-weight: 700; }
+#siteInfoDialog .migration-details[open] > summary { margin-bottom: 20px; }
+#siteInfoDialog .migration-action { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; width: 100%; margin-top: 24px; padding: 20px; box-sizing: border-box; border: 1px solid var(--theme-line); border-radius: 8px; background: var(--info-soft); }
+#siteInfoDialog .migration-action button { flex: 1 1 100px; min-height: 48px; padding: 12px 16px; font-size: 16px; border-radius: 6px; }
+#siteInfoDialog .migration-action :is(p, .migration-backup-status) { flex-basis: 100%; margin: 0; font-size: 15px; line-height: 1.8; }
+#siteInfoDialog .migration-action :is(.migration-action-note, .migration-backup-status) { font-size: 15px !important; line-height: 1.8 !important; color: inherit !important; }
+#siteInfoDialog .admin-details > summary { display: block; width: auto; font-size: 23px; line-height: 1.5; padding: 0 0 16px; margin-bottom: 24px; border: 0; border-bottom: 2px solid var(--theme-line); border-radius: 0; background: transparent; cursor: pointer; }
+#siteInfoDialog .admin-details > summary::marker, #siteInfoDialog .admin-details > summary::-webkit-details-marker { display: none; content: ''; }
+#siteInfoDialog .admin-profile { padding: 24px; border: 1px solid var(--theme-line); border-radius: 8px; background: var(--info-soft); }
+#siteInfoDialog .admin-profile p:last-child { margin-bottom: 0; }
+#siteInfoDialog .admin-profile strong { display: inline-block; font-size: 21px; margin-bottom: 10px; }
+@media (max-width: 599px) {
+  #siteInfoDialog .site-info-content { padding: 20px 16px; }
+  #siteInfoDialog .term-grid { grid-template-columns: 1fr; gap: 14px; }
+  #siteInfoDialog .term-grid > :is(div, a), #siteInfoDialog .era, #siteInfoDialog .admin-profile { padding: 16px; }
+  #siteInfoDialog .site-info-content h2 { margin-bottom: 20px; }
+  #siteInfoDialog .migration-action { padding: 14px; }
+}

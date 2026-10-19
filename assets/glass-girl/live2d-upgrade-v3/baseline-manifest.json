@@ -1,0 +1,162 @@
+[
+  {
+    "version": "v7",
+    "name": "browser-verification.json",
+    "sha256": "f16ad745063cd2ef019e05da0083e646705a239bbc1f94fc4afa5e5ddbd6c1b1"
+  },
+  {
+    "version": "v7",
+    "name": "face-source-verification.json",
+    "sha256": "4c59c9d2374da553bf6fb717ce132894bf475f7cb1225d07a8664c2647c4a98b"
+  },
+  {
+    "version": "v7",
+    "name": "geometry-verification.json",
+    "sha256": "537998bab9066be6970492ba7a22aecd9c722ab4e49de7bb4dede5d02756b357"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-gust.png",
+    "sha256": "7dcf8c4498a53a77db204c439d3cf7d57d82a8db10f13ea7e4e8095e75dbc5df"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-hair-generated.png",
+    "sha256": "989da98194fa5b7344d88877ec52b814ae50a558d9f85d66e4c175ff33144a90"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-hair-wind.blend",
+    "sha256": "e60cd2b7c60c37b242b2fdb326b04e430deb8f1e8face67e1d5385ab3b27bd7b"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-hair-wind.blend1",
+    "sha256": "aea9dd0726a6883e3fd4dcf41f85f4ae25477a86c8e9fe3d73f8ce026463e26f"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-hair-wind.mp4",
+    "sha256": "1545c87c5544de64e91f51a156a8404c55f073437edf4bf5b8c6fc3d435e1e58"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-hair_back.png",
+    "sha256": "1b5776b1102d13e8b814b182d30fd4982bdb9f7b49fce59d4e1adb9819cb879d"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-hair_front.png",
+    "sha256": "7031b7ecadbebcc17215a2207c81f960fc81ebe1a779bec3b6bd8e1530fe4d16"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-hair_side.png",
+    "sha256": "7b7f3b10ff03a2a0272be0908b977e0436fc0905aeccdae1a386e0266c032294"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-still.png",
+    "sha256": "da3086513da422e5aae40b055bfd183f3d8743eeb86c137e68eaa34e6e49bd5f"
+  },
+  {
+    "version": "v7",
+    "name": "glass-girl-underlay-generated.png",
+    "sha256": "8aeeed92c7268bb6543ec86a1c4b8a9f891857aefdc34031609f8c092601c7f3"
+  },
+  {
+    "version": "v7",
+    "name": "original-reference-render.png",
+    "sha256": "9ace23fce0e8dcc1d38eea0ece7760e52b5781fc0a125ae307c56aca647475f8"
+  },
+  {
+    "version": "v7",
+    "name": "production.json",
+    "sha256": "d6155697989c7cf3bdc8f15d007dc1fb061c0a39b51f0db142d86a49bec7eb90"
+  },
+  {
+    "version": "v7",
+    "name": "README.md",
+    "sha256": "7f403096d6d76ead789995c0cacb42bda7129a5b82d2b36030814cc8f2df8081"
+  },
+  {
+    "version": "v8",
+    "name": "browser-verification.json",
+    "sha256": "c47c28743ef9eba50deaf9f1f5201c7db8dbd589f6c97a8c24d0182df6b25976"
+  },
+  {
+    "version": "v8",
+    "name": "geometry-verification.json",
+    "sha256": "02b46db0c38fbab279d77f097532789d6623034611e86e200106dcb734935a57"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-gust.png",
+    "sha256": "d6974883dd40db31cdef21d2abfa4830ca5fac21f802cb30df65d2577c955ddb"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair-generated.png",
+    "sha256": "e05c144c660734b5f7b7c74ce64cfa4686c471f1b53532628e88d5b919888577"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair-wind.blend",
+    "sha256": "a73290a2aa0ead2a410335346d141c4dcfee871f784509bd4f34d83b080d642d"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair-wind.blend1",
+    "sha256": "e6758734870f83abdf69b3db6ea3f0d0f73bdcdeb462d0b2d415f35ee46e1e3c"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair-wind.mp4",
+    "sha256": "e4a16e6b5949dc43e3ffbe8d08069888f524980ef9c884a27f424bbab6f8e751"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair_back.png",
+    "sha256": "6cdce72c33f46ee115363084fbeca8510f6df07514d2ad9920b1857d4b7b12cd"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair_front.png",
+    "sha256": "a52458466928060ca72aebc2a31d96f971ead5b963f6aef92e0c16fad3702aad"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair_hand_lock.png",
+    "sha256": "95111bf2fee0473243442e48aba08af9235543cf62c0d70f6b00cf5403526e41"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-hair_side.png",
+    "sha256": "1240c6c8ed3fac2ee2dec6256d10810b17a9005557636daf12578e5986389587"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-still.png",
+    "sha256": "295d5b776a5bc218c866567d3578d6e655411a21744a35b0d8cee0043f5470a4"
+  },
+  {
+    "version": "v8",
+    "name": "nameless-girl-underlay-generated.png",
+    "sha256": "95c0a32ec2647942f68ca1d33d5e439ea81920fd7383d5391a2046435d5794a6"
+  },
+  {
+    "version": "v8",
+    "name": "production.json",
+    "sha256": "9126c3b0a4f3baa7e1a1836c62f7cdd6a84365acf1a56a5fac6ecb9bbb0afec1"
+  },
+  {
+    "version": "v8",
+    "name": "PROMPT.md",
+    "sha256": "aa97d23228238295c78209f86139e7b121052c9b4db3fce7e0b1e54d83d9df80"
+  },
+  {
+    "version": "v8",
+    "name": "README.md",
+    "sha256": "47f1e865eaffea757565060c56000ad604912964c00dd64ac1fa52736c31a0aa"
+  }
+]

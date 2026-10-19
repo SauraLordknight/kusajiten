@@ -1,0 +1,11 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><title>ガラスの少女・むき出しの図柄</title>
+<style>body{margin:0;background:#f5f4f1;color:#19384b;font:16px sans-serif}main{max-width:1000px;margin:30px auto;padding:20px}.symbols{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}img{width:100%;height:300px;object-fit:contain}figure{margin:0;text-align:center}canvas{width:100%;max-width:920px;display:block;margin:30px auto;background:transparent}button{padding:10px;margin:5px}@media(max-width:600px){.symbols{grid-template-columns:repeat(2,1fr)}}</style>
+<main><h1>少女の力を、図柄そのものに</h1><p>外側のクリスタルを除去。雫・花・羽根・7だけが浮かびます。下部はゲームと同じ回転／停止のプレビューです。</p>
+<div class="symbols"><figure><img src="life-drop.png"><figcaption>生命の雫 · 100球</figcaption></figure><figure><img src="crystal-flower.png"><figcaption>結晶の花 · 150 / 190球</figcaption></figure><figure><img src="guardian-feather.png"><figcaption>守りの羽根 · 250 / 500球</figcaption></figure><figure><img src="crystal-seven.png"><figcaption>7 · 大当たり</figcaption></figure></div>
+<button id="background">背景を切り替え</button><button data-symbol="drop">雫</button><button data-symbol="flower">花</button><button data-symbol="feather">羽根</button><button data-symbol="seven">7</button><canvas width="920" height="420"></canvas>
+</main><script src="../../../scripts/glass-crystal-symbols.js"></script><script>
+let selected='drop',started=performance.now();const c=document.querySelector('canvas'),ctx=c.getContext('2d');
+document.querySelectorAll('[data-symbol]').forEach(b=>b.onclick=()=>{selected=b.dataset.symbol;started=performance.now();});
+document.querySelector('#background').onclick=()=>{document.body.style.background=document.body.style.background?'':'#10202a';document.body.style.color=document.body.style.background?'#def5ff':'';};
+function frame(now){const clock=(now-started)/1000,remaining=1.2-clock;ctx.clearRect(0,0,c.width,c.height);GlassCrystalSymbols.draw(ctx,{x:0,y:0,width:920,height:420},{clock,current:remaining>0?{remaining,faces:Array(3).fill(selected)}:null,lastFaces:Array(3).fill(selected),lastAward:500,lastSettleAt:1.2});requestAnimationFrame(frame);}requestAnimationFrame(frame);
+</script></html>

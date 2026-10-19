@@ -1,0 +1,15 @@
+{
+  "method": "Live2D-style broad 2D deformers, NOT Cubism; low-pass filtered v4 Blender Cloth wind results",
+  "temporal_filter_sigma_seconds": 0.75,
+  "spatial_deformers": 4,
+  "random_noise": false,
+  "tip_lag_seconds": 0.7,
+  "left_peak_seconds": 5.25,
+  "maximum_left_displacement": -0.44098804893506155,
+  "root_error": 0.0,
+  "body_error": 0.0,
+  "loop_error": 0.0,
+  "maximum_frame_step": 0.008023556428182949,
+  "passed": true,
+  "source": "original v1 artwork, v4 physical motion; earlier versions and game untouched"
+}

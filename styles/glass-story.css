@@ -1,0 +1,22 @@
+/* Prologue overlay belongs to the independent pachinko cabinet window. */
+#kusa-pachi-window .glass-story-dialog{position:absolute;z-index:30;inset:44px 0 0;display:grid;place-items:center;box-sizing:border-box;padding:clamp(12px,3vw,28px);overflow:auto;background:rgba(2,8,20,.72);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);color:#f2fbff}
+#kusa-pachi-window .glass-story-dialog[hidden]{display:none!important}
+.glass-story-panel{box-sizing:border-box;width:min(760px,100%);max-height:100%;overflow:auto;padding:clamp(14px,2.5vw,22px);border:1px solid #b5a16b;border-radius:12px;background:linear-gradient(180deg,rgba(20,31,42,.98),rgba(8,17,27,.99));box-shadow:0 12px 38px #000b,inset 0 0 0 2px #d8c78b22,inset 0 1px 0 #fff2}
+.glass-story-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.glass-story-kicker{color:#d8c58c;font-size:10px;font-weight:800;letter-spacing:.16em}
+.glass-story-header h2{margin:4px 0 0;color:#fff4d5;font-size:17px;letter-spacing:.04em}
+.glass-story-close{flex:0 0 38px;width:38px;height:38px;border:1px solid rgba(190,235,255,.42);border-radius:12px;background:rgba(8,22,39,.72);color:#e9faff;font-size:24px;line-height:1;cursor:pointer}
+.glass-story-close:hover{border-color:#a7edff;background:rgba(68,144,180,.48)}
+.glass-story-progress{display:flex;align-items:center;gap:12px;margin:12px 0 9px;color:#d8cfb2;font-size:10px;font-variant-numeric:tabular-nums}
+.glass-story-progress i{display:block;flex:1;height:3px;overflow:hidden;border-radius:999px;background:#ffffff24}
+.glass-story-progress b{display:block;width:11.11%;height:100%;border-radius:inherit;background:#d9c381;box-shadow:0 0 8px #d9c38177;transition:width .28s ease}
+.glass-story-advance{display:flex;width:100%;min-height:124px;box-sizing:border-box;flex-direction:column;align-items:stretch;justify-content:space-between;gap:18px;padding:clamp(17px,3vw,24px);border:1px solid #ffffff27;border-radius:8px;background:#08131f;color:#f2eee2;text-align:left;cursor:pointer;box-shadow:inset 0 1px 0 #ffffff12;transition:border-color .2s ease,background .2s ease,transform .2s ease}
+.glass-story-advance:hover{border-color:#d9c38199;background:#0b1a29}
+.glass-story-advance:active{transform:scale(.995)}
+.glass-story-advance:focus-visible,.glass-story-close:focus-visible{outline:3px solid #b0edff;outline-offset:3px}
+#glassStoryText{display:block;white-space:pre-line;font-size:clamp(14px,1.45vw,16px);font-weight:500;line-height:1.85;letter-spacing:.025em;color:#f2eee2}
+#glassStoryText.is-entering{animation:glass-story-text-in .3s ease both}
+.glass-story-advance small{align-self:flex-end;color:#dfd0a1;font-size:10px;font-weight:700;letter-spacing:.06em}
+@keyframes glass-story-text-in{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:480px){#kusa-pachi-window .glass-story-dialog{inset:42px 0 0;padding:9px}.glass-story-panel{padding:13px;border-radius:10px}.glass-story-progress{margin-top:10px}.glass-story-advance{min-height:112px;padding:15px;border-radius:7px;gap:14px}#glassStoryText{font-size:14px;line-height:1.75}}
+@media(prefers-reduced-motion:reduce){.glass-story-progress b,.glass-story-advance{transition:none!important}#glassStoryText.is-entering{animation:none!important}}

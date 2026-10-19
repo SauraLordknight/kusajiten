@@ -1,0 +1,61 @@
+{
+  "generatedWith": "built-in image_gen",
+  "date": "2026-10-18",
+  "prompts": "PROMPTS.md",
+  "assets": [
+    {
+      "name": "house-midnight.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1746437,
+      "sha256": "c8a8ca075a6fe5e18c85d15be5a5d8d80da6f820abe2496052e4a2bdb0572699"
+    },
+    {
+      "name": "house-night.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1766126,
+      "sha256": "ca9761f579056cd256b6098a53023da56770a3b6e3d29a94f27bdb04264d8102"
+    },
+    {
+      "name": "house-sunset.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 1836803,
+      "sha256": "9eb0f1386f8cbd6f17a345a1585538421c30684b111b8e29793737732c6e20cc"
+    },
+    {
+      "name": "map-midnight.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2828963,
+      "sha256": "93374e0bb021abc6ff7833345f0392697d7943e5f21f4e29016314f1ee04fe81"
+    },
+    {
+      "name": "map-night.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 2856755,
+      "sha256": "b56474fee5b3d2eda2b4ecc1a33cb4b86233d75c8ee986cfa18bc6db8e012dc8"
+    },
+    {
+      "name": "map-sunset.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "bytes": 3183773,
+      "sha256": "1bb6ab0505ed1e9b4adb18342398e98dfdadda57b02c542acf1942ba35dd06dc"
+    }
+  ]
+}

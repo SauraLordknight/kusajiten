@@ -1,0 +1,178 @@
+{
+  "cardId": "glass-girl-omega",
+  "rarity": "Ω",
+  "date": "2026-10-18",
+  "names": [
+    "ガラスの少女",
+    "【零の誓い】名前の無い少女",
+    "【原初の天誓】Eve〈イヴ〉"
+  ],
+  "originals": [
+    {
+      "name": "ガラスの少女.png",
+      "size": [
+        1680,
+        2560
+      ],
+      "sha256": "0380e1187faca2392fe14f05168cd3b08cbc0eaa5a6032f99a56de62b42336e0"
+    },
+    {
+      "name": "【零の誓い】名前が無い少女.png",
+      "size": [
+        1360,
+        2048
+      ],
+      "sha256": "b90ae4a65be0720a3caf78a9688173ae0916c2bbb4c652e43188164c56f6f05a"
+    },
+    {
+      "name": "【原初の天誓】Eve〈イヴ〉.png",
+      "size": [
+        1360,
+        2048
+      ],
+      "sha256": "a23dc88ad632e06f8288944e3085ca7202fe91df3ebb87eb8bc9d22f8a9bcbb6"
+    }
+  ],
+  "assets": [
+    {
+      "name": "portrait-frame-v2.png",
+      "bytes": 1368720,
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "f985083aacf07e7e31ab56c7a07e14fd10947a577b8a4393c5a552c642079998"
+    },
+    {
+      "name": "square-frame-v2.png",
+      "bytes": 1248874,
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "a626cb67a3dfd6a9a62b63762a3d5f493f2e23e7a721d81703920d36a8c1dc86"
+    },
+    {
+      "name": "eve-still-v5.png",
+      "bytes": 1742066,
+      "size": [
+        800,
+        1200
+      ],
+      "sha256": "fcc924be3c7e1d588290bb3b1407b3ce4ec5a1209e8655f79c02babe8336be55"
+    },
+    {
+      "name": "eve-loop-v5.mp4",
+      "bytes": 5054232,
+      "sha256": "13fa9a34a55bb533910763e102686bb5e40c7a83b7df2fa7140bacef8b1ae94f"
+    },
+    {
+      "name": "eve-celestial-v5.blend",
+      "bytes": 114782240,
+      "sha256": "87852cca88149a8fea645302966cca2f876b3f9e4df3e3c391008fadc57474fc"
+    },
+    {
+      "name": "layers-v2/background.png",
+      "bytes": 2085847,
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "180403cf3c7c5874df29822e29ab431910f648b36c6769bf213449b2d49324df"
+    },
+    {
+      "name": "layers-v2/body-clean.png",
+      "bytes": 1675642,
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "cf5826ba77897e2354a719aabf8c1a26bc033af2af2ab2689c0418c5961765b2"
+    },
+    {
+      "name": "layers-v2/hair.png",
+      "bytes": 1941429,
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "67ec1d4d84861202fd4216183bd45c2d056736a8e33c082c58591ec15a6f9a1b"
+    },
+    {
+      "name": "layers-v2/wings.png",
+      "bytes": 1445515,
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "7796ad7573a6f4067b73ec887b6adc0ea71f43f6e7d6196d75d6e6ae11374b95"
+    },
+    {
+      "name": "layers-v2/body-blink.png",
+      "bytes": 1662272,
+      "size": [
+        1024,
+        1536
+      ],
+      "sha256": "f2834248538f59368e6d01f72419f974a4f7624dbc7068438233d20a1c1af830"
+    }
+  ],
+  "reusedVideos": [
+    {
+      "file": "assets/glass-girl/live2d-upgrade-v3/glass-girl-deluxe.mp4",
+      "sha256": "445f88ae51134d2280b5baa945818b3f92eb595030671a937bd591f8e1297880"
+    },
+    {
+      "file": "assets/glass-girl/live2d-upgrade-v3/nameless-girl-deluxe.mp4",
+      "sha256": "4954099e0454c16a3f9e063d2f7c933161427b0cb25abacb71a65b9cf64da7c5"
+    }
+  ],
+  "blender": {
+    "version": "3.4.1",
+    "via": "Blender MCP; PNG sequence render and H264 encode",
+    "renderSize": [
+      800,
+      1200
+    ],
+    "frames": 240,
+    "fps": 24,
+    "durationSeconds": 10,
+    "layeredMeshes": 7,
+    "verticesPerLayer": 9801,
+    "parts": [
+      "background",
+      "back hair",
+      "body and face",
+      "crown/bangs/side locks",
+      "upper wing",
+      "lower wing",
+      "eyelids"
+    ],
+    "windPeriodSeconds": 10,
+    "breathPeriodSeconds": 5,
+    "cosmosRevision": "v5-clean-contour",
+    "scene": "Eve_Celestial_Oath_v5_CleanContour",
+    "objects": 271,
+    "effects": [
+      "animated procedural 4D nebula",
+      "three star depths",
+      "18 faceted crystals",
+      "celestial orbital rings and 30 constellation marks",
+      "palm glow and floating seal",
+      "20 palm-to-wing wisps",
+      "travelling wing emission",
+      "blink-safe iris light",
+      "breathing and wind",
+      "looping camera push-in",
+      "intro exposure ramp"
+    ],
+    "loopMeshMaxWorldError": 1.1920928955078125e-7,
+    "faceBorderRelativeMotionPixels": 0.000011920928955078125,
+    "faceAnchorSampledFrames": 31,
+    "faceContourRevision": "v5: hair face opening fitted to cheek/jaw; duplicate bob underpaint edge covered"
+  },
+  "imageGeneration": {
+    "method": "built-in image_gen",
+    "prompts": "PROMPTS-V2.md"
+  }
+}

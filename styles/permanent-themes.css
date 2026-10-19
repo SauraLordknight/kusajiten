@@ -1,0 +1,145 @@
+/* Static theme layers: artwork + paint only. Shell geometry and game art keep their own rules. */
+html[data-site-theme="mint-soda"] {
+  color-scheme:light;
+  --skin-page:#e6fff5;--skin-panel:#f6fffbdf;--skin-soft:#e3f8f0e8;--skin-ink:#163d3a;
+  --skin-muted:#426660;--skin-link:#00615e;--skin-line:#68b5a5;--skin-accent:#128a78;
+  --skin-band:#147567;--skin-band-end:#3d9e89;--skin-control:#f5fffb;
+  --skin-hover:#d1f3e8;--skin-action:#176c60;--skin-glow:#37c7ad26;--skin-shade:#ffffff00;--skin-danger:#9b3228;
+  --skin-world:url('../assets/themes/mint-soda/world.webp');
+  --skin-profile:url('../assets/themes/mint-soda/profile.webp');
+  --skin-shop:url('../assets/themes/mint-soda/shop.webp');
+}
+html[data-site-theme="neon-arcade"] {
+  color-scheme:dark;
+  --skin-page:#091325;--skin-panel:#09172bed;--skin-soft:#14253beb;--skin-ink:#e9f5ff;
+  --skin-muted:#b8cbe1;--skin-link:#81edff;--skin-line:#488fa9;--skin-accent:#58e7f8;
+  --skin-band:#17344d;--skin-band-end:#402757;--skin-control:#11263f;
+  --skin-hover:#22374e;--skin-action:#57387f;--skin-glow:#54e7ff24;--skin-shade:#07101e1a;--skin-danger:#ffc6ae;
+  --skin-world:url('../assets/themes/neon-arcade/world.webp');
+  --skin-profile:url('../assets/themes/neon-arcade/profile.webp');
+  --skin-shop:url('../assets/themes/neon-arcade/shop.webp');
+}
+html.night[data-site-theme="mint-soda"] {
+  color-scheme:dark;
+  --skin-page:#0c2827;--skin-panel:#102f2eeb;--skin-soft:#1b403beF;--skin-ink:#ecfff7;
+  --skin-muted:#bdded3;--skin-link:#9cf0dd;--skin-line:#5d9e8e;--skin-accent:#74ddbd;
+  --skin-band:#17554b;--skin-band-end:#337464;--skin-control:#193f38;
+  --skin-hover:#28564a;--skin-action:#266b58;--skin-shade:#082c27b8;--skin-danger:#ffc6ae;
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]),
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme {
+  --theme-page:var(--skin-page);--theme-panel:var(--skin-panel);--theme-ink:var(--skin-ink);
+  --theme-link:var(--skin-link);--theme-line:var(--skin-line);--theme-band:var(--skin-band);
+  --theme-band-end:var(--skin-band-end);--theme-paper:none;--profile-background:var(--skin-profile);
+  --window-border:var(--skin-line);--window-soft:var(--skin-soft);--window-muted:var(--skin-muted);
+  --window-backdrop:#06132699;--window-radius:6px;
+  --window-shadow:0 12px 35px #00152230,inset 0 1px 0 #ffffff20;
+  --ink:var(--skin-ink);--deep:var(--skin-link);--muted:var(--skin-muted);
+  --panel:var(--skin-panel);--panel-soft:var(--skin-soft);--line:var(--skin-line);
+  --green:var(--skin-band);--green2:var(--skin-band-end);--green3:var(--skin-soft);--green4:var(--skin-hover);
+  --paper:var(--skin-panel);--page:var(--skin-page);
+  background-color:var(--skin-page);color:var(--skin-ink);
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme {
+  background-image:linear-gradient(var(--skin-shade),var(--skin-shade)),var(--skin-world);
+  background-position:center;background-size:cover;background-repeat:no-repeat;background-attachment:fixed;
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .wrap {background:transparent}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .hero {
+  background:var(--skin-panel);color:var(--skin-ink);border-color:var(--skin-line);
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .hero-inner {background:none}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .hero-inner::after {
+  height:2px;background:linear-gradient(90deg,transparent,var(--skin-accent),transparent);
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.logo h1,.logo p,.logo-mark,.hero-top::after) {
+  color:var(--skin-ink);text-shadow:none;
+}
+html[data-site-theme="neon-arcade"] .base-theme .logo h1 {color:#90f3ff;text-shadow:2px 1px #9e3ca5,0 0 14px #58e7f849}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.site-nav,.screen-notice-bar,.screen-dock,.screen-management-launch,.migration-notice,.site-purpose,.site-information,.info-card,.request-box,.policy-banner,.sidebar-block,.named-directory,.site-shop,.kusa-games-hub,.theme-window,.site-theme-dialog,.profile-management-dialog,.named-directory-dialog,.site-info-dialog) {
+  background:var(--skin-panel);color:var(--skin-ink);border-color:var(--skin-line);
+  box-shadow:inset 0 1px #ffffff14,0 1px 6px var(--skin-glow);
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.screen-pane,.screen-workspace,.screen-game-window,.site-shop-body,.section,.kusa-profile-management,.site-info-content) {background:transparent}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.section-heading,#kusaGamesTitle,.directory-head,.theme-window-head,.site-info-head,.profile-management-dialog>header,.named-directory-dialog>header,.screen-panel-head) {
+  background:linear-gradient(110deg,var(--skin-band),var(--skin-band-end));color:#fff;border-color:var(--skin-line);
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.theme-window-head,.site-info-head,.profile-management-dialog>header,.named-directory-dialog>header) :is(h2,h3,p,small,span) {color:#fff}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme #directoryTitle.section-heading {background:none;box-shadow:none}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile {
+  background:var(--skin-panel);color:var(--skin-ink);border:2px solid var(--skin-line);
+  box-shadow:inset 0 0 0 2px #ffffff26,0 2px 9px var(--skin-glow);border-radius:7px;
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile::before {
+  background-image:var(--profile-background);background-position:right center;background-size:auto 100%;background-repeat:no-repeat;
+  opacity:1;image-rendering:auto;
+}
+html.night[data-site-theme="mint-soda"] .base-theme .kusa-profile::before {opacity:.2}
+html[data-site-theme="neon-arcade"] .base-theme .kusa-profile {border-color:#52c7e2;box-shadow:inset 0 0 0 2px #bb61d24d,0 0 12px #54e7ff26}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile h2 {
+  background:linear-gradient(110deg,var(--skin-band),var(--skin-band-end));color:#fff;
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.kusa-profile-identity strong,.kusa-profile-rank strong,.kusa-profile-rank small,.kusa-profile .commemorative-medal-open,.kusa-profile .commemorative-medal-open small) {color:var(--skin-ink);text-shadow:none}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile-identity span {background:var(--skin-soft);color:var(--skin-ink);text-shadow:none;border-radius:3px}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile-rank {background:transparent}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile progress {accent-color:var(--skin-accent);border-color:var(--skin-line)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile progress::-webkit-progress-bar {background:var(--skin-soft);border-color:var(--skin-line)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile progress::-webkit-progress-value {background:linear-gradient(90deg,var(--skin-band),var(--skin-accent))}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile progress::-moz-progress-bar {background:var(--skin-accent)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile-resources {background:var(--skin-panel);border-color:var(--skin-line)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile-resources>span {background:none;color:var(--skin-ink);border-color:var(--skin-line)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile-resources strong {color:var(--skin-ink)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.named-item .name,.directory-index,.sidebar-block h3,.section-title,.kusa-profile-panel h3,.kusa-profile-panel p,.kusa-profile-panel label,.kusa-profile-panel small,.shop-product h3,.shop-product p,.shop-product small,.shop-product-cost,.capsule-inventory-summary,.site-shop .service-caption,.kusa-games-hub>div>p,.site-purpose p,.migration-short) {color:var(--skin-ink)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .named-item {border-color:var(--skin-line);text-shadow:none}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .named-item:hover {background:var(--skin-hover)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.section-title,.kusa-profile-panel,.kusa-profile-management summary,.shop-product,.commerce-wallet,.commerce-sticky,.capsule-reward-description,.kusa-profile-records span,.kusa-profile-achievements div,.kusa-profile-grassify,.kusa-profile-season>div,.kusa-profile-theme-shop>div,.capsule-inventory-row,.pachi-ranking-list li,.pachi-result-section,.pachi-result-titles) {
+  background:var(--skin-soft);color:var(--skin-ink);border-color:var(--skin-line);box-shadow:none;
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.kusa-profile-records strong,.kusa-profile-records span,.capsule-inventory-row strong,.capsule-inventory-row small) {color:var(--skin-ink);opacity:1}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.workshop-materials>div,.workshop-requirements,#profileOfferCard,#workshopCard) {background:var(--skin-control);color:var(--skin-ink);border-color:var(--skin-line)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.workshop-materials span,.workshop-materials strong,.workshop-materials small,.workshop-requirements strong) {color:var(--skin-ink)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(#profileOfferCard,#workshopCard) option {background:var(--skin-control);color:var(--skin-ink)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(#profileOfferCard,#workshopCard) option:checked {background:var(--skin-hover);color:var(--skin-ink)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile-message {color:var(--skin-link)!important}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .workshop-requirements .is-short {color:var(--skin-danger)!important}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .commerce-sticky {background:var(--skin-page)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile-achievements .is-unlocked {background:var(--skin-hover);color:var(--skin-ink);border-color:var(--skin-accent)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.screen-button,.site-menu-toggle,.kusa-shop-open,.kusa-games-icons button,.shop-shortcuts button,.kusa-profile-panel button,.kusa-profile-panel select,.commerce-dialog button,.commerce-dialog input,.site-theme-dialog button,.site-theme-dialog select,.site-theme-dialog input:not([type="range"]),.kusa-action-dialog button,.directory-head .search-box input,.directory-head .search-box button,.capsule-inventory-filters button) {
+  background:var(--skin-control);color:var(--skin-ink);border-color:var(--skin-line);box-shadow:inset 0 1px #ffffff14;
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.kusa-shop-open span,.kusa-shop-open small,.kusa-games-icons strong,.kusa-games-icons small) {color:inherit}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .shop-art {content:var(--skin-shop);object-fit:contain}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.site-utility,.site-nav a,.filter-button,.kana-nav a) {color:var(--skin-link)}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.kusa-external,.shop-product>button,.capsule-open-confirm,.filter-button.is-active,.shop-tabs [aria-selected="true"],.kusa-games-icons button[aria-pressed="true"],.screen-dock button[aria-current="page"],.capsule-inventory-filters button[aria-pressed="true"]) {
+  background:var(--skin-action)!important;color:#fff!important;border-color:var(--skin-accent);
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .directory-head .search-box input::placeholder {color:var(--skin-muted);opacity:1}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(button,a,input,select):focus-visible {outline:2px solid var(--skin-accent);outline-offset:2px}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.site-theme-dialog,.profile-management-dialog,.named-directory-dialog,.site-info-dialog,.commerce-dialog,.commemorative-viewer,.kusa-action-dialog)::backdrop {background:#06132699;backdrop-filter:none;-webkit-backdrop-filter:none}
+/* Preview art belongs to its product, regardless of the currently equipped theme. */
+.base-theme .shop-skin-preview.mint-soda {
+  background:#eafff7 url('../assets/themes/mint-soda/profile.webp') center/cover;
+  color:#153e39;border:2px solid #5ebba5;text-shadow:0 1px #fff;
+}
+.base-theme .shop-skin-preview.neon-arcade {
+  background:#091325 url('../assets/themes/neon-arcade/profile.webp') center/cover;
+  color:#dbf9ff;border:2px solid #58cfe3;text-shadow:0 1px 2px #001026;box-shadow:inset 0 0 0 1px #e97cd36b;
+}
+html[data-site-theme="neon-arcade"] .base-theme #siteShop>.section-heading {background:linear-gradient(100deg,#49234c,#2b2448);border-bottom:1px solid #ed74d7}
+html[data-site-theme="neon-arcade"] .base-theme .kusa-games-hub>#kusaGamesTitle {background:linear-gradient(100deg,#252a55,#3a275a);border-bottom:1px solid #a097ff}
+@media(hover:hover){
+ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.kusa-shop-open,.kusa-games-icons button,.shop-shortcuts button):hover {background:var(--skin-hover);box-shadow:0 0 8px var(--skin-glow)}
+}
+@media(min-width:800px){
+ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile::before {
+  mask-image:linear-gradient(90deg,transparent 55%,#000 75%);-webkit-mask-image:linear-gradient(90deg,transparent 55%,#000 75%);
+ }
+}
+@media(max-width:799px){
+ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme {background-attachment:scroll;background-position:65% center}
+ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .kusa-profile::before {opacity:.35}
+}
+/* Existing no-art and simple-frame controls apply to both new skins. */
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme[data-theme-paper="plain"] {background-image:none}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme[data-theme-profile="plain"] {--profile-background:none}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme[data-theme-frame="simple"] .kusa-profile {border:1px solid var(--skin-line);box-shadow:none}

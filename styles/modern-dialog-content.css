@@ -1,0 +1,47 @@
+/* Internal utility content only. Cabinet canvases, card art and window frames are excluded. */
+.base-theme #kusaShopDialog #shopContent,
+.base-theme #capsuleOpenDialog > :not(header),
+.base-theme .kusa-action-dialog > div,
+.base-theme [data-pane="manage"] .kusa-profile-grid {
+  font-size: 16px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+.base-theme #kusaShopDialog .shop-product { padding: 20px; margin-block: 16px; border-color: var(--theme-line); border-radius: 8px; background: var(--theme-panel); color: var(--theme-ink); }
+.base-theme #kusaShopDialog .shop-product h3 { font-size: 20px; line-height: 1.5; margin-block: 8px 14px; color: inherit; }
+.base-theme #kusaShopDialog .shop-product p { font-size: 16px; line-height: 1.85; margin-block: 12px; }
+.base-theme #kusaShopDialog .shop-product small { font-size: 14px; line-height: 1.8; margin-block: 12px; }
+.base-theme #kusaShopDialog .shop-product-cost { color: inherit; font-size: 17px; }
+.base-theme #kusaShopDialog .commerce-wallet { font-size: 15px; gap: 12px 20px; padding: 16px; }
+.base-theme #kusaShopDialog :is(.shop-tabs, .shop-product, .shop-reset-buttons) button { min-height: 46px; font-size: 15px; line-height: 1.6; }
+.base-theme #kusaShopDialog #shopMessage { font-size: 15px; line-height: 1.8; }
+.base-theme #capsuleOpenDialog :is(p, label) { font-size: 16px; line-height: 1.85; margin-block: 18px; }
+.base-theme #capsuleOpenDialog > small { display: block; font-size: 14px; line-height: 1.85; margin-block: 16px; }
+.base-theme #capsuleOpenDialog .capsule-reward-description { padding: 18px; background: color-mix(in srgb, var(--theme-panel) 92%, var(--theme-band)); color: var(--theme-ink); border: 1px solid var(--theme-line); border-radius: 8px; }
+.base-theme #capsuleOpenDialog :is(.capsule-count-buttons button, #capsuleOpenConfirm) { font-size: 15px; min-height: 46px; }
+.base-theme .kusa-action-dialog > div:not(.kusa-action-buttons) { padding-block: 4px 12px; }
+.base-theme .kusa-action-dialog > div p { font-size: 16px; line-height: 1.85; margin-block: 12px; color: var(--theme-ink); }
+.base-theme .kusa-action-dialog .kusa-action-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+.base-theme .kusa-action-dialog .kusa-action-buttons button { flex: 1 1 120px; min-height: 46px; padding: 12px 16px; font-size: 15px; }
+.base-theme [data-pane="manage"] .kusa-profile-grid { gap: 18px; padding: 18px; }
+.base-theme [data-pane="manage"] .kusa-profile-panel { padding: 20px; border-radius: 8px; }
+.base-theme [data-pane="manage"] .kusa-profile-panel h3 { font-size: 20px; line-height: 1.5; margin-bottom: 14px; }
+.base-theme [data-pane="manage"] .kusa-profile-panel p { font-size: 15px; line-height: 1.85; margin-block: 10px; }
+.base-theme [data-pane="manage"] .kusa-profile-panel label { font-size: 15px; line-height: 1.7; margin-top: 18px; }
+.base-theme [data-pane="manage"] .kusa-profile-panel select { box-sizing: border-box; max-width: 100%; font-size: 16px; line-height: 1.6; padding: 10px; }
+.base-theme [data-pane="manage"] .kusa-profile-actions { gap: 10px; margin-top: 16px; }
+.base-theme [data-pane="manage"] .kusa-profile-actions button { flex: 1 1 130px; padding: 12px; min-height: 46px; font-size: 14px; line-height: 1.65; white-space: normal; }
+.base-theme [data-pane="manage"] :is(.workshop-materials small, .kusa-profile-season small, .kusa-profile-theme-shop small, .capsule-inventory-row small) { font-size: 14px; line-height: 1.7; }
+.base-theme [data-pane="manage"] :is(.workshop-materials span, .capsule-inventory-row strong) { font-size: 15px; line-height: 1.6; }
+.base-theme [data-pane="manage"] .capsule-inventory-row { gap: 14px; padding-block: 16px; }
+.base-theme [data-pane="manage"] .capsule-inventory-row button { min-height: 46px; font-size: 14px; }
+.base-theme [data-pane="manage"] .workshop-requirements { font-size: 15px; line-height: 1.8; }
+.base-theme #gachaPanel :is(.gacha-ticket-row, .gacha-timer) { font-size: 14px; line-height: 1.75; }
+.base-theme #gachaPanel .gacha-book-head { font-size: 16px; padding-block: 12px; }
+.base-theme #gachaPanel .gacha-book-count { font-size: 14px; }
+@media (max-width: 599px) {
+  .base-theme [data-pane="manage"] .kusa-profile-grid { grid-template-columns: 1fr; padding: 12px; gap: 14px; }
+  .base-theme [data-pane="manage"] .kusa-profile-panel { padding: 16px; }
+  .base-theme #kusaShopDialog .shop-product { padding: 16px; }
+  .base-theme #kusaShopDialog .commerce-wallet span { flex-basis: 100%; }
+}

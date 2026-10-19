@@ -1,0 +1,7 @@
+.pdm-machine>canvas.glass-jackpot-film{position:absolute;left:calc(var(--glass-lcd-x) - 8px);top:calc(var(--glass-lcd-y) - 8px);width:var(--glass-lcd-width);height:var(--glass-lcd-height);z-index:6;pointer-events:none}
+.glass-jackpot-spill{position:absolute;left:-8px;top:-8px;width:521px;height:809px;z-index:5;pointer-events:none}
+.glass-jackpot-film[hidden],.glass-jackpot-spill[hidden]{display:none!important}
+.pdm-machine>canvas.glass-mode-film{position:absolute;left:calc(var(--glass-lcd-x) - 8px);top:calc(var(--glass-lcd-y) - 8px);width:var(--glass-lcd-width);height:var(--glass-lcd-height);z-index:6;pointer-events:none}
+.glass-mode-film[hidden]{display:none!important}
+.glass-transition-active .glass-energy-flow{animation:none!important;opacity:var(--glass-transition-light,0)}
+.glass-transition-active .glass-energy-halo{opacity:.9;filter:blur(2px)}

@@ -1,0 +1,19 @@
+/* Additive trial only. OFF removes the entire pass and restores the original pixels. */
+.pdm-art-whole{transform:translateZ(0)}
+.glass-energy{position:absolute;inset:0;width:521px;height:809px;pointer-events:none;opacity:0;will-change:opacity;mix-blend-mode:screen;overflow:hidden}
+.energy-enabled .glass-energy{opacity:1}
+.glass-energy{--led-cycle:8s}
+.glass-energy-flow{opacity:0;animation:glass-life-chase var(--led-cycle) linear infinite;animation-delay:calc(var(--led-phase)*var(--led-cycle))}
+.glass-energy-halo{opacity:.38}
+.energy-firing .glass-energy{--led-cycle:5.6s}
+.energy-jackpot .glass-energy-flow{animation:glass-life-awaken 1.6s ease-in-out infinite}
+.energy-jackpot .glass-energy-halo{opacity:.65}
+.energy-paused .glass-energy-flow{animation-play-state:paused}
+.glass-energy-controls{position:absolute;z-index:35;right:8px;top:8px;display:flex;gap:5px}
+.base-theme #kusa-pachi-window .glass-energy-controls button{min-height:32px;padding:4px 7px;border:1px solid #41728a;border-radius:5px;background:#081b27e8;color:#bdeeff;font-size:11px;cursor:pointer}
+.base-theme #kusa-pachi-window .glass-energy-controls button[aria-pressed="true"]{background:#14394d!important;color:#c9f4ff!important}
+.glass-energy-controls button:disabled{opacity:.45;cursor:default}
+.glass-energy-controls button:focus-visible{outline:2px solid #9eefff;outline-offset:2px}
+@keyframes glass-life-chase{0%,2%,18%,100%{opacity:0}6%{opacity:1}9%{opacity:.85}13%{opacity:.22}}
+@keyframes glass-life-awaken{0%,100%{opacity:.05}50%{opacity:1}}
+@media(prefers-reduced-motion:reduce){.glass-energy-flow{animation:none!important;display:none}.energy-jackpot .glass-energy-flow{display:inline;opacity:.65}}

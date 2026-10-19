@@ -1,0 +1,13 @@
+{
+  "width": 384,
+  "height": 240,
+  "columns": 4,
+  "rows": 3,
+  "fps": 15,
+  "clips": {
+    "normal": 36,
+    "saved": 12,
+    "broken": 12
+  },
+  "method": "Blender keyframes, moving solids and life material; no canvas lines"
+}

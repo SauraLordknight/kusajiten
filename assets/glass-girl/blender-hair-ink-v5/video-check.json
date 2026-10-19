@@ -1,0 +1,24 @@
+{
+  "duration": 12,
+  "width": 640,
+  "height": 960,
+  "hair": {
+    "changed": 50702,
+    "mean": 15.758994469582705,
+    "ratio": 0.2549120160884867
+  },
+  "feet": {
+    "changed": 0,
+    "mean": 0.696038961038961,
+    "ratio": 0
+  },
+  "crown": {
+    "changed": 0,
+    "mean": 0.9193103448275862,
+    "ratio": 0
+  },
+  "playbackAdvanced": 0.7066880000000006,
+  "paused": false,
+  "errors": [],
+  "passed": true
+}

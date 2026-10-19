@@ -1,0 +1,53 @@
+/* Appearance only. Never change the shell dimensions or game coordinate systems here. */
+html[data-site-theme="kusa-theme-2"] .base-theme{
+ --theme-page:#f4fcf0;--theme-panel:#fbfff8;--theme-ink:#103147;--theme-line:#b3df9b;
+ --theme-band:#32b328;--theme-band-end:#72db44;--theme-link:#003cdd;--theme-paper:none;
+ --profile-background:url('../assets/themes/kusa-theme-2/profile-meadow.webp');--profile-frame:#e5ce63;
+ --window-border:#73bb49;--window-soft:#eef9e8;--window-muted:#3a6536;--window-backdrop:#0a2d1c99;
+ --skin-grass:url('../assets/themes/kusa-theme-2/grass-border.webp');
+ background:var(--theme-page);color:var(--theme-ink)
+}
+html[data-site-theme="kusa-theme-2"] .base-theme .wrap{background-image:none}
+html[data-site-theme="kusa-theme-2"] .base-theme .hero{background:linear-gradient(110deg,#36b723,#49c42e 65%,#80de4f);color:#fff;border-bottom:2px solid #75c547}
+html[data-site-theme="kusa-theme-2"] .base-theme .hero-inner{background-image:var(--skin-grass),var(--skin-grass);background-position:left bottom,right bottom;background-size:auto 60px,auto 60px;background-repeat:no-repeat}
+html[data-site-theme="kusa-theme-2"] .base-theme .hero-inner::after{background-image:var(--skin-grass);height:16px}
+html[data-site-theme="kusa-theme-2"] .base-theme .logo :is(h1,p),html[data-site-theme="kusa-theme-2"] .base-theme .hero-top::after{color:white;text-shadow:0 1px 1px #227f24}
+html[data-site-theme="kusa-theme-2"] .base-theme .site-nav{background:#fbfff8;border-color:var(--theme-line)}
+html[data-site-theme="kusa-theme-2"] .base-theme .migration-notice{background:#fff7c8;border-color:#e7c954}
+html[data-site-theme="kusa-theme-2"] .base-theme .migration-notice h2{color:#e62807}
+html[data-site-theme="kusa-theme-2"] .base-theme :is(.site-purpose,.sidebar-block,.site-information,.site-shop,.kusa-games-hub,.named-directory,.screen-workspace){background:var(--theme-panel);border-color:var(--theme-line)}
+html[data-site-theme="kusa-theme-2"] .base-theme :is(.section-heading,#kusaGamesTitle,.directory-head,.theme-window-head){background-image:var(--skin-grass),linear-gradient(110deg,var(--theme-band),var(--theme-band-end));background-position:right bottom,center;background-size:auto 35px,auto;background-repeat:no-repeat;color:white}
+html[data-site-theme="kusa-theme-2"] .base-theme #directoryTitle.section-heading{background:none}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile{background:#052e23;color:#fff4b7;border:4px double #e5ce63;box-shadow:inset 0 0 0 3px #78be4f}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile::before{background-image:var(--profile-background);background-size:cover;background-position:center;opacity:1}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile h2{background:linear-gradient(110deg,#0b481bd9,#1d772ddb);color:white;border-bottom:1px solid #a8c861}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile-identity strong{color:#fff4b7;text-shadow:0 2px 2px #001c13}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile-identity span{background:none;color:#fff4b7;text-shadow:0 1px 2px #001c13}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile-rank :is(strong,small){color:#fff4b7;text-shadow:0 1px 2px #001c13}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile progress{border:2px solid #e5d365;background:#07352b;border-radius:20px;overflow:hidden}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile progress::-webkit-progress-bar{background:#123d30}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile progress::-webkit-progress-value{background:linear-gradient(#ffed54,#d3b621)}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile progress::-moz-progress-bar{background:#dfc52c}
+html[data-site-theme="kusa-theme-2"] .base-theme .commemorative-medal-open{color:#fff4b7;text-shadow:0 1px 2px #001c13}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile-resources{background:#052d24ed;border:2px solid #cfbb61;border-radius:5px}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile-resources>span{color:#fff4b7;border-color:#2d6742;background:none}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile-resources strong{color:#fff4a1}
+html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile-management summary{background:linear-gradient(#fcfff8,#edf8e5);color:#103147}
+html[data-site-theme="kusa-theme-2"] .base-theme :is(.kusa-external,.kusa-shop-open){background:linear-gradient(#28852b,#085517);border-color:#68aa50;color:white;box-shadow:inset 0 0 0 2px #b3df9b55}
+html[data-site-theme="kusa-theme-2"] .base-theme :is(.kusa-games-icons button,.shop-shortcuts button){background:var(--theme-panel);border-color:var(--theme-line)}
+html[data-site-theme="kusa-theme-2"] .base-theme .named-item{border-bottom:1px solid #d8ebcd}
+html[data-site-theme="kusa-theme-2"] .base-theme .named-item .name{color:#075018}
+html[data-site-theme="kusa-theme-2"] .base-theme .named-item:hover{background:#e8f7de}
+html[data-site-theme="kusa-theme-2"] .base-theme .section-title{background:#edf8e5;color:#075018}
+/* Respect the player's existing part controls and night preference. */
+html[data-site-theme="kusa-theme-2"] .base-theme[data-theme-profile=plain]{--profile-background:none}
+html[data-site-theme="kusa-theme-2"] .base-theme[data-theme-frame=simple] .kusa-profile{border:1px solid #6da34d;box-shadow:none}
+html.night[data-site-theme="kusa-theme-2"] .base-theme{--theme-page:#102419;--theme-panel:#192e20;--theme-ink:#ebf9e3;--theme-line:#477342;--theme-link:#9fc9ff;--window-soft:#233e29}
+html.night[data-site-theme="kusa-theme-2"] .base-theme .site-nav{background:var(--theme-panel)}
+html.night[data-site-theme="kusa-theme-2"] .base-theme .named-item .name{color:#ceecb5}
+html.night[data-site-theme="kusa-theme-2"] .base-theme .named-item:hover{background:#254730}
+/* Shop previews are live-style samples, not screenshots with baked-in text. */
+.base-theme .shop-skin-preview.kusa-theme-1{background:url('../assets/themes/basic/profile-reference.webp') center/cover,#f8f4e7;border-color:#7c984d;color:#13252e;text-shadow:0 1px #fff}
+.base-theme .shop-skin-preview.kusa-theme-2{background:url('../assets/themes/kusa-theme-2/profile-meadow.webp') center/cover,#062f24;border-color:#e5ce63;color:#fff4b7;text-shadow:0 1px 2px #00170e}
+.base-theme .shop-skin-preview small{color:inherit!important}
+@media(max-width:599px){html[data-site-theme="kusa-theme-2"] .base-theme .hero-inner{background-size:auto 42px,auto 42px}html[data-site-theme="kusa-theme-2"] .base-theme .kusa-profile::before{background-size:auto 100%;background-position:60% center}}

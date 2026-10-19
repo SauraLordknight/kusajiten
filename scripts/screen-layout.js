@@ -1,0 +1,164 @@
+/* Static new-theme shell: bind windows and responsive navigation without rebuilding the page. */
+(() => {
+  'use strict';
+  const body = document.body, main = document.querySelector('main.wrap');
+  const make = (tag, cls, text) => { const n = document.createElement(tag); n.className = cls; if (text) n.textContent = text; return n; };
+  const button = (text, action) => { const n = make('button', 'screen-button', text); n.type = 'button'; n.addEventListener('click', action); return n; };
+  const profile = document.getElementById('kusaProfile');
+  const services = document.querySelector('.site-services');
+  const hub = document.querySelector('.kusa-games-hub'), shop = document.getElementById('siteShop');
+  const management = document.querySelector('.kusa-profile-management');
+  const namedDirectory=document.getElementById('namedDirectory');
+  // Management used to be a lower page pane. Keep its existing controls, but
+  // host them in an independent modal so long card/title lists remain legible.
+  const managementDialog=document.createElement('dialog');managementDialog.id='profileManagementDialog';managementDialog.className='profile-management-dialog';
+  const managementHead=document.createElement('header'),managementTitle=document.createElement('div'),managementClose=document.createElement('button');
+  const managementKicker=document.createElement('small'),managementH=document.createElement('h2');managementKicker.textContent='PLAYER MANAGEMENT';managementH.textContent='🌱 育成・カード管理';managementTitle.append(managementKicker,managementH);managementClose.type='button';managementClose.textContent='×';managementClose.setAttribute('aria-label','育成・カード管理を閉じる');managementHead.append(managementTitle,managementClose);managementDialog.append(managementHead,management);
+  (document.querySelector('.base-theme')||document.body).append(managementDialog);
+  let managementFocus=null;
+  function openManagement(target=null){managementFocus=document.activeElement;management.open=true;if(!managementDialog.open)managementDialog.showModal();if(target&&target!==management)requestAnimationFrame(()=>target.scrollIntoView({block:'start',behavior:'instant'}));managementClose.focus({preventScroll:true});}
+  function closeManagement(){if(managementDialog.open)managementDialog.close();}
+  managementClose.addEventListener('click',closeManagement);
+  managementDialog.addEventListener('close',()=>{if(managementFocus?.isConnected)managementFocus.focus({preventScroll:true});});
+  // Keep the initial-page directory in place. When its dedicated window opens,
+  // temporarily host the same live node there, then put it back on close.
+  const namedDialog=document.createElement('dialog');namedDialog.id='namedDirectoryDialog';namedDialog.className='named-directory-dialog theme-window';
+  const namedHead=document.createElement('header'),namedTitle=document.createElement('h2'),namedClose=document.createElement('button');
+  const namedHomeParent=namedDirectory.parentNode,namedHomeNext=namedDirectory.nextSibling;
+  namedTitle.textContent='ネームド一覧';namedClose.type='button';namedClose.textContent='×';namedClose.setAttribute('aria-label','ネームド一覧を閉じる');namedHead.append(namedTitle,namedClose);namedDialog.append(namedHead);
+  (document.querySelector('.base-theme')||document.body).append(namedDialog);
+  let namedFocus=null;
+  function restoreNamedDirectory(){if(namedDirectory.parentNode===namedDialog)namedHomeParent.insertBefore(namedDirectory,namedHomeNext);}
+  function openNamedDirectory(){namedFocus=document.activeElement;if(!namedDialog.open){namedDialog.append(namedDirectory);namedDialog.showModal();}namedClose.focus({preventScroll:true});}
+  namedClose.addEventListener('click',()=>namedDialog.close());
+  namedDialog.addEventListener('click',event=>{if(event.target===namedDialog)namedDialog.close();});
+  namedDialog.addEventListener('close',()=>{restoreNamedDirectory();if(namedFocus?.isConnected)namedFocus.focus({preventScroll:true});});
+  // A CSS overlay cannot appear above a modal dialog's top layer. Give the
+  // person detail its own native modal, preserving the existing detail events.
+  const personDetail=document.getElementById('detailModal');
+  const personHost=document.createElement('dialog');personHost.className='person-detail-host';
+  personHost.setAttribute('aria-labelledby','detailTitle');
+  personDetail.removeAttribute('role');personDetail.removeAttribute('aria-modal');
+  personDetail.before(personHost);personHost.append(personDetail);
+  const syncPerson=()=>{
+    if(personDetail.classList.contains('is-open')){if(!personHost.open)personHost.showModal();}
+    else if(personHost.open)personHost.close();
+  };
+  new MutationObserver(syncPerson).observe(personDetail,{attributes:true,attributeFilter:['class']});
+  personHost.addEventListener('cancel',event=>{event.preventDefault();personDetail.classList.remove('is-open');});
+  personHost.addEventListener('close',()=>personDetail.classList.remove('is-open'));
+  const stage = document.getElementById('kusaGamesStage');
+  const grid = document.querySelector('.directory-layout');
+  const information = document.querySelector('.site-information');
+  const migration = document.querySelector('.migration-notice'), purpose = document.querySelector('.site-purpose');
+  const requestBox=document.getElementById('request-box'),requestFormURL=requestBox.querySelector('.request-button').href;
+  const workspace=document.getElementById('screenWorkspace'),panelHead=workspace.querySelector('.screen-panel-head'),panelTitle=document.getElementById('screenPanelTitle');
+  const labels={directory:'名鑑',games:'遊技場',shop:'ショップ',manage:'管理',menu:'メニュー'},panes=Object.fromEntries([...workspace.querySelectorAll(':scope>.screen-pane')].map(n=>[n.dataset.pane,n]));
+  document.querySelector('.screen-notice-bar button').addEventListener('click',()=>openTarget(migration));
+  document.querySelector('.screen-notice-bar button:nth-of-type(2)').addEventListener('click',()=>openTarget(purpose));
+  document.querySelector('.screen-management-launch').addEventListener('click',()=>openManagement());panelHead.querySelector('button').addEventListener('click',closeWorkspace);
+  const targets=['migrationNoticeTitle','policyBannerTitle','how-to-use','siteThemeOpen'];
+  panes.menu.querySelectorAll('.screen-menu-links button').forEach((n,i)=>n.addEventListener('click',()=>targets[i]==='siteThemeOpen'?document.getElementById(targets[i]).click():openTarget(document.getElementById(targets[i]))));
+  const infoDialog=document.getElementById('siteInfoDialog'),infoTitle=document.getElementById('siteInfoTitle'),infoClose=infoDialog.querySelector('.site-info-head button'),infoContent=infoDialog.querySelector('.site-info-content');
+  infoClose.addEventListener('click',()=>infoDialog.close());
+  const infoPages=new Map([...infoContent.children].map(page=>[page,page===migration?'データ保存':page===purpose?'この事典について・掲載方針の要点':page.querySelector('h2,summary')?.textContent.trim()||'サイトの案内']));
+  const entries=[...panes.menu.querySelectorAll('.site-info-index button')];[...infoPages.keys()].forEach((page,i)=>entries[i].addEventListener('click',()=>openInfo(page)));
+  function openInfo(page, target = page) {
+    infoPages.forEach((_,n) => { n.hidden = n !== page; });
+    infoTitle.textContent = infoPages.get(page); if (page.matches('details')) page.open = true;
+    if (!infoDialog.open) infoDialog.showModal();
+    infoContent.scrollTop = 0; infoClose.focus({preventScroll:true});
+    if (target !== page && !target.matches('h2,summary')) requestAnimationFrame(() => target.scrollIntoView({block:'start',behavior:'instant'}));
+  }
+  infoDialog.addEventListener('click', e => {
+    if (e.target !== infoDialog) return;
+    const r = infoDialog.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) infoDialog.close();
+  });
+  const effectsLayer=document.getElementById('screenEffectsLayer');
+  // Existing game rewards still drive the animations; only their presentation layer changes.
+  const particleSelector = '.commerce-acquired,.workshop-flying-material,.offering-particle,.offering-xp';
+  new MutationObserver(records => records.forEach(record => record.addedNodes.forEach(n => {
+    if (n.nodeType === 1 && n.matches(particleSelector)) effectsLayer.append(n);
+  }))).observe(body, {childList:true});
+  const dock=document.querySelector('.screen-dock');dock.querySelectorAll('[data-screen-view]').forEach(n=>n.addEventListener('click',()=>show(n.dataset.screenView)));
+  document.querySelectorAll('[data-named-directory-open]').forEach(n=>n.addEventListener('click',event=>{event.preventDefault();openNamedDirectory();}));
+  let current = 'directory', returnFocus = null;
+  const mobile = matchMedia('(max-width: 799px)');
+  function show(view, focus = true) {
+    if (!panes[view]) return;
+    if (current === 'directory' && view !== 'directory') returnFocus = document.activeElement;
+    current = view; body.dataset.screenView = view;
+    if(view==='games'||mobile.matches)panes.games.prepend(hub);
+    else services.append(hub);
+    Object.entries(panes).forEach(([key,n]) => { n.hidden = key !== view; });
+    panelTitle.textContent = labels[view];
+    dock.querySelectorAll('button').forEach(n => n.setAttribute('aria-current', n.dataset.screenView === view ? 'page' : 'false'));
+    if(view === 'manage'){ show('directory',false); openManagement(); return; }
+    services.inert = !mobile.matches && view !== 'directory';
+    body.classList.toggle('screen-game-playing', body.classList.contains('screen-game-active'));
+    if (focus && view !== 'directory') { panelTitle.tabIndex = -1; panelTitle.focus({preventScroll:true}); }
+    if (focus && view === 'directory' && returnFocus?.isConnected) returnFocus.focus({preventScroll:true});
+    requestAnimationFrame(fit);
+  }
+  function closeWorkspace() {
+    closeManagement();
+    if (current === 'games') document.querySelectorAll('.game-dialog button[id$="Toggle"][aria-expanded="true"]').forEach(n => n.click());
+    show('directory');
+  }
+  function openTarget(target) {
+    if (!target) return;
+    if (requestBox.contains(target)) { location.assign(requestFormURL); return; }
+    const page = [...infoPages.keys()].find(n => n.contains(target));
+    if (page) { openInfo(page, target); return; }
+    if (infoDialog.open) infoDialog.close();
+    if (target.closest('.kusa-profile-management')) { openManagement(target); return; }
+    else if (target.closest('#namedDirectory')) { openNamedDirectory(); return; }
+    else if (target.closest('.directory-sidebar')) show('directory', false);
+    else if (target.closest('.kusa-games-hub')) show('games');
+    else if (target.closest('#siteShop')) { show('shop'); if (!mobile.matches) document.getElementById('kusaShopOpen').click(); }
+    else if (target.closest('#kusaProfile')) { show('directory', false); return; }
+    else show('menu');
+    const details = target.closest('details'); if (details) details.open = true;
+    requestAnimationFrame(() => target.scrollIntoView({block:'start',behavior:'instant'}));
+  }
+  function routeHash() {
+    let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+    if (id) openTarget(document.getElementById(id));
+  }
+  function arrange() {
+    if (mobile.matches) { panes.games.prepend(hub); panes.shop.append(shop); }
+    else { services.append(shop, hub); }
+    body.classList.add('screen-shell'); show(current, false);
+  }
+  function fit() {
+    // Short screens, enlarged text and unusually long names get an accessible scrolling fallback.
+    body.classList.remove('screen-flow');
+    const top = `${profile.getBoundingClientRect().bottom - main.getBoundingClientRect().top + 5}px`;
+    if (main.style.getPropertyValue('--screen-panel-top') !== top) main.style.setProperty('--screen-panel-top', top);
+    const usable = innerHeight >= 620 && workspace.getBoundingClientRect().height >= 150;
+    body.classList.toggle('screen-flow', !usable);
+  }
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (a && !a.closest('.theme-retired')) {
+      const target = document.getElementById(decodeURIComponent(a.hash.slice(1)));
+      if (target && (!a.closest('.detail-modal,.commemorative-medal-modal,dialog') || a.closest('#siteInfoDialog'))) { e.preventDefault(); history.replaceState(null, '', a.hash); openTarget(target); }
+    }
+    if (e.target.closest('#capsuleInventoryBadge')) openTarget(document.getElementById('capsuleInventoryTitle'));
+    if (e.target.closest('.site-menu-toggle')) show('menu');
+  }, true);
+  // Individual game windows own game state and scrolling now.
+  document.addEventListener('keydown', e => {
+    if (e.target.closest('#capsuleInventoryBadge') && ['Enter',' '].includes(e.key)) openTarget(document.getElementById('capsuleInventoryTitle'));
+    if (e.key === 'Escape' && !document.querySelector('dialog[open],.detail-modal.is-open,.commemorative-medal-modal:not([hidden])')) closeWorkspace();
+  }, true);
+  mobile.addEventListener('change', arrange); window.addEventListener('resize', fit); window.addEventListener('hashchange', routeHash);
+  let fitFrame = 0;
+  function scheduleFit() { if (!fitFrame) fitFrame = requestAnimationFrame(() => { fitFrame = 0; fit(); }); }
+  new ResizeObserver(scheduleFit).observe(profile);
+  // Reloads return to the directory; deliberate external deep links still work.
+  const reload=performance.getEntriesByType('navigation')[0]?.type==='reload';
+  if(reload){history.replaceState(null,'',location.pathname+location.search);if('scrollRestoration' in history)history.scrollRestoration='manual';window.scrollTo(0,0);}
+  arrange();if(!reload)routeHash();
+  window.addEventListener('pageshow',event=>{if(event.persisted){document.querySelectorAll('dialog[open]').forEach(d=>d.close());history.replaceState(null,'',location.pathname+location.search);show('directory',false);window.scrollTo(0,0);}});
+})();

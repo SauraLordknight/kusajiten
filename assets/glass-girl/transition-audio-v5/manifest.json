@@ -1,0 +1,123 @@
+{
+  "version": 5,
+  "verifiedDate": "2026-10-14",
+  "sourceDirectory": "../transition-audio-v1/sources",
+  "evidenceDirectory": "../transition-audio-v1/license-evidence",
+  "license": "CC0-1.0 sources + original DSP",
+  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "licenseLegalCode": "https://creativecommons.org/publicdomain/zero/1.0/legalcode.en",
+  "sources": [
+    {
+      "id": 155620,
+      "author": "samueljustice00",
+      "title": "IMPACT_GLASS_BIG_WINDOW_PANE_SMASH_HAMMER_LOUD_NTG3_H4N_20120513.wav",
+      "role": "6秒の板ガラス破砕・残響",
+      "preview": "https://cdn.freesound.org/previews/155/155620_2123163-hq.mp3",
+      "page": "https://freesound.org/people/samueljustice00/sounds/155620/",
+      "license": "CC0-1.0",
+      "sha256": "66275e46f4303dab4da87a4c8f64bbb82728543ab6605ada4eddd8327cec766b"
+    },
+    {
+      "id": 336425,
+      "author": "221Beimesche",
+      "title": "Glass Shattering and Falling",
+      "role": "6秒の破砕と破片落下・長い空間残響",
+      "preview": "https://cdn.freesound.org/previews/336/336425_4663534-hq.mp3",
+      "page": "https://freesound.org/people/221Beimesche/sounds/336425/",
+      "license": "CC0-1.0",
+      "sha256": "4029aee66f808600a10b11576c5907c38df0b0227f12a3fe941646f5a87b4321"
+    },
+    {
+      "id": 382690,
+      "author": "gerainsan",
+      "title": "Creepy Sci-Fi Drone.wav",
+      "role": "暗転の低い持続音",
+      "preview": "https://cdn.freesound.org/previews/382/382690_3577171-hq.mp3",
+      "page": "https://freesound.org/people/gerainsan/sounds/382690/",
+      "license": "CC0-1.0",
+      "sha256": "a3b9e1463b6c54c3090039c4bd22d96caf28fe76c6a4e2f6e6853d1b14cd4c8b"
+    },
+    {
+      "id": 426058,
+      "author": "JavierZumer",
+      "title": "hum movements whooshes.wav",
+      "role": "暗転のブーン・光の上昇と放出",
+      "preview": "https://cdn.freesound.org/previews/426/426058_2836758-hq.mp3",
+      "page": "https://freesound.org/people/JavierZumer/sounds/426058/",
+      "license": "CC0-1.0",
+      "sha256": "e00b7dc356fa81dd127a0c9a8c4052d7a8f6806e8983e2cf58ee9e0b53039c6b"
+    },
+    {
+      "id": 379008,
+      "author": "13FPanska_Cerny_Jan",
+      "title": "Crack_glass.wav",
+      "role": "1.5〜4秒の亀裂音",
+      "preview": "https://cdn.freesound.org/previews/379/379008_7020756-hq.mp3",
+      "page": "https://freesound.org/people/13FPanska_Cerny_Jan/sounds/379008/",
+      "license": "CC0-1.0",
+      "sha256": "beee8addf690c81cb350a51e6629f5e4396caf8cdd965e0d5992cd611994b526"
+    }
+  ],
+  "mix": {
+    "sampleRate": 44100,
+    "frames": 396900,
+    "peak": 0.8399658203125,
+    "rms": 0.08843326417716658,
+    "selected": {
+      "glassAt": 6.718861678004536,
+      "crackAt": 19.89,
+      "crackEvents": [
+        19.949909297052155,
+        6.205306122448979,
+        23.5621768707483,
+        3.117641723356009,
+        7.689183673469388
+      ],
+      "fallAt": 0
+    },
+    "decoded": {
+      "155620": {
+        "duration": 8.584399092970521,
+        "channels": 1
+      },
+      "336425": {
+        "duration": 3.6919727891156464,
+        "channels": 2
+      },
+      "379008": {
+        "duration": 25.674308390022677,
+        "channels": 2
+      },
+      "382690": {
+        "duration": 42.31578231292517,
+        "channels": 2
+      },
+      "426058": {
+        "duration": 37.73428571428571,
+        "channels": 1
+      }
+    },
+    "introReplacement": {
+      "endSeconds": 1.5,
+      "crossfadeSeconds": [
+        1.12,
+        1.5
+      ],
+      "targetPeak": 0.7,
+      "restCopiedFrom": "transition-audio-v4",
+      "pcmAfterIntroIdentical": true
+    },
+    "renderedCandidate": {
+      "peak": 0.8637574315071106,
+      "rms": 0.07077142335924315
+    },
+    "duration": 9,
+    "shatterTime": 6,
+    "preImpactSilence": [
+      5.88,
+      6
+    ],
+    "bytes": 1587644,
+    "sha256": "eb085063090b76e1c6d62cd8b1685102e083af16462a6beec6356c65a52c7dec"
+  }
+}

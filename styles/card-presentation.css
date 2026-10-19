@@ -1,0 +1,20 @@
+/* Keep original square card artwork separate from the surrounding window theme. */
+.base-theme .theme-card-window { align-items:center; }
+.base-theme .theme-card-window > .theme-window-head { align-self:stretch; }
+.base-theme .theme-card-window > .detail-panel.gacha-framed {
+  --gacha-detail-size:min(520px,calc(100vw - 64px),calc(100dvh - 120px));
+  width:var(--gacha-detail-size);
+  height:var(--gacha-detail-size);
+  min-height:0;
+  aspect-ratio:1;
+  flex-shrink:0;
+  margin:16px;
+  background-size:100% 100%;
+}
+/* Use URLs relative to this sheet, not a relative URL custom property consumed
+   from another sheet (browsers resolve it against the consuming stylesheet). */
+.base-theme :is(.gacha-book-item,#gachaDetailModal .detail-panel).gacha-framed.rarity-SSR:not(.is-processed) { background-image:linear-gradient(#f9faff1f,#f9faff1f),url('../assets/gacha-frames/ssr-background.png'); }
+.base-theme :is(.gacha-book-item,#gachaDetailModal .detail-panel).gacha-framed.rarity-UR:not(.is-processed) { background-image:linear-gradient(#ffffff24,#ffffff24),url('../assets/gacha-frames/ur-background.png'); }
+.base-theme :is(.gacha-book-item,#gachaDetailModal .detail-panel).gacha-framed.rarity-GODR:not(.is-processed) { background-image:linear-gradient(#fff0b014,#fff0b014),url('../assets/gacha-frames/god-background.png'); }
+.base-theme :is(.gacha-book-item,#gachaDetailModal .detail-panel).gacha-framed.rarity-Ω:not(.is-processed) { background-image:linear-gradient(#040b1c1a,#040b1c1a),url('../assets/gacha-frames/omega-background.png'); }
+.gacha-book-quantity { max-width:calc(100% + 12px);height:auto;min-height:22px;overflow-wrap:anywhere; }

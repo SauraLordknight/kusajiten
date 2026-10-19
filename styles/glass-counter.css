@@ -1,0 +1,7 @@
+/* Generated black-glass housing; all labels and values remain live accessible text. */
+.pdm-machine .glass-data-counter{position:absolute;z-index:20;left:-8px;top:-96px;width:521px;height:78px;box-sizing:border-box;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:12px 30px;color:#effaff;isolation:isolate;font-family:system-ui,sans-serif}
+.glass-data-counter::before{content:"";position:absolute;z-index:-1;inset:0;background:url('../assets/glass-girl/counter-frame-v1.png') center/100% 260% no-repeat;pointer-events:none}
+.glass-data-counter>div{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.glass-data-counter>div+div{border-left:1px solid #70cfff88}
+.glass-data-counter span{font-size:10px;white-space:nowrap;color:#d6efff}
+.glass-data-counter strong{font:600 18px/1.1 ui-monospace,Consolas,monospace;font-variant-numeric:tabular-nums;text-shadow:0 0 5px #77caff66;max-width:100%;white-space:nowrap;overflow:hidden}

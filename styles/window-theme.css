@@ -1,0 +1,55 @@
+/* Shared window chrome follows the basic theme tokens, including night mode. */
+.base-theme{--window-radius:5px;--window-border:#739449;--window-shadow:0 16px 50px #182b2538;--window-soft:#eeefdf;--window-muted:#53624b;--window-backdrop:#14271b99}
+.night .base-theme{--window-border:#718267;--window-soft:#29372b;--window-muted:#c1cfb8;--window-backdrop:#07110bcc}
+.base-theme .theme-window{background:var(--theme-panel);color:var(--theme-ink);border:3px double var(--window-border);border-radius:var(--window-radius);box-shadow:var(--window-shadow);font-family:inherit}
+.base-theme .theme-window-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background: url('../assets/themes/basic/grass-reference.webp') right bottom/auto 28px no-repeat,linear-gradient(110deg,var(--theme-band),var(--theme-band-end));color:#fff;border:0;border-bottom:1px solid var(--window-border);border-radius:0;text-shadow:none}
+.base-theme .theme-window-head :is(h2,h3){color:#fff!important;font-size:20px;line-height:1.4;text-shadow:none;margin:0}
+.base-theme .theme-window-head :is(p,small,span){color:#eaf2df!important;text-shadow:none;letter-spacing:normal}
+.base-theme .theme-window:not(.screen-workspace,.screen-game-window) :is(button,select,input:not([type=range]):not([type=checkbox]):not([type=radio])){border:1px solid var(--theme-line);border-radius:3px;background:var(--theme-panel);color:var(--theme-ink);box-shadow:none;font-family:inherit}
+.base-theme .theme-window:not(.screen-workspace,.screen-game-window) button{min-height:40px;padding:8px 12px;font-size:13px;cursor:pointer}
+.base-theme .theme-window:not(.screen-workspace,.screen-game-window) button:disabled{cursor:default;opacity:.5}
+.base-theme .theme-window :is(button,a,select,input):focus-visible{outline:3px solid #5086d4;outline-offset:2px}
+.base-theme .theme-window-head button{min-height:40px;width:auto;height:auto;font-size:14px;line-height:1.2;flex-shrink:0;background:#fbf9ef!important;color:#183322!important;border-color:#c0c9ad}
+.base-theme .theme-window:not(.screen-workspace,.screen-game-window) :is([aria-selected=true],[aria-pressed=true],[data-action-confirm],.shop-product>button,.capsule-open-confirm){background:var(--theme-band)!important;color:#fff!important;border-color:var(--window-border)}
+.base-theme :is(.commerce-dialog,.site-theme-dialog,.kusa-action-dialog,.commemorative-viewer,.pachi-ranking-dialog,.site-info-dialog)::backdrop{background:var(--window-backdrop);backdrop-filter:none}
+.base-theme :is(.detail-modal,.news-modal,.commemorative-medal-modal,.pachi-share-modal,.pachi-result-modal){background:var(--window-backdrop);backdrop-filter:none}
+.base-theme :is(.commerce-dialog,.site-theme-dialog,.kusa-action-dialog){padding:16px;max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);max-width:calc(100vw - 20px);overflow:auto}
+.base-theme :is(.commerce-dialog,.site-theme-dialog)>header{margin:-16px -16px 16px}
+.base-theme .commerce-sticky{top:-16px;margin-top:-16px;padding-top:0;background:var(--theme-panel)}
+.base-theme .commerce-sticky>header{margin:0 -16px 12px}
+.base-theme .commerce-dialog header h2{margin:0}
+.base-theme .capsule-open-dialog>header{top:-16px}
+.base-theme .commerce-wallet{background:var(--window-soft);color:var(--theme-ink);border:1px solid var(--theme-line);border-radius:3px;padding:10px}
+.base-theme :is(.shop-product,.capsule-reward-description,.commemorative-medal-card,.commemorative-viewer-metadata,.pachi-result-section,.pachi-result-titles){background:var(--window-soft);color:var(--theme-ink);border:1px solid var(--theme-line);border-radius:3px;box-shadow:none}
+.base-theme .shop-product :is(h3,p,small),.base-theme .shop-product-cost{color:var(--theme-ink)}
+.base-theme .kusa-action-dialog>h2{margin:-16px -16px 16px;display:block;font-size:20px;color:#fff}
+.base-theme .commemorative-medal-dialog-head{position:sticky;top:0;z-index:3}
+.base-theme .commemorative-medal-dialog :is(h3,p,small,.commemorative-medal-status,.commemorative-medal-progress),.base-theme .commemorative-viewer :is(dt,dd,.commemorative-viewer-help,.commemorative-viewer-note){color:var(--theme-ink)}
+.base-theme .commemorative-medal-dialog-head :is(p,span){color:#eaf2df}
+.base-theme .commemorative-medal-dialog{max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px)}
+.base-theme .commemorative-medal-note{color:var(--window-muted)!important}.base-theme .commemorative-medal-token.is-locked{background:radial-gradient(circle at 30% 25%,#fff9d9,#dcc48f 68%,#ad8249);color:#85653a;border-color:#89642d;box-shadow:none}
+.base-theme .commemorative-viewer>header{position:sticky;top:0;z-index:3}
+/* The viewer stage, minted medal and rarity/processed card art deliberately keep their own materials. */
+.base-theme .pachi-ranking{background:var(--theme-panel);color:var(--theme-ink);padding:16px}
+.base-theme .pachi-ranking-head{margin:-16px -16px 12px;position:sticky;top:0;z-index:3}
+.base-theme .pachi-ranking :is(.pachi-ranking-lead,.pachi-ranking-note,.pachi-ranking-status,.pachi-ranking-mine){color:var(--theme-ink);background:none;border-color:var(--theme-line)}
+.base-theme .pachi-ranking :is(.pachi-ranking-numbers>div,.pachi-ranking-list li){background:var(--window-soft);color:var(--theme-ink);border-color:var(--theme-line);box-shadow:none;border-radius:3px}
+.base-theme .pachi-ranking :is(strong,small,.pachi-ranking-name,.pachi-ranking-score){color:var(--theme-ink)}
+.base-theme .pachi-ranking-head small{color:#eaf2df}.base-theme .pachi-ranking-tabs button{box-shadow:none}
+.base-theme :is(.pachi-share-panel,.pachi-result-panel){max-height:calc(100dvh - 28px);overflow:auto;padding:16px}
+.base-theme :is(.pachi-share-head,.pachi-result-head){margin:-16px -16px 16px;position:sticky;top:-16px;z-index:3}
+.base-theme .pachi-result-panel :is(p,h4,label,dt,dd){color:var(--theme-ink)}
+.base-theme .pachi-result-hero{background:var(--window-soft);color:var(--theme-ink);border-color:var(--theme-line);box-shadow:none}
+.base-theme .pachi-result-hero :is(strong,small,span){color:var(--theme-ink)}
+.base-theme #detailModal .detail-head{position:sticky;top:0;z-index:3}.base-theme #detailModal .detail-body{color:var(--theme-ink)}
+.base-theme #detailModal :is(.detail-label,.detail-text){color:var(--theme-ink)}
+.base-theme .theme-card-window{width:min(680px,100%);max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);display:flex;flex-direction:column;overflow:auto}
+.base-theme .theme-card-window>.theme-window-head{position:sticky;top:0;z-index:5;flex-shrink:0}
+.base-theme .theme-card-window>.detail-panel{width:100%;max-height:none;overflow:visible;flex-shrink:0}
+.base-theme .theme-card-window .detail-close{display:none}
+.base-theme .news-panel{padding:0}.base-theme .news-modal-head{border-radius:0}
+.base-theme .screen-workspace.theme-window{border-radius:var(--window-radius)}
+/* The directory already has its own title/search bar; reserve this header for other screens. */
+.base-theme[data-screen-view=directory] .screen-workspace>.screen-panel-head{display:none}
+.base-theme .screen-game-window.theme-window{box-shadow:none}
+@media(max-width:599px){.base-theme .theme-window-head{padding:10px;gap:8px}.base-theme .theme-window-head :is(h2,h3){font-size:17px}.base-theme .theme-window-head button{min-height:40px;padding:6px 9px}.base-theme .commemorative-medal-modal{align-items:center;padding:10px}.base-theme .commemorative-medal-dialog{border-radius:var(--window-radius)}.base-theme .commemorative-viewer-metadata div{grid-template-columns:1fr}.base-theme .theme-window :is(button,select){max-width:100%}}

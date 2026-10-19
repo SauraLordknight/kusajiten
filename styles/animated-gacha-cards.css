@@ -1,0 +1,38 @@
+/* Portrait art owns its proportions; the surrounding site window remains scrollable. */
+.base-theme .theme-card-window:has(.has-animated-card){width:min(540px,calc(100vw - 24px));}
+.base-theme #gachaDetailModal .detail-panel.has-animated-card{
+  width:100%!important;height:auto!important;max-height:none;aspect-ratio:auto!important;
+  margin:0!important;padding:12px!important;overflow:visible;
+  background:#0a1421!important;color:#ecf8ff!important;border:0;box-shadow:none;
+}
+#gachaDetailModal .has-animated-card .gacha-omega-sigil{display:none}
+#gachaDetailModal .detail-panel.has-animated-card::before,#gachaDetailModal .detail-panel.has-animated-card::after{display:none!important}
+#gachaDetailModal .has-animated-card .detail-head{padding:10px 4px 0;background:transparent;border:0;display:block;text-align:center}
+#gachaDetailModal .has-animated-card .detail-title-wrap{display:flex;flex-wrap:wrap;gap:5px 10px;align-items:center;justify-content:center}
+#gachaDetailModal .has-animated-card #gachaDetailTitle{color:#eefaff;font-size:clamp(16px,3.8vw,21px);line-height:1.45;overflow-wrap:anywhere}
+#gachaDetailModal .has-animated-card #gachaDetailRarity{color:#d2efff;background:#152e47;border:1px solid #80bfdb;padding:3px 9px;border-radius:20px;font-size:12px;white-space:nowrap}
+#gachaDetailModal .has-animated-card .detail-body{padding:7px 5px 0;text-align:center;background:none}
+#gachaDetailModal .has-animated-card .detail-label{color:#a8d2e7}
+#gachaDetailModal .has-animated-card .detail-text{color:#e0ebf3;background:none;padding:0;margin:5px 0 0;line-height:1.6;font-size:12px}
+.base-theme #gachaDetailModal .detail-panel.has-animated-card.is-processed .detail-text{background:none!important;color:#e0ebf3!important;padding:0!important}
+.base-theme #gachaDetailModal .detail-panel.has-animated-card .detail-label{color:#a8d2e7;text-shadow:none}
+.animated-card-stage{position:relative;isolation:isolate;margin:0 auto;width:min(100%,calc((100dvh - 320px)*var(--card-ratio,.664)));aspect-ratio:var(--card-ratio,.664);background:#080d19;overflow:hidden;border-radius:7px;min-width:180px}
+.animated-card-stage[hidden]{display:none}
+.animated-card-poster,.animated-card-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.animated-card-video[hidden]{display:none}
+.animated-card-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none;z-index:2}
+.animated-card-replay{position:absolute;z-index:3;bottom:10%;left:50%;transform:translateX(-50%);padding:9px 13px;min-height:40px;color:#f0fbff;background:#142c45e8;border:1px solid #96cce5;border-radius:6px;font-size:12px;white-space:nowrap;cursor:pointer}
+.animated-card-replay[hidden]{display:none}
+#gachaDetailModal .has-animated-card .card-display-tabs{justify-content:center;margin-top:10px;gap:7px;flex-wrap:wrap}
+#gachaDetailModal .has-animated-card .card-display-tabs button{min-height:38px;padding:6px 16px;color:#cde4f3;background:#11273d;border:1px solid #517791;font-size:13px;border-radius:5px}
+#gachaDetailModal .has-animated-card .card-display-tabs button[aria-pressed=true]{color:#fff;background:#28516d;border-color:#9bd4ee}
+#gachaDetailModal .has-animated-card .card-process-metadata{margin:8px 0 0;background:#11243b;color:#c8e6f5;font-size:11px;padding:6px 8px;text-align:center}
+.base-theme .gacha-book-item.has-animated-thumbnail{background:linear-gradient(#040b1c1a,#040b1c1a),url('../assets/gacha-frames/omega-background.png') center/100% 100%!important;color:#e3f5ff!important;border:0!important;aspect-ratio:1}
+.gacha-book-item.has-animated-thumbnail::before{display:block!important;inset:-6px;background:url('../assets/gacha-cards/glass-girl-omega/square-frame-v2.png') center/100% 100% no-repeat!important;z-index:2}
+.gacha-book-item.has-animated-thumbnail::after{display:none!important}
+.gacha-book-item.has-animated-thumbnail>.gacha-omega-sigil{display:block!important;position:absolute;top:7px;right:7px;z-index:4;color:#e9fbff;background:#12304bdc;border:1px solid #8bd5f5;border-radius:4px;padding:2px 5px;font-size:10px;font-weight:800;line-height:1.2;letter-spacing:.04em;text-shadow:0 0 7px #66d8ff;box-shadow:0 0 9px #47caff66;pointer-events:none}
+.gacha-book-item.has-animated-thumbnail .gacha-book-emoji{position:relative;display:block;width:auto;height:auto;margin:0 auto 6px;font-size:clamp(22px,3vw,34px);filter:drop-shadow(0 0 9px #8aeaff)}
+.gacha-book-item.has-animated-thumbnail .gacha-book-name{display:block;line-height:1.45}
+@media(max-height:540px){.animated-card-stage{width:min(240px,80%)}}
+.workshop-mode-tabs button[aria-pressed=true]{background:#244d37;color:#fff;border-color:#244d37}
+

@@ -1,0 +1,20 @@
+.gacha-rates-dialog{box-sizing:border-box;width:min(660px,calc(100vw - 24px));max-height:calc(100dvh - 32px);margin:auto;padding:0;overflow:auto;border:1px solid var(--theme-line,#77a85b);border-radius:8px;background:var(--theme-panel,#fafff6);color:var(--theme-ink,#163718);box-shadow:0 16px 65px #0006;font-family:inherit}
+.gacha-rates-dialog::backdrop{background:#06121c99}
+.gacha-rates-dialog[open]{display:block}
+.gacha-rates-dialog header{position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--theme-band,#315e29);color:#fff}
+.gacha-rates-dialog h2{margin:0;font-size:19px;color:inherit}
+.gacha-rates-dialog header button{flex:none;min-height:40px;padding:6px 12px;border:1px solid #b9cda9;border-radius:4px;background:#f7fff0;color:#173819;font:inherit;cursor:pointer}
+.gacha-rates-content{padding:6px 18px 18px;font-size:14px;line-height:1.8;overflow-wrap:anywhere}
+.gacha-rates-content p{margin:14px 0;color:inherit}
+.gacha-rates-content h3{font-size:16px;margin:20px 0 8px;color:inherit}
+.gacha-rates-table{width:100%;table-layout:fixed;border-collapse:collapse;color:inherit;font-size:14px}
+.gacha-rates-table caption{text-align:left;padding:10px 0;font-weight:bold;color:inherit}
+.gacha-rates-table :is(th,td){border:1px solid var(--theme-line,#a5b99b);padding:8px 9px;overflow-wrap:anywhere;color:inherit}
+.gacha-rates-table thead th{background:var(--window-soft,#e5efd9);color:inherit}
+.gacha-rates-table th{font-weight:600;text-align:left}
+.gacha-rates-table td{text-align:right;font-variant-numeric:tabular-nums}
+.gacha-rates-content .gacha-rates-note{font-size:12px;opacity:1}
+.gacha-rates-status{padding:10px;border:1px solid var(--theme-line,#a5b99b);border-radius:5px;font-weight:bold}
+.gacha-rates-content summary{cursor:pointer;font-weight:bold;padding:8px 0}
+#gachaRatesOpen{min-height:36px;padding:5px 12px;font:inherit;cursor:pointer;white-space:nowrap}
+@media(max-width:420px){.gacha-rates-dialog{width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}.gacha-rates-content{padding:4px 12px 14px}.gacha-rates-table{font-size:12px}.gacha-rates-table :is(th,td){padding:8px 4px}.gacha-rates-dialog h2{font-size:17px}}

@@ -1,0 +1,185 @@
+/* Skin-ready viewport: preserve a single coordinate system for art and balls. */
+.base-theme #kusa-pachi-window{width:min(1100px,calc(100vw - 24px))}
+.base-theme #kusa-pachi-window.pachi-expanded{width:min(1280px,calc(100vw - 8px))}
+.base-theme #kusa-pachi-window .game-window-head{padding:3px 8px;gap:5px}
+.base-theme #kusa-pachi-window .game-window-head h2{font-size:15px;margin-right:auto}
+.base-theme #kusa-pachi-window .game-window-head button{font-size:12px;padding:4px 7px;min-height:36px}
+.base-theme #kusa-pachi-window.pachi-debug-active .game-window-head{border-color:#8feeff;background:linear-gradient(90deg,#071722,#123e57 50%,#071722);color:#e9fcff;box-shadow:inset 0 -2px 0 #59dcff66}
+.base-theme #kusa-pachi-window.pachi-responsive-window .screen-game-scroll{padding:3px;display:flex;flex-direction:column;background:radial-gradient(circle at 50% 38%,#244c5a 0,#0b222c 42%,#040c12 100%)}
+.base-theme .pachi-responsive-window #kusa-pachi{width:100%;padding:0;flex:1;min-height:0;border:0;background:none;box-shadow:none}
+.base-theme .pachi-responsive-window #pachiPanel{height:100%;padding:0;display:flex;flex-direction:column}
+.base-theme .pachi-responsive-window .pachi-heading{display:none}
+.base-theme .pachi-responsive-window #pachiGame{flex:1;min-height:0;display:flex;flex-direction:column}
+.base-theme .pachi-responsive-window #pachiMachine{width:min(520px,100%);height:100%;min-height:0;flex:1;margin:0 auto;padding:4px;border:2px solid #bda05a;border-radius:24px 24px 12px 12px;background:linear-gradient(100deg,#102c24,#2c5141 7%,#142d25 20%,#142d25 80%,#2c5141 93%,#102c24);box-shadow:inset 0 0 0 2px #071d17,0 4px 8px #0003}
+.base-theme .pachi-responsive-window #pachiMachine[hidden]{display:none!important}
+.base-theme .pachi-expanded #pachiMachine{width:min(740px,100%)}
+.base-theme .pachi-responsive-window .pachi-marquee{display:none}
+.pachi-responsive-arena{height:100%;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:3px}
+.pachi-cabinet-viewport{min-height:0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative}
+.pachi-debug-stage{position:relative;flex:1;min-height:0;width:min(920px,100%);margin:0 auto}
+.base-theme #kusa-pachi-window .screen-game-scroll{overflow-anchor:none}
+.pdm-machine[data-scrolling="true"] .pdm-art-whole,.pdm-machine[data-scrolling="true"] .pdm-cabinet-art{will-change:transform}
+.pachi-debug-stage[hidden]{display:none!important}
+.pachi-top-readouts[hidden],.pachi-play-rail[hidden],.pachi-cabinet-shell[hidden]{display:none!important}
+.pachi-cabinet-shell{position:absolute;left:50%;top:50%;width:454px;height:584px;transform:translate(-50%,-50%) scale(var(--cabinet-scale,1));transform-origin:center;transition:width .2s ease,height .2s ease}
+.base-theme .pachi-responsive-window .pachi-board-wrap{position:absolute;left:0;top:0;width:454px;height:584px;max-width:none;margin:0;border-width:7px;box-sizing:border-box;transform:none}
+.base-theme .pachi-responsive-window #pachiCanvas{width:440px;height:570px;max-width:none}
+.base-theme .pachi-responsive-window #pachiBallsCanvas{width:440px;height:570px;max-width:none}
+.pachi-play-rail{min-width:0;padding:4px;border-top:2px solid #bc9d57;border-radius:8px;background:linear-gradient(#244a39,#102b23);box-shadow:inset 0 1px 0 #f3dc8c55}
+.pachi-top-readouts{min-width:0;height:132px;box-sizing:border-box;overflow:hidden;padding:2px 4px;border-bottom:2px solid #bc9d57;border-radius:16px 16px 4px 4px;background:linear-gradient(#244a39,#102b23)}
+.base-theme .pachi-top-readouts .pachi-stats{padding:0;border:0;border-radius:0;background:none}
+.pachi-responsive-window .sr-only{position:absolute!important;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.base-theme .pachi-responsive-window .pachi-display{margin:0;padding:4px}
+.base-theme .pachi-responsive-window .pachi-status-grid{height:auto;gap:4px}
+.base-theme .pachi-responsive-window .pachi-status-cell{padding:3px;min-height:0;height:36px;box-sizing:border-box;overflow:hidden}
+.base-theme .pachi-responsive-window .pachi-status-cell strong{font-size:12px;line-height:1.3;height:auto}
+.base-theme .pachi-responsive-window .pachi-status-cell small,.base-theme .pachi-responsive-window .pachi-display-label,.base-theme .pachi-responsive-window .pachi-omen-meter{display:none}
+.base-theme .pachi-responsive-window .pachi-announcement{height:36px;min-height:36px;box-sizing:border-box;overflow:hidden;font-size:11px;line-height:1.3;padding:3px;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+/* Keep the same HUD slots during shots: text changes must never resize the playfield. */
+.base-theme .pachi-responsive-window .pachi-announcement.is-instruction{visibility:hidden}
+.base-theme .pachi-responsive-window .pachi-stats{margin:0;padding:0;gap:3px;grid-template-columns:1.4fr repeat(3,minmax(0,1fr));border:0;border-radius:0;background:none}
+.base-theme .pachi-responsive-window .pachi-stats div{padding:3px;min-height:0}
+.base-theme .pachi-responsive-window .pachi-stats strong{font-size:11px;white-space:nowrap;overflow:visible;overflow-wrap:normal}.base-theme .pachi-responsive-window .pachi-stats small{font-size:10px}
+.base-theme .pachi-responsive-window .pachi-stats>div:first-child strong{font-size:18px}
+.base-theme .pachi-responsive-window .pachi-display{border:0;border-radius:0;box-shadow:none;background:none;padding:2px 0}
+.base-theme .pachi-responsive-window .pachi-status-grid{margin:0}
+.base-theme .pachi-responsive-window .pachi-status-cell{border:0;box-shadow:none;padding:2px 4px}
+.base-theme .pachi-responsive-window .pachi-wager{margin:3px 0;padding:3px;gap:4px;align-items:center}
+.base-theme .pachi-responsive-window .pachi-wager legend,.base-theme .pachi-responsive-window .pachi-wager small{display:none}
+.base-theme .pachi-responsive-window .pachi-wager label span{padding:4px 8px;font-size:12px}
+.base-theme .pachi-responsive-window .pachi-controls{padding:4px 0 0}
+.base-theme .pachi-responsive-window .pachi-fire{min-height:48px;font-size:15px;padding:5px;box-shadow:none}
+.base-theme .pachi-responsive-window .pachi-power-label{font-size:12px}.base-theme .pachi-responsive-window .pachi-power-label input{width:100%;min-height:26px}
+.base-theme .pachi-settings-dialog{width:min(640px,calc(100vw - 20px));max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:0;background:var(--theme-panel);color:var(--theme-ink);border:2px solid var(--theme-line);overflow:auto}
+.pachi-settings-dialog>header{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:0;z-index:2;padding:8px 12px}
+.pachi-settings-dialog h2{font-size:17px;margin:0}.pachi-settings-content{padding:12px}.pachi-settings-content>*{margin-bottom:12px}
+.base-theme .pachi-responsive-window.pachi-layout-scroll .screen-game-scroll{overflow:auto}
+@media(max-width:420px){.pachi-top-readouts{height:168px}.base-theme .pachi-responsive-window .pachi-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.base-theme .pachi-responsive-window .pachi-stats>div:first-child{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:5px}.base-theme #kusa-pachi-window .game-window-head{flex-wrap:wrap}.base-theme #kusa-pachi-window .game-window-head h2{font-size:13px}.base-theme #kusa-pachi-window .game-window-head button{font-size:11px;padding:3px 5px}}
+
+/* 実機型デバッグ台。草パチのDOM・配色・操作UIには依存しない。 */
+.glass-volume-controls{position:absolute;z-index:30;left:50%;right:auto;transform:translateX(-50%);box-sizing:border-box;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;margin:0;padding:12px;border:1px solid rgba(116,220,255,.45);border-radius:10px;background:#041c2b;color:#d9f8ff;font-size:.82rem;pointer-events:auto}
+.glass-volume-controls legend{padding:0 6px;color:#8fe8ff;font-weight:700}.glass-volume-controls label{display:flex;align-items:center;gap:7px;white-space:nowrap}.glass-volume-controls output{min-width:34px;text-align:right;color:#fff}.glass-volume-controls input{width:105px;accent-color:#56d8ff}
+@media(max-width:560px){.glass-volume-controls{flex-wrap:wrap;gap:8px}.glass-volume-controls label{width:100%;justify-content:space-between}.glass-volume-controls input{flex:1}}
+.pdm-machine[hidden]{display:none!important}
+.pdm-machine{position:absolute;left:50%;top:50%;width:521px;height:809px;box-sizing:border-box;transform:translate(-50%,-50%) scale(var(--pdm-scale,1));transform-origin:center;border:8px ridge #d9edf4;border-radius:20px 20px 12px 12px;background:linear-gradient(105deg,#e9f3f8 0 4%,#6b8796 5%,#132936 10%,#07131d 48%,#19384a 90%,#7895a4 95%,#eef9fc 100%);box-shadow:inset 0 0 0 4px #061019,inset 0 0 28px #5fdcff55,0 16px 35px #0009;color:#eafbff;font-family:system-ui,sans-serif;overflow:hidden}
+.pdm-top-unit{position:absolute;z-index:5;left:12px;right:12px;top:10px;height:78px;display:grid;grid-template-columns:70px 1fr 70px;gap:8px;align-items:center}
+.pdm-speaker{width:58px;height:58px;justify-self:center;border:7px double #c7f6ff;border-radius:50%;background:repeating-radial-gradient(circle,#173e52 0 2px,#02080d 3px 5px);box-shadow:inset 0 0 12px #54ddff66,0 0 12px #48dfff55}
+.pdm-data-counter{height:62px;box-sizing:border-box;padding:5px 8px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border:4px ridge #b7edfa;border-radius:8px;background:linear-gradient(#07131e,#0b293a);box-shadow:inset 0 0 14px #20cfff44;text-align:center}
+.pdm-data-counter>small{grid-column:1/-1;color:#85dff0;font:800 8px/1 ui-monospace,monospace;letter-spacing:.12em}.pdm-data-counter div{display:flex;align-items:baseline;justify-content:center;gap:3px;min-width:0}.pdm-data-counter span{color:#8bbdcc;font-size:7px}.pdm-data-counter strong{color:#fff4a8;font:900 15px/1 ui-monospace,monospace;text-shadow:0 0 7px #ffe45a}
+.pdm-glass-frame{position:absolute;z-index:3;left:12px;top:91px;width:481px;height:553px;box-sizing:border-box;border:8px ridge #bdefff;border-radius:44% 44% 15px 15px / 9% 9% 15px 15px;background:#06121c;box-shadow:inset 0 0 0 3px #183b4e,inset 0 0 28px #30cfff55,0 0 14px #43dbff66;overflow:hidden}
+.pdm-glass-frame>canvas{position:absolute;left:7px;top:19px;display:block;width:451px;height:499px}.pdm-balls-canvas{z-index:3;pointer-events:none}.pdm-glass-frame>#pachiDebugCanvas{z-index:1}.pdm-glass-shine{position:absolute;z-index:5;inset:8px;pointer-events:none;border-radius:43% 43% 8px 8px / 8% 8% 8px 8px;background:linear-gradient(118deg,rgba(255,255,255,.11),transparent 26%,transparent 72%,rgba(100,220,255,.07));mix-blend-mode:screen}
+.pdm-flash{position:absolute;z-index:6;inset:8px;pointer-events:none;opacity:0;background:radial-gradient(circle,#fff 0,#62eaffaa 25%,#5a7dff55 55%,transparent 75%)}.pdm-flash.is-active{animation:pdm-flash .72s ease-out}@keyframes pdm-flash{0%{opacity:.95;transform:scale(.7)}55%{opacity:.55}100%{opacity:0;transform:scale(1.12)}}
+.pdm-lcd{position:absolute;z-index:2;left:119px;top:176px;width:225px;height:172px;box-sizing:border-box;padding:14px;border:8px ridge #8098a5;border-radius:22px;background:radial-gradient(circle at 50% 25%,#173d5c,#07121f 70%);box-shadow:inset 0 0 22px #63dfff44,0 0 20px #000c;text-align:center}.pdm-lcd small{display:block;color:#7fdff1;font:800 8px ui-monospace,monospace}.pdm-lcd>strong{display:block;min-height:34px;margin:7px 0;color:#eefcff;font-size:11px}.pdm-lcd #pdmReels{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.pdm-lcd #pdmReels span{display:grid;place-items:center;height:47px;border:3px ridge #c1d9e2;border-radius:5px;background:linear-gradient(#eaf4f6,#96aab1);color:#123140;font-size:26px}.pdm-holds{display:flex;justify-content:center;gap:5px;margin-top:8px}.pdm-holds i{width:12px;height:7px;border:1px solid #698696;border-radius:5px;background:#142a35}.pdm-holds i:not(:empty),.pdm-holds i[class]:not([class=""]){background:#62eaff;box-shadow:0 0 8px #62eaff}
+.pdm-jackpot{position:absolute;z-index:10;left:42px;right:42px;top:132px;padding:22px 16px;border:6px double #efffff;border-radius:26px;background:radial-gradient(circle,#3768bcee,#071525 72%);box-shadow:0 0 45px #7beaff,inset 0 0 26px #a8f5ff66;text-align:center}.pdm-jackpot[hidden]{display:none!important}.pdm-jackpot small,.pdm-jackpot strong,.pdm-jackpot span{display:block}.pdm-jackpot small{color:#a8f4ff;letter-spacing:.18em;font-size:9px}.pdm-jackpot strong{margin:8px 0;color:#fff7b7;font-size:25px;text-shadow:0 0 12px #fff,0 0 22px #58dfff}.pdm-jackpot span{color:#fff;font:800 11px ui-monospace,monospace}.pdm-jackpot progress{width:100%;height:12px;margin-top:10px;accent-color:#70ebff}
+.pdm-control-deck{position:absolute;z-index:4;left:14px;right:14px;top:656px;height:126px;box-sizing:border-box;border:7px ridge #d5edf5;border-radius:14px 14px 28px 28px;background:linear-gradient(160deg,#dce9ee,#728895 13%,#163545 28%,#07131d 72%,#254b5e);box-shadow:inset 0 0 24px #59dbff33}
+.pdm-tray{position:absolute;left:25px;bottom:18px;width:280px;height:48px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:7px;border:5px ridge #bdeaff;border-radius:8px 8px 28px 28px;background:linear-gradient(#183444,#050d13);color:#8fc8d7;font-size:9px}.pdm-tray strong{color:#fff5a2;font:900 18px ui-monospace,monospace}.pdm-tray small{font-size:7px}
+.pdm-push{position:absolute;left:224px;top:8px;width:58px;height:58px;border:7px double #e9fbff!important;border-radius:50%!important;padding:0!important;background:radial-gradient(circle,#e6fbff,#4ca3bf 48%,#092435 72%)!important;color:#fff!important;font:900 10px system-ui!important;box-shadow:0 0 15px #5ce7ff88!important;cursor:pointer}
+.pdm-handle{position:absolute;right:19px;bottom:12px;width:75px;height:75px;box-sizing:border-box;display:grid;place-content:center;border:9px double #d9f7ff;border-radius:50%;background:radial-gradient(circle,#78cfe3,#163f52 52%,#030b10 70%);box-shadow:0 0 18px #5be6ff99;text-align:center;color:#fff;cursor:pointer}.pdm-handle span{font-size:7px}.pdm-handle strong{font:900 10px ui-monospace,monospace}.pdm-handle input{position:absolute;right:78px;bottom:25px;width:105px;height:14px;margin:0;accent-color:#6beaff}
+.pdm-fire{position:absolute!important;z-index:20;right:39px!important;top:697px!important;width:75px!important;height:75px!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:50%!important;background:transparent!important;box-shadow:none!important;color:transparent!important;font-size:0!important;cursor:pointer}.pdm-fire:focus-visible{outline:3px solid #fff36d!important;outline-offset:2px}.pdm-fire:disabled{background:transparent!important;opacity:.42}
+.pdm-machine .pachi-debug-hud{left:16px;right:16px;bottom:13px;z-index:8}.pdm-machine:not(.show-dimensions) .pachi-debug-hud{display:none!important}
+.pdm-dimension-layer{display:none}.pdm-machine.show-dimensions .pdm-dimension-layer{display:block;position:absolute;z-index:12;inset:0;pointer-events:none;font:800 8px ui-monospace,monospace}.pdm-dimension-layer span{position:absolute;padding:3px 5px;background:#020911dd}.pdm-dim-frame{left:3px;top:3px;border-left:2px solid #ffe66d;color:#ffe66d}.pdm-dim-glass{right:4px;top:4px;border-right:2px solid #6be9ff;color:#6be9ff}.pdm-dim-field{left:17px;top:20px;border-left:2px solid #75ffad;color:#75ffad}
+@media(max-width:560px){.base-theme #kusa-pachi-window{width:calc(100vw - 12px)}.pdm-machine{border-width:6px}.pdm-data-counter strong{font-size:13px}.pdm-fire{right:39px}}
+.pdm-machine .pdm-lcd{padding:7px;border-width:5px;border-radius:12px}
+.pdm-machine .pdm-lcd>strong{min-height:0;height:36px;overflow:hidden;margin:5px 0;font-size:9px;line-height:12px}
+.pdm-machine .pdm-lcd #pdmReels span{height:32px;font-size:22px}
+.pdm-machine .pdm-lcd .pdm-holds{margin-top:4px}
+.pdm-machine .pdm-lcd{padding:4px;border:3px solid #86cddd;border-radius:7px;background:#071823;box-shadow:inset 0 0 12px #63dfff22}
+.pdm-machine .pdm-lcd #pdmMode,.pdm-machine .pdm-lcd #pdmAnnouncement,.pdm-machine .pdm-lcd #pdmHolds{display:none!important}
+.pdm-machine .pdm-lcd #pdmReels{height:100%;gap:5px}
+.pdm-machine .pdm-lcd #pdmReels span{height:100%;box-sizing:border-box;border:2px solid #b7dce8;font-size:38px;overflow:hidden}
+.pdm-machine #pdmJackpot{display:none!important}
+.pdm-machine #pdmReels b{font-weight:400;display:block;line-height:1}
+.pdm-machine #pdmReels.is-spinning b{animation:crystal-reel-scroll .24s linear infinite;filter:blur(.5px)}
+.pdm-machine #pdmReels.is-spinning span:nth-child(2) b{animation-delay:-.08s}
+.pdm-machine #pdmReels.is-spinning span:nth-child(3) b{animation-delay:-.16s}
+@keyframes crystal-reel-scroll{from{transform:translateY(-65px)}to{transform:translateY(65px)}}
+@media(prefers-reduced-motion:reduce){.pdm-machine #pdmReels.is-spinning b{animation:none;filter:none}}
+
+/* Raster cabinet v1: border stays 8 units at every breakpoint to preserve the blueprint origin. */
+.pdm-cabinet-art{display:none;position:absolute;left:-8px;top:-8px;width:521px;height:809px;z-index:8;pointer-events:none}
+.pdm-art-part{position:absolute;background-repeat:no-repeat}
+.pdm-art-deck{position:absolute;left:0;top:625px;width:521px;height:184px;object-fit:fill}
+.pdm-machine.has-raster-skin{border:8px solid transparent;background:none;box-shadow:none;border-radius:0;overflow:visible}
+.has-raster-skin .pdm-cabinet-art{display:block}
+.has-raster-skin .pdm-top-unit{display:none}
+.has-raster-skin .pdm-glass-frame{border:8px solid transparent;border-radius:0;background:none;box-shadow:none;overflow:visible}
+.has-raster-skin .pdm-glass-shine{display:none}
+.has-raster-skin .pdm-control-deck{left:0;right:auto;top:0;width:505px;height:793px;border:0;background:none;box-shadow:none;pointer-events:none;z-index:10}
+.has-raster-skin .pdm-tray{left:47px;top:768px;bottom:auto;width:300px;height:18px;border:0;border-radius:0;background:rgba(0,0,0,.65);box-shadow:none;font-size:8px;color:#cceaff}
+.has-raster-skin .pdm-tray strong{font-size:12px}
+.has-raster-skin .pdm-handle{left:389px;top:698px;right:auto;bottom:auto;width:76px;height:76px;border:0;border-radius:50%;background:none;box-shadow:none;pointer-events:auto;isolation:isolate}
+.has-raster-skin .pdm-handle::before{content:'';position:absolute;inset:-5px;background:url('../assets/glass-girl/cabinet-v1/handle.png') center/contain no-repeat;z-index:-1;transform:rotate(var(--glass-power-angle,0deg));transition:transform .12s ease-out}
+.has-raster-skin .pdm-handle>span{display:none}
+.has-raster-skin .pdm-handle>strong{position:absolute;top:81px;left:0;right:0;color:#9beaff;font-size:10px;text-shadow:0 1px 2px #000}
+.has-raster-skin .pdm-handle input{right:102px;bottom:14px;width:120px;height:18px;accent-color:#119cf4;pointer-events:auto}
+.has-raster-skin .pdm-push{left:386px;top:618px;width:68px;height:68px;border:0!important;border-radius:50%!important;background:url('../assets/glass-girl/cabinet-v1/push.png') center/54px 54px no-repeat!important;box-shadow:none!important;color:transparent!important;pointer-events:auto}
+.has-raster-skin .pdm-push:active{transform:translateY(2px) scale(.97);filter:brightness(1.3)}
+.has-raster-skin .pdm-fire{left:389px!important;right:auto!important;top:698px!important;width:76px!important;height:76px!important}
+.has-raster-skin .pdm-dimension-layer{z-index:30}
+@media(max-width:560px){.pdm-machine.has-raster-skin{border-width:8px}}
+
+/* v2: preserve the complete original raster silhouette, never stretch its regions separately. */
+.pdm-machine .pdm-lcd{visibility:hidden;pointer-events:none}
+.pachi-settings-dialog #pachiWager{margin:12px 0;display:flex;flex-wrap:wrap;gap:8px}
+.pachi-settings-dialog #pachiWager label{min-height:44px;display:inline-flex;align-items:center;padding:4px 10px}
+.pachi-settings-dialog #pachiWager small{flex-basis:100%}
+.pdm-art-whole{position:absolute;inset:0;width:521px;height:809px;object-fit:fill}
+.pdm-cabinet-interior{display:none;position:absolute;left:62px;top:112px;width:390px;height:415px;border-radius:24px;background:radial-gradient(ellipse at 40% 30%,#1c2027,#070b11 80%);pointer-events:none;z-index:1}
+.has-continuous-skin .pdm-cabinet-interior{display:block}
+.has-continuous-skin .pdm-glass-frame{left:var(--glass-board-x);top:var(--glass-board-y);transform:scale(var(--glass-board-sx),var(--glass-board-sy));transform-origin:0 0}
+.has-continuous-skin .pdm-handle{left:389px;top:554.4px;width:104px;height:104px}
+.has-continuous-skin .pdm-handle::before{inset:0;transform:none;transition:filter .15s ease-out}
+.has-continuous-skin .pdm-handle>strong{top:106px}
+.has-continuous-skin .pdm-handle input{right:auto;left:-285px;top:102px;bottom:auto;width:120px;height:18px}
+.has-continuous-skin .pdm-fire{left:389px!important;top:554.4px!important;width:104px!important;height:104px!important}
+.has-continuous-skin .pdm-push{left:407px;top:479.5px;background-size:54px 36px!important}
+.has-continuous-skin .pdm-tray{left:102px;top:737px;width:260px;height:18px}
+
+/* Selection is a separate content-sized window, never a cabinet viewport. */
+.base-theme #pachiSelectionWindow{
+ inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);margin:0;
+ width:min(640px,calc(100vw - 12px));height:auto;
+ max-height:min(560px,calc(100vh - 48px));max-height:min(560px,calc(100dvh - 48px));
+ padding:0;overflow:hidden;
+}
+.base-theme #pachiSelectionWindow .game-window-head{flex:none;margin:0;padding:3px 8px}
+.base-theme #pachiSelectionWindow .game-window-head h2{font-size:15px}
+.base-theme #pachiSelectionWindow .pachi-selection-content{flex:0 1 auto;min-height:0;padding:12px;overflow:auto;overscroll-behavior:contain;background:#06151d}
+.base-theme #pachiSelectionWindow .pachi-profiles{max-height:none;overflow:visible}
+.base-theme #pachiSelectionWindow .pachi-machine-select{margin:0 auto}
+.base-theme #pachiSelectionWindow [hidden]{display:none!important}
+.base-theme #kusa-pachi-window .game-window-head button[hidden]{display:none!important}
+@media(max-width:560px){.base-theme #pachiSelectionWindow .pachi-selection-content{padding:8px}}
+
+/* Hidden game screens must not contribute their cabinet height to selection. */
+.base-theme #kusa-pachi-window [hidden]{display:none!important}
+
+/* The frame follows the dark viewport instead of reserving a separate height. */
+.base-theme #kusa-pachi-window.pachi-responsive-window{
+ inset:auto;
+ top:50%;
+ left:50%;
+ margin:0;
+ transform:translate(-50%,-50%);
+}
+.base-theme #kusa-pachi-window.pachi-responsive-window{
+ height:calc(100vh - 24px);
+ height:calc(100dvh - 24px);
+ max-height:calc(100vh - 24px);
+ max-height:calc(100dvh - 24px);
+ padding:0;
+ background:#040c12;
+ overflow:hidden;
+}
+.base-theme #kusa-pachi-window.pachi-responsive-window>.screen-game-scroll{
+ flex:1 1 0;
+ height:auto;
+ max-height:none;
+ margin:0;
+ box-sizing:border-box;
+}
+.base-theme #kusa-pachi-window.pachi-debug-active .pachi-debug-stage{flex:0 0 auto}
+.base-theme #kusa-pachi-window.pachi-responsive-window>.game-window-head{
+ margin:0;
+ flex-shrink:0;
+}

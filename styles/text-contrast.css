@@ -1,0 +1,55 @@
+/* Keep each text/background pair together across day, night and purchased skins. */
+html .base-theme .type-badge.type-unknown {color:#4b5c4b;background:#f1f3f1}
+html .base-theme #detailTypeBadge.type-handle {color:#235f9e!important;background:#edf5ff}
+html .base-theme #detailTypeBadge.type-named {color:#226b2b!important;background:#edf9ed}
+html .base-theme #detailTypeBadge.type-both {color:#6840a1!important;background:#f4efff}
+html .base-theme #detailTypeBadge.type-unknown {color:#4b5c4b!important;background:#f1f3f1}
+html .base-theme .capsule-inventory-summary,
+html .base-theme .capsule-inventory-empty {color:var(--theme-ink)}
+html .base-theme .profile-management-dialog>header,
+html .base-theme .profile-management-dialog>header :is(h2,small,button) {color:#fff}
+html .base-theme .workshop-materials>div,
+html .base-theme .workshop-requirements {
+  background:var(--window-soft,var(--theme-panel));color:var(--theme-ink);
+  border-color:var(--theme-line);
+}
+html .base-theme .workshop-materials :is(span,strong,small),
+html .base-theme .workshop-requirements strong {color:var(--theme-ink)}
+html .base-theme .workshop-requirements .is-short {color:#922b20!important}
+html.night .base-theme .workshop-requirements .is-short,
+html[data-site-theme="neon-arcade"] .base-theme .workshop-requirements .is-short {color:#ffd0bf!important}
+html[data-site-theme="glass-cosmos"] .base-theme .workshop-requirements .is-short {color:#922b20!important}
+/* A pale button must not inherit the light night-mode link/help colors. */
+html .base-theme .kusa-games-icons button,
+html .base-theme .shop-shortcuts button {
+  background:var(--theme-panel)!important;color:var(--theme-ink)!important;
+}
+html .base-theme .kusa-games-icons button :is(strong,small),
+html .base-theme .shop-shortcuts button :is(span,small) {color:inherit!important}
+html .base-theme .kusa-shop-open span {color:inherit!important}
+html .base-theme .pachi-machine-choice small,
+html .base-theme .pachi-player-title {color:var(--theme-ink)}
+html .base-theme #gachaDetailRarity {background:var(--window-soft,var(--theme-panel));color:var(--theme-ink)}
+.glass-howto .glass-howto-cabinet figcaption {background:#153749;color:#fff;padding:6px;border-radius:4px}
+html .base-theme .pachi-wallet span {background:var(--window-soft,var(--theme-panel));color:var(--theme-ink)}
+html .base-theme .pachi-wallet strong,
+html .base-theme :is(.pachi-convert-preview,.pachi-exchange-message) {color:var(--theme-ink)}
+/* Theme 2's bright green is decorative; action labels need a darker green. */
+html[data-site-theme="kusa-theme-2"] .base-theme .theme-window:not(.screen-workspace,.screen-game-window)
+ :is([aria-selected=true],[aria-pressed=true],[data-action-confirm],.shop-product>button,.capsule-open-confirm) {
+  background:#1c672b!important;color:#fff!important;
+}
+html[data-site-theme="kusa-theme-2"] .base-theme .commemorative-medal-open small {color:#fff2c4}
+html[data-site-theme="kusa-theme-2"] .base-theme .profile-management-dialog>header {
+  background:linear-gradient(100deg,#1c672b,#326c2b);
+}
+html[data-site-theme="kusa-theme-2"] .base-theme :is(.section-heading,#kusaGamesTitle,.directory-head,.theme-window-head) {
+  background-color:#1c672b;
+  background-image:url('../assets/themes/basic/grass-reference.webp'),linear-gradient(100deg,#1c672b,#326c2b);
+  background-position:right bottom,center;background-size:auto 28px,cover;background-repeat:no-repeat;
+}
+html[data-site-theme="kusa-theme-2"] .base-theme .hero :is(.logo h1,.logo p,.logo-mark),
+html[data-site-theme="kusa-theme-2"] .base-theme .hero-top::after {color:#113019;text-shadow:none}
+html[data-site-theme="mint-soda"] {--skin-band-end:#257563}
+html[data-site-theme="mint-soda"].night {--skin-band-end:#286253}
+html[data-site-theme="glass-cosmos"] .base-theme {--theme-band-end:#3e667e}

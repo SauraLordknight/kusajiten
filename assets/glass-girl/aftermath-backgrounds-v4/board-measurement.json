@@ -1,0 +1,70 @@
+{
+  "lcd": {
+    "x": 80,
+    "y": 118,
+    "width": 360,
+    "height": 430
+  },
+  "output": {
+    "width": 720,
+    "height": 860
+  },
+  "visibleAperture": {
+    "x": 90,
+    "y": 128,
+    "right": 430,
+    "bottom": 506,
+    "pixels": 113196
+  },
+  "aspectError": 0,
+  "clips": {
+    "restoration": {
+      "dimensions": [
+        720,
+        860
+      ],
+      "fullFrame": true,
+      "videos": {
+        "intro": {
+          "width": 720,
+          "height": 860,
+          "duration": 6,
+          "bytes": 1148337
+        },
+        "loop": {
+          "width": 720,
+          "height": 860,
+          "duration": 10,
+          "bytes": 2020418
+        }
+      }
+    },
+    "life-return": {
+      "dimensions": [
+        720,
+        860
+      ],
+      "fullFrame": true,
+      "videos": {
+        "intro": {
+          "width": 720,
+          "height": 860,
+          "duration": 6,
+          "bytes": 1365576
+        },
+        "loop": {
+          "width": 720,
+          "height": 860,
+          "duration": 10,
+          "bytes": 2413784
+        }
+      }
+    }
+  },
+  "fullLcdDraw": true,
+  "noInsetPadding": true,
+  "physicsCoordinatesUnchanged": [
+    440,
+    570
+  ]
+}

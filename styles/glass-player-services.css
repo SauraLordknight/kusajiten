@@ -1,0 +1,16 @@
+/* Visible components reuse Grass result/ranking styles and day/night tokens. */
+.glass-records-dialog{box-sizing:border-box;width:min(620px,calc(100vw - 28px));max-width:none;max-height:calc(100dvh - 28px);margin:auto;padding:0;border:0;background:transparent;overflow:visible;color:inherit}
+.glass-records-dialog:not([open]){display:none}
+.glass-records-dialog::backdrop{background:rgba(3,21,15,.8)}
+.base-theme .glass-records-dialog::backdrop{background:var(--window-backdrop)}
+.glass-records-dialog .pachi-result-panel{width:100%}
+.glass-records-dialog .pachi-result-section dt{min-width:0;overflow-wrap:anywhere}
+.glass-records-dialog .pachi-result-section dd{white-space:nowrap}
+.glass-records-dialog .glass-title-collection{border-color:rgba(90,209,255,.48);background:linear-gradient(145deg,rgba(5,29,50,.92),rgba(13,54,81,.82));color:#e9faff}
+.glass-records-dialog .glass-title-collection h4{color:#d8f8ff}
+.glass-records-dialog .glass-title-collection .pachi-title-picker{color:#c6edff}
+.glass-records-dialog .glass-title-collection .pachi-title-item{border-color:rgba(109,210,255,.28);background:rgba(1,18,36,.62)}
+.glass-records-dialog .glass-title-collection .pachi-title-item strong{color:#e2faff}
+.glass-records-dialog .glass-title-collection .pachi-title-item span{color:#b9dcea}
+.glass-records-dialog .glass-title-collection .pachi-title-item.is-locked{background:rgba(10,31,47,.52);opacity:.68}
+.glass-records-dialog .glass-title-collection .pachi-title-item[data-rarity="Ω"]{border-color:rgba(158,242,255,.9);box-shadow:0 0 12px rgba(45,190,255,.22)}

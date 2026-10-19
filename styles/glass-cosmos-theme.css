@@ -1,0 +1,210 @@
+/* A purchased appearance layer. Game art, card art and game coordinates remain independent. */
+html[data-site-theme="glass-cosmos"] {
+  color-scheme:light;
+  background:#edf2f6;
+  --ink:#122538;--deep:#153c5c;--muted:#3d5367;--panel:#f3f8fcc4;
+  --panel-soft:#e5f0f8a8;--line:#6d8fa68c;--green:#477e9e;--green2:#70a6c2;
+  --green3:#e9f5fc99;--green4:#d4ebf5b3;--paper:#eef5fac4;--page:#edf2f6;
+}
+html[data-site-theme="glass-cosmos"] .base-theme {
+  --theme-page:#edf2f6;--theme-panel:#f4f9fc70;--theme-ink:#122538;--theme-link:#144e89;
+  --theme-line:#7691a88f;--theme-band:#224c68;--theme-band-end:#537f96;
+  --theme-paper:none;--profile-background:none;--profile-frame:#7796ae;
+  --window-border:#8099b2;--window-soft:#f4f9fca6;--window-muted:#3d5367;
+  --window-backdrop:#11223840;--window-radius:7px;
+  --window-shadow:0 15px 48px #10273d26,inset 0 1px 0 #fff,inset 0 0 0 1px #ffffff73;
+  --ink:#122538;--deep:#153c5c;--muted:#3d5367;--panel:#f4f9fc70;
+  --panel-soft:#e5f0f891;--line:#7691a88f;--green:#477e9e;--green2:#70a6c2;
+  --green3:#e9f5fc99;--green4:#d4ebf5b3;
+  background:#edf2f6 url('../assets/themes/glass-cosmos/world-poster.webp') center/cover fixed no-repeat;
+  color:var(--theme-ink);
+}
+/* Outer shell stays clear so the animated world is visible through every gap. */
+html[data-site-theme="glass-cosmos"] .base-theme .wrap {
+  background:transparent;
+  border-color:#8aa0b24d;
+}
+html[data-site-theme="glass-cosmos"] .base-theme .hero {
+  color:#14273a;background:linear-gradient(110deg,#fbfdff70,#eaf4fc42);
+  border-color:#879fb87d;box-shadow:0 1px 0 #fff9;
+}
+html[data-site-theme="glass-cosmos"] .base-theme .hero-inner {
+  background:none;
+}
+html[data-site-theme="glass-cosmos"] .base-theme .hero-inner::after {
+  height:1px;background:linear-gradient(90deg,transparent,#fff,#86bce6,transparent);
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.logo h1,.logo p,.logo-mark,.hero-top::after) {
+  color:#14273a;text-shadow:0 1px 0 #ffffffdf;
+}
+html[data-site-theme="glass-cosmos"] .base-theme .hero-top::after {
+  background:#f4faffba;border:1px solid #ffffffbf;border-radius:4px;padding:4px 7px;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.site-nav,.screen-notice-bar,.screen-dock,.screen-management-launch) {
+  background:linear-gradient(120deg,#ffffff9c,#e7f3fc59);
+  border-color:var(--theme-line);color:var(--theme-ink);
+  box-shadow:inset 0 1px 0 #fff9;
+}
+/* Only the major surfaces blur. Avoid stacking many expensive blur layers in the directory. */
+html[data-site-theme="glass-cosmos"] .base-theme :is(.site-shop,.kusa-games-hub,.sidebar-block,.named-directory,.kusa-profile,.theme-window,.profile-management-dialog,.site-theme-dialog,.named-directory-dialog,.site-info-dialog) {
+  background:linear-gradient(125deg,#ffffff82,#e5eff74d);
+  color:var(--theme-ink);border-color:var(--theme-line);
+  box-shadow:inset 0 1px 0 #ffffffed,inset 0 0 0 1px #ffffff4a,0 5px 18px #152e4614;
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.screen-workspace,.screen-pane,.screen-game-window,.screen-game-scroll) {
+  background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+html[data-site-theme="glass-cosmos"] .base-theme.screen-shell:not([data-screen-view="directory"]) .screen-workspace {
+  background:#eaf3f778;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.section-heading,#kusaGamesTitle,.directory-head,.theme-window-head,.site-info-head,.profile-management-dialog>header,.named-directory-dialog>header,.screen-panel-head) {
+  background:linear-gradient(115deg,#102b43d6,#33546cc7 65%,#6a90a3b0);
+  color:#f7fcff;border-color:#8eafc9ab;box-shadow:inset 0 1px 0 #d2e9ff8f;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.theme-window-head,.profile-management-dialog>header,.named-directory-dialog>header,.site-info-head) :is(h2,h3,p,small,span) {
+  color:#f0f8ff!important;text-shadow:0 1px 1px #172d4980;
+}
+html[data-site-theme="glass-cosmos"] .base-theme .directory-head #directoryTitle.section-heading {background:none;box-shadow:none}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.site-purpose,.site-information,.info-card,.request-box,.policy-banner,.migration-notice,.admin-details,.note) {
+  background:#f8fbff68;border-color:var(--theme-line);color:var(--theme-ink);
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.section,.named-item,.site-shop-body,.kusa-profile-grid,.kusa-profile-management,.site-info-content) {
+  background:transparent;color:var(--theme-ink);
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.sidebar-block h3,.named-item .name,.directory-index,.site-shop .service-caption,.kusa-games-hub>div>p,.kusa-games-icons small) {color:#213e55}
+html[data-site-theme="glass-cosmos"] .base-theme .named-item {border-color:#718ba54a;text-shadow:0 1px 0 #ffffffad}
+html[data-site-theme="glass-cosmos"] .base-theme .named-item:hover {background:#effbffb8}
+html[data-site-theme="glass-cosmos"] .base-theme .section-title {background:#e0edf6a6;color:#153c5c}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.site-utility,.site-nav a,.filter-button,.kana-nav a) {color:#144e89}
+html[data-site-theme="glass-cosmos"] .base-theme .filter-button.is-active {background:#224c68;color:white}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile {isolation:isolate;border:3px double #7897b2;border-radius:7px}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile::before {background:none;opacity:0}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile h2 {
+  background:linear-gradient(110deg,#102b43d1,#3b6880a8);color:#f1faff;border-bottom:1px solid #88b4d0;
+}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-identity strong {color:#11283b;text-shadow:0 1px 1px #fff}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-identity span {background:#eff8ff73;color:#23435c;text-shadow:0 1px #fff}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-rank {background:transparent;border-color:#7293b14d;color:#122538}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-rank :is(strong,small) {color:#142e46;text-shadow:0 1px #ffffffbf}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile progress {border-color:#7797af;accent-color:#5384aa}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile progress::-webkit-progress-bar {background:#e2ecf2a6;border-color:#7897b2}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile progress::-webkit-progress-value {background:linear-gradient(90deg,#285472,#9bdbf0)}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile progress::-moz-progress-bar {background:#5384aa}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-resources {position:relative;z-index:3;background:#f3f9ffae;border-color:#7f9bb0}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-resources>span {background:transparent;color:#1f3b50;border-color:#7695ae73}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-resources strong {color:#11283e}
+html[data-site-theme="glass-cosmos"] .base-theme .commemorative-medal-open,
+html[data-site-theme="glass-cosmos"] .base-theme .commemorative-medal-open small {color:#183d55;text-shadow:0 1px #fff}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.kusa-profile-panel,.shop-product,.commerce-wallet,.capsule-reward-description,.pachi-ranking-list li,.pachi-ranking-numbers>div,.pachi-result-section,.pachi-result-titles,.commemorative-medal-card,.commemorative-viewer-metadata) {
+  background:#f1f8fca6;color:var(--theme-ink);border-color:#7f9bb09c;box-shadow:inset 0 1px #fff9;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.kusa-profile-panel p,.kusa-profile-panel h3,.kusa-profile-panel label,.kusa-profile-panel small,.shop-product p,.shop-product h3,.shop-product small,.shop-product-cost,.kusa-profile-records strong,.kusa-profile-records span,.capsule-inventory-summary) {color:#193c55}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.kusa-profile-records span,.kusa-profile-achievements,.kusa-profile-achievements div,.kusa-profile-grassify,.kusa-profile-season>div,.kusa-profile-theme-shop>div) {background:#e8f3fb94;color:#173b55;border-color:#86a6bf9c}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-achievements .is-unlocked {background:linear-gradient(120deg,#cce7fbab,#fff8d5ab);color:#173b55;border-color:#78a0bf}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.kusa-profile-panel .capsule-inventory-row,.capsule-inventory-row) {background:#f1f8fcbf;color:#15344c;border-color:#8faac0}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-panel .capsule-inventory-row :is(strong,small) {color:#15344c;opacity:1}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.commerce-sticky,.capsule-open-dialog>header) {background:#e7f2fbea}
+/* Glass controls keep enough pigment beneath text, even over a dark floating shard. */
+html[data-site-theme="glass-cosmos"] .base-theme :is(.screen-button,.site-menu-toggle,.kusa-shop-open,.kusa-games-icons button,.shop-shortcuts button,.kusa-profile-panel button,.kusa-profile-panel select,.commerce-dialog button,.commerce-dialog input,.site-theme-dialog button,.site-theme-dialog select,.site-theme-dialog input:not([type="range"]),.kusa-action-dialog button,.directory-head .search-box input,.directory-head .search-box button,.capsule-inventory-filters button) {
+  background:linear-gradient(120deg,#ffffffd6,#dcecf7ba);color:#163d58;border-color:#8ba7be;box-shadow:inset 0 1px #fff9;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.kusa-shop-open span,.kusa-shop-open small,.kusa-games-icons strong,.kusa-games-icons small) {color:inherit}
+html[data-site-theme="glass-cosmos"] .base-theme .shop-art {content:url('../assets/themes/glass-cosmos/shop.webp');image-rendering:auto;object-fit:contain}
+html[data-site-theme="glass-cosmos"] .base-theme .theme-window-head button {background:#f4faffdc!important;color:#15334a!important;border-color:#9dbbd0}
+html[data-site-theme="glass-cosmos"] .base-theme .directory-head .search-box input::placeholder {color:#3d5367;opacity:1}
+html[data-site-theme="glass-cosmos"] .base-theme #kusaProfile #commemorativeMedalOpen small {color:#183d55!important;text-shadow:0 1px 0 #fff}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.kusa-external,.shop-product>button,.capsule-open-confirm,.shop-tabs [aria-selected="true"],.kusa-games-icons button[aria-pressed="true"],.screen-dock button[aria-current="page"],.capsule-inventory-filters button[aria-pressed="true"]) {
+  background:linear-gradient(110deg,#254d69,#487e9b)!important;color:#f8fcff!important;border-color:#6d9cbb;box-shadow:inset 0 1px #badcfcb8;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.site-theme-dialog,.profile-management-dialog,.named-directory-dialog,.site-info-dialog,.commerce-dialog,.commemorative-viewer,.pachi-ranking-dialog,.kusa-action-dialog)::backdrop {
+  background:#132b424d;backdrop-filter:none;-webkit-backdrop-filter:none;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.detail-modal,.news-modal,.commemorative-medal-modal,.pachi-share-modal,.pachi-result-modal) {background:#132b424d;backdrop-filter:none}
+/* Card materials and the fishing/pachinko canvas retain their own composition. */
+html[data-site-theme="glass-cosmos"] .base-theme .theme-card-window>.detail-panel {border-color:transparent}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.gacha-card,.pachi-card) {background:#f1f8fc8c;border-color:#8ba7be}
+html[data-site-theme="glass-cosmos"] .base-theme .shop-skin-preview.glass-cosmos {
+  background:linear-gradient(115deg,#ffffff40,#f2f9ff2b),url('../assets/themes/glass-cosmos/world-poster.webp') center/cover,#edf2f6;
+  color:#122c43;border:3px double #8aacc4;text-shadow:0 1px 2px white;box-shadow:inset 0 1px 0 #fff,0 3px 12px #133c5526;
+}
+.base-theme .shop-skin-preview.glass-cosmos {
+  background:linear-gradient(115deg,#ffffff40,#f2f9ff2b),url('../assets/themes/glass-cosmos/world-poster.webp') center/cover,#edf2f6;
+  color:#122c43;border:3px double #8aacc4;text-shadow:0 1px 2px white;
+}
+@media(max-width:799px) {
+  html[data-site-theme="glass-cosmos"] .base-theme :is(.site-shop,.kusa-games-hub,.sidebar-block,.named-directory,.kusa-profile) {backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+  html[data-site-theme="glass-cosmos"] .base-theme {background-position:78% center}
+  html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop :is(img,video) {object-position:78% center}
+}
+@supports not (backdrop-filter:blur(3px)) {
+  html[data-site-theme="glass-cosmos"] .base-theme :is(.theme-window,.profile-management-dialog,.site-theme-dialog,.named-directory-dialog,.site-info-dialog) {background:#f1f8fce0}
+}
+/* Decorative media never intercept a click or change the original game layout. */
+html[data-site-theme="glass-cosmos"] .base-theme #kusa-pachi-window.pachi-responsive-window {
+  background:linear-gradient(125deg,#ffffff82,#e5eff74d);
+}
+html[data-site-theme="glass-cosmos"] .base-theme #kusa-pachi-window.pachi-responsive-window .screen-game-scroll,
+html[data-site-theme="glass-cosmos"] .base-theme #pachiSelectionWindow .pachi-selection-content {background:transparent}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.pachi-entry,.pachi-machine-select,.pachi-settings-dialog,.glass-howto) {
+  background:linear-gradient(125deg,#f8fcffcf,#e5eff79c);color:#17374f;border-color:#8ba7be;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.pachi-settings-dialog,.glass-howto) {
+  backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.pachi-machine-select-head,.pachi-machine-choice) :is(h3,p,strong,small,span) {color:#17374f}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.pachi-machine-choice,.pachi-machine-choice.is-debug,.pachi-machine-back,.glass-howto-foot,.glass-howto-tip,.glass-howto-mode,.glass-howto-mode-trigger,.glass-howto-rate-section,.glass-howto-details) {
+  background:linear-gradient(125deg,#ffffffb5,#deedf7a1);color:#17374f;border-color:#8ba7be;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.pachi-settings-dialog>header,.glass-howto-head) {background:#234c68cc;color:#f6fbff}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.pachi-settings-dialog,.glass-howto)::backdrop {background:#132b424d}
+.glass-cosmos-backdrop,.glass-theme-portrait {display:none;pointer-events:none;user-select:none}
+html[data-site-theme="glass-cosmos"] .base-theme {isolation:isolate}
+html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop {
+  display:block;position:fixed;inset:0;z-index:-1;overflow:hidden;background:#edf2f6;
+}
+html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop :is(img,video) {
+  display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+}
+html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop video {opacity:0;transition:opacity .7s ease}
+html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop[data-video-ready="true"] video,
+html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop.is-playing video {opacity:1}
+html[data-site-theme="glass-cosmos"] .base-theme .glass-theme-portrait {
+  display:block;position:absolute;z-index:1;inset:0;width:100%;height:100%;
+  overflow:hidden;border-radius:inherit;mask-image:none;-webkit-mask-image:none;
+}
+html[data-site-theme="glass-cosmos"] .glass-theme-portrait :is(img,video) {
+  position:absolute;inset:auto 0 auto auto;top:-10%;width:auto;height:200%;max-width:none;
+  object-fit:contain;object-position:right top;
+}
+html[data-site-theme="glass-cosmos"] .glass-theme-portrait video {opacity:0}
+html[data-site-theme="glass-cosmos"] .glass-theme-portrait[data-video-ready="true"] video,
+html[data-site-theme="glass-cosmos"] .glass-theme-portrait.is-playing video {opacity:1}
+/* An alpha movie must reveal the real backdrop, never a second static face. */
+html[data-site-theme="glass-cosmos"] .glass-theme-portrait[data-video-ready="true"] .glass-theme-portrait-poster {opacity:0}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-head,
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-status-row {position:relative;z-index:2}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-identity {max-width:calc(100% - 330px)}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-status-row {padding-right:375px}
+html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile .commemorative-medal-open {position:absolute;right:275px;top:-64px}
+@media(max-width:799px) {
+  html[data-site-theme="glass-cosmos"] .glass-theme-portrait :is(img,video) {height:165%;top:-5%}
+  html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-identity {max-width:calc(100% - 185px)}
+  html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-status-row {padding-right:185px}
+  html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile .commemorative-medal-open {right:125px;top:-27px}
+  html[data-site-theme="glass-cosmos"] .base-theme.screen-game-playing .glass-theme-portrait {inset:0;width:100%;height:100%}
+  html[data-site-theme="glass-cosmos"] .base-theme.screen-game-playing .glass-theme-portrait :is(img,video) {height:170%;top:-10%}
+  html[data-site-theme="glass-cosmos"] .base-theme.screen-game-playing .kusa-profile-identity {max-width:calc(100% - 107px)}
+  html[data-site-theme="glass-cosmos"] .base-theme.screen-game-playing .kusa-profile-status-row {padding-right:107px}
+  html[data-site-theme="glass-cosmos"] .base-theme.screen-game-playing .kusa-profile .commemorative-medal-open {right:92px;top:-24px}
+}
+@media(max-width:420px) {
+  html[data-site-theme="glass-cosmos"] .glass-theme-portrait :is(img,video) {height:145%;top:1%}
+  html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-identity {max-width:calc(100% - 143px)}
+  html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile-status-row {padding-right:165px}
+  html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile .commemorative-medal-open {right:112px;top:-27px}
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop video,
+  html[data-site-theme="glass-cosmos"] .glass-theme-portrait video {display:none}
+}

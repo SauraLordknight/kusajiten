@@ -1,0 +1,37 @@
+/* Classification is visible in both the embedded directory and its window. */
+.base-theme #namedDirectory .named-item {
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 7px;
+}
+.base-theme #namedDirectory .named-item .name { flex: 1 1 100px; min-width: 0; }
+.base-theme #namedDirectory .named-item .type-badge {
+  display: inline-flex !important;
+  flex: 0 0 auto;
+  padding: 4px 6px;
+  font-size: 10px;
+  line-height: 1.25;
+  border: 1px solid currentColor;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+.base-theme #namedDirectory .named-item .leaf { display: none; }
+.person-detail-host {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}
+.person-detail-host::backdrop { background: transparent; }
+.person-detail-host .detail-modal { z-index: 1; }
+@media (max-width: 599px) {
+  .base-theme #namedDirectory .named-item .type-badge { font-size: 10px; }
+}

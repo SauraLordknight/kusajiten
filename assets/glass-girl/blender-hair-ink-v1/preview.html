@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ガラスの少女・髪の風アニメーション</title>
+<style>
+body{margin:0;background:#eef0f3;color:#203046;font:15px system-ui;text-align:center}
+header{padding:12px}h1{font-size:18px;margin:0 0 6px}
+video{display:block;height:80vh;max-width:100%;margin:auto;background:white}
+button,a{display:inline-block;padding:9px 14px;margin:8px;color:inherit}
+small{display:block;padding:8px}#status{font-variant-numeric:tabular-nums}
+</style>
+<header><h1>ガラスの少女 — 髪の風アニメーション</h1>採用イラスト／Blender 2.5D／8秒ループ</header>
+<video id="v" src="hair-wind-ink-v1.mp4" autoplay muted loop playsinline controls></video>
+<button onclick="v.play()">再生</button><button onclick="v.pause()">停止</button>
+<a href="girl-hair-ink-v1.blend">Blenderファイル</a>
+<p id="status"></p>
+<small>動画は白背景のプレビュー。Blenderで WHITE_PREVIEW_ONLY を非表示にし、Film → Transparent を有効にすると透過出力できます。</small>
+<script>setInterval(()=>{document.getElementById('status').textContent=(v.paused?'停止中':'再生中')+' '+v.currentTime.toFixed(2)+' / '+(v.duration||0).toFixed(2)+' 秒'},100)</script>
+</html>

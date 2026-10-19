@@ -1,0 +1,36 @@
+{
+  "fps": 12,
+  "duration": 6.4,
+  "wings": {
+    "width": 640,
+    "height": 360,
+    "frames": 72,
+    "sheets": [
+      "wings-0.webp",
+      "wings-1.webp",
+      "wings-2.webp",
+      "wings-3.webp",
+      "wings-4.webp",
+      "wings-5.webp"
+    ]
+  },
+  "girl": {
+    "width": 240,
+    "height": 360,
+    "frames": 144,
+    "sheets": [
+      "girl-0.webp",
+      "girl-1.webp",
+      "girl-2.webp",
+      "girl-3.webp",
+      "girl-4.webp",
+      "girl-5.webp",
+      "girl-6.webp",
+      "girl-7.webp",
+      "girl-8.webp",
+      "girl-9.webp",
+      "girl-10.webp",
+      "girl-11.webp"
+    ]
+  }
+}

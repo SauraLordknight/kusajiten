@@ -1,0 +1,14 @@
+{
+  "width": 480,
+  "height": 624,
+  "fps": 20,
+  "frames": 144,
+  "columns": 4,
+  "rows": 3,
+  "sheets": 12,
+  "switchFrame": 26,
+  "shatterFrame": 121,
+  "duration": 7.2,
+  "cells": 46,
+  "seed": 14026
+}

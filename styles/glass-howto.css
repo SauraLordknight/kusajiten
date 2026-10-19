@@ -1,0 +1,29 @@
+.glass-howto{padding:0;width:min(900px,calc(100vw - 24px));max-height:calc(100dvh - 28px);border:2px solid #65b4d1;border-radius:16px;background:#f4fbff;color:#173b50;box-shadow:0 20px 90px #0009;overflow:hidden;font-family:system-ui,sans-serif}
+.glass-howto::backdrop{background:#041522b8}.glass-howto[open]{display:flex;flex-direction:column}.glass-howto-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;background:#123749;color:#fff;flex:none}.glass-howto-head h2{font-size:19px;margin:0;color:#fff}.glass-howto button{font:inherit;font-size:14px;min-height:40px;padding:7px 13px;border:1px solid #78aabf;border-radius:7px;background:#fff;color:#173b50;cursor:pointer}.glass-howto button:focus-visible,.glass-howto h3:focus-visible{outline:3px solid #df9a1b;outline-offset:3px}.glass-howto button:disabled{opacity:.45;cursor:default}.glass-howto-body{padding:16px 24px;overflow:auto;min-height:0;overscroll-behavior:contain}.glass-howto-progress{margin:0 0 8px;font-weight:700;font-size:13px;color:#406579}.glass-howto h3{font-size:23px;line-height:1.4;margin:0 0 18px;color:#173b50}.glass-howto-grid{display:grid;grid-template-columns:minmax(210px,.85fr) minmax(0,1.15fr);gap:24px;align-items:start}.glass-howto figure{margin:0;text-align:center}.glass-howto figure img{display:block;width:100%;height:auto;border-radius:12px}.glass-howto figcaption{font-size:12px;color:#426278;line-height:1.5;margin:7px 0}.glass-howto p{font-size:15px;line-height:1.85;margin:0 0 15px;color:#173b50}.glass-howto strong{color:#0e405c}.glass-howto .glass-howto-tip{padding:13px 15px;border:1px solid #79b6c9;border-radius:10px;background:#e2f3fc;color:#173b50;font-size:15px;line-height:1.8;margin:12px 0}.glass-howto-cabinet{position:relative;background:radial-gradient(ellipse,#94d6e9,#17384a);border-radius:12px;padding:12px}.glass-howto .glass-howto-cabinet img{width:auto;height:350px;max-width:100%;margin:auto;object-fit:contain}.glass-howto-cabinet .glass-howto-handle-callout{position:absolute;left:5px;bottom:90px;background:#fff0b8;color:#423004;border:2px solid #bd871c;border-radius:8px;padding:5px 8px;font-size:13px;font-weight:700}.glass-howto .glass-howto-cabinet figcaption{color:#fff}.glass-howto-flow{max-width:560px;margin:0 auto 15px!important}.glass-howto-text{grid-template-columns:1fr 1fr;gap:22px}.glass-howto-foot{display:flex;gap:12px;align-items:center;justify-content:space-between;background:#e3f0f7;border-top:1px solid #a7c6d5;padding:12px 18px;flex:none}.glass-howto-foot nav{display:flex;gap:6px}.glass-howto-foot button[aria-current="page"]{background:#17465f;color:white;border-color:#17465f;font-weight:700}.glass-howto-page[hidden],.glass-howto-prompt[hidden],#glassHowtoOpen[hidden]{display:none!important}.glass-howto-prompt{padding:15px;border:1px solid #7dafc3;border-radius:9px;background:#edf8ff;color:#173b50;font-size:14px;line-height:1.8}.glass-howto-prompt button{padding:8px 12px;border:1px solid #5c91a8;background:#fff;color:#173b50;border-radius:6px;cursor:pointer}
+@media(max-width:620px){.glass-howto-body{padding:14px}.glass-howto-grid,.glass-howto-text{grid-template-columns:1fr;gap:15px}.glass-howto-head{padding:11px}.glass-howto-head h2{font-size:16px}.glass-howto h3{font-size:20px}.glass-howto .glass-howto-cabinet img{height:260px}.glass-howto-foot{padding:10px 8px;gap:5px}.glass-howto-foot button{padding:7px 9px}.glass-howto-foot nav{gap:4px}}
+
+#pachiSettingsDialog .pachi-rule[hidden]{display:none!important}
+
+.glass-howto{width:min(1120px,calc(100vw - 24px))}
+.glass-howto-modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:16px 0}
+.glass-howto-mode{min-width:0;border:2px solid #9ac1d1;border-radius:12px;padding:14px;background:#e9f5fb}
+.glass-howto-mode h4,.glass-howto-mode-trigger h4,.glass-howto-rate-section h4{font-size:19px;margin:0 0 10px;color:#173b50}
+.glass-howto-mode.repair{border-color:#9eb8c8;background:#f7fbff}
+.glass-howto-mode.release{border-color:#4389c4;background:#e8f2ff}
+.glass-howto-mode figure img{width:100%;height:330px;object-fit:contain;background:#0a1b29;border-radius:8px}
+.glass-howto-mode p{margin:9px 0 0}
+.glass-howto-image-note,.glass-howto-rounding{font-size:12px!important;color:#456273!important;line-height:1.65!important}
+.glass-howto-mode-trigger,.glass-howto-rate-section{border:1px solid #9ac1d1;border-radius:11px;padding:14px 16px;margin:14px 0;background:#edf8fc}
+.glass-howto-mode-trigger p:last-child,.glass-howto-rate-section p:last-child{margin-bottom:0}
+.glass-howto-details{margin:15px 0;border:1px solid #87b1c3;border-radius:10px;background:#f8fcff;overflow:hidden}
+.glass-howto-details summary{cursor:pointer;padding:12px 15px;color:#123f59;font-weight:700;background:#e2f1f8}
+.glass-howto-details>p{padding:0 15px}
+.glass-howto-table-wrap{max-width:100%;overflow:auto;border:1px solid #aac2ce;border-radius:7px;background:white;margin:10px 0 15px;overscroll-behavior-inline:contain}
+.glass-howto table{border-collapse:collapse;width:100%;min-width:670px;font-size:13px;line-height:1.5;color:#183b4c}
+.glass-howto table caption{text-align:left;font-weight:700;padding:9px 10px;background:#e5f1f7}
+.glass-howto th,.glass-howto td{padding:8px 10px;border:1px solid #c6d6de;text-align:center;white-space:nowrap}
+.glass-howto thead th{position:sticky;top:0;background:#d8eaf3;color:#12384b}
+.glass-howto tbody th{background:#f0f6f8}
+.glass-howto-foot nav button{min-width:38px}
+@media(max-width:700px){.glass-howto-modes{grid-template-columns:1fr}.glass-howto-mode figure img{height:300px}.glass-howto table{font-size:12px}.glass-howto-details>p{padding:0 12px}}
+

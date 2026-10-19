@@ -1,0 +1,3 @@
+.glass-sfx-dialog{max-width:620px;width:calc(100vw - 48px);max-height:80dvh;box-sizing:border-box;overflow:auto;border:1px solid #94ddf7;border-radius:14px;padding:20px;background:#f7fcff;color:#15384b;font:14px system-ui}
+.glass-sfx-dialog::backdrop{background:#00121dbc}.glass-sfx-dialog h3{margin-top:0}.glass-sfx-dialog p{line-height:1.7}.glass-sfx-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:16px 0}.glass-sfx-dialog button{min-height:40px;border:1px solid #9ebecd;border-radius:6px;background:#fff;color:#15384b;padding:8px;cursor:pointer}.glass-sfx-dialog button:focus-visible{outline:3px solid #35b7eb;outline-offset:2px}
+@media(max-width:420px){.glass-sfx-list{grid-template-columns:1fr}}

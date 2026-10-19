@@ -1,0 +1,32 @@
+{
+  "rows": [
+    {
+      "name": "glass-girl",
+      "width": 960,
+      "height": 1462,
+      "duration": 12,
+      "hair_changed": 0.4099054125065686,
+      "blink_changed": 0.7314655172413793,
+      "loop_changed": 0.017238799589603282,
+      "video_to_current_blender_frame_mismatch": 0,
+      "playing": true,
+      "source": "http://127.0.0.1:61496/assets/glass-girl/live2d-upgrade-v3/glass-girl-deluxe.mp4"
+    },
+    {
+      "name": "nameless-girl",
+      "width": 960,
+      "height": 1446,
+      "duration": 12,
+      "hair_changed": 0.3805225653206651,
+      "blink_changed": 0.5818181818181818,
+      "loop_changed": 0.013469628861226372,
+      "video_to_current_blender_frame_mismatch": 0.000015127939142461965,
+      "playing": true,
+      "source": "http://127.0.0.1:61496/assets/glass-girl/live2d-upgrade-v3/nameless-girl-deluxe.mp4"
+    }
+  ],
+  "baseline_files_verified": 32,
+  "restore_button_passed": true,
+  "mobile_horizontal_overflow": false,
+  "passed": true
+}

@@ -1,0 +1,31 @@
+{
+  "worldPrompt": "Use case: stylized-concept. Production website background illustration ONLY, no UI, text, people, foliage, buildings or frames. Very wide landscape image. The adopted design reference is a website mockup; extract ONLY its atmospheric world: a luminous white endless void, refined floating black obsidian glass fragments, a shattered white glass surface with irregular cracks and openings revealing midnight-blue cosmos, pin-sharp silver stars and a very restrained deep-blue nebula. Place primary space openings at the far right edge, upper-right and lower-left; scattered black mirror shards near edges. Keep central 60 percent predominantly pearly white with subtle translucent crystalline reflections so interface text can be layered above. Luxurious anime pachinko glass-crystal aesthetic, silver glints, prismatic bevels, polished black facets. Camera straight-on into a white broken dimensional wall, calm dreamlike bright lighting, white world must dominate, black glass pieces have coherent depth and reflections. Avoid UI shapes, letters, outlined rectangular frames, photoreal landscape, excessive dark coverage. Final asset used as background texture in Blender, preserve substantial uncluttered center. The reference image is composition and material guidance only.",
+  "shopPrompt": "Use case: stylized-concept. Production transparent UI asset for a Japanese fantasy game website theme, small isolated glass shop icon. A compact welcoming boutique made of clear polished glass and ivory white stone, black obsidian crystal roof accents, thin silver edges and very subtle pale cyan light, three-quarter front view, crisp charming high-quality game icon, readable at 80px, a small crystal above the entrance as a shop symbol. Entire building visible with generous transparent margins. Transparent background, no ground rectangle, no scenery, no text, no letters, no price, no UI frame, no characters. Match a luminous white world with floating black glass and stars seen through cracks. Materials can sparkle very lightly, uncluttered silhouette.",
+  "imageTool": "built-in image_gen",
+  "worldSource": "world-source.png",
+  "shopSource": "shop-source.png",
+  "scene": "glass-cosmos-world.blend",
+  "background": {
+    "dimensions": [
+      1280,
+      720
+    ],
+    "fps": 24,
+    "frames": 144,
+    "seconds": 6,
+    "format": "H264 MP4",
+    "elements": [
+      "Generated white world and cosmic crack texture",
+      "34 animated faceted black/silver glass shards",
+      "30 animated star glints"
+    ]
+  },
+  "profile": "See profile-production.json; approved normal-card source reused",
+  "verification": {
+    "purchaseAndSave": "verify-site-skins.cjs: 1440x900, 390x844, 320x640, 844x390 PASS",
+    "localMedia": "verify-glass-theme-media.cjs: file protocol movie playback, static-image suppression, reduced motion and theme release PASS",
+    "cabinet": "verify-glass-theme-cabinet.cjs: 521x809 geometry retained PASS",
+    "cards": "verify-omega-card.cjs: file and HTTP normal/processed/awakened playback PASS",
+    "appleFallback": "build-glass-profile.check.cjs: Apple browser detection simulated in Edge; animated alpha WebP, reduced motion, resume and release PASS"
+  }
+}

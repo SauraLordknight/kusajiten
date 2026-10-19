@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "glass-girl",
+    "character_objects_unchanged": 10,
+    "character_signature_matches_v2": true,
+    "crystals": 0,
+    "old_effects_removed": true,
+    "camera_restored": true
+  },
+  {
+    "slug": "nameless-girl",
+    "character_objects_unchanged": 10,
+    "character_signature_matches_v2": true,
+    "crystals": 7,
+    "old_effects_removed": true,
+    "camera_restored": true
+  }
+]
