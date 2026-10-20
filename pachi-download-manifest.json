@@ -1,0 +1,782 @@
+{
+  "schema": 1,
+  "revision": "67cc3eb878fc485517ab",
+  "progressUnit": "completed-file-bytes",
+  "profiles": {
+    "kusa": [
+      {
+        "url": "pachi-sounds/drain.wav",
+        "bytes": 47672,
+        "sha256": "ac98264d091c47df73e6b6d9e2bfadc2bec69f0a96f0d991ae0c617a55a0c754"
+      },
+      {
+        "url": "pachi-sounds/jackpot-finale.wav",
+        "bytes": 132344,
+        "sha256": "c7870a28a76ca9793a79a1bb8fa1055447010e25ae0be9556d75ff895f152004"
+      },
+      {
+        "url": "pachi-sounds/jackpot-finish.wav",
+        "bytes": 187028,
+        "sha256": "5424061cae16661c9cff6d7123b59798923a61a9ce2e63b9ed8e2940b88a9cd0"
+      },
+      {
+        "url": "pachi-sounds/jackpot-grand.wav",
+        "bytes": 194084,
+        "sha256": "fc34ddf052bb79940ab4973af3409ce38cac19b98c49a30d18c1c1ebee0822b1"
+      },
+      {
+        "url": "pachi-sounds/jackpot-milestone.wav",
+        "bytes": 57374,
+        "sha256": "fd9d3568f6a3c98135f6f3b54c51327fb2120088cc56aa86661bbdc35464555f"
+      },
+      {
+        "url": "pachi-sounds/jackpot.wav",
+        "bytes": 103678,
+        "sha256": "ff82424df7d702ec86f7a2d92e52b20b9c01668ef3c1c5d80d128f3d80c8dad1"
+      },
+      {
+        "url": "pachi-sounds/launch.wav",
+        "bytes": 37088,
+        "sha256": "e34bfe8e1f19e8ff16534eb87e6e3fe647a81c11adeb6ec6e8aa32b4d061f526"
+      },
+      {
+        "url": "pachi-sounds/mode-combo.ogg",
+        "bytes": 8968,
+        "sha256": "063564703b6094d70718a3e787a55cc9141611e4ecd6b6637f8828f79b4a8c3a"
+      },
+      {
+        "url": "pachi-sounds/mode-enter.ogg",
+        "bytes": 12111,
+        "sha256": "fd3e75e1de2f2fda90aceeacaeb0427ac8bddd3b07a6ce2a8f9ba923df3771f9"
+      },
+      {
+        "url": "pachi-sounds/mode-festival-peg.ogg",
+        "bytes": 6356,
+        "sha256": "f41b3d106360fc68ebc061a211d4265b4cb5fa1fbe86e4d57d3673510e2c3784"
+      },
+      {
+        "url": "pachi-sounds/mode-festival.ogg",
+        "bytes": 4848,
+        "sha256": "d21d0f0b782445db579d11e2506b24cd1ac9d664ee33aeaf807761aa7b6fd710"
+      },
+      {
+        "url": "pachi-sounds/mode-jackpot.ogg",
+        "bytes": 5642,
+        "sha256": "9f985e766c3557eef1764240b48e30b2f0ffa870a99f05de85cd6bf0ea758ef5"
+      },
+      {
+        "url": "pachi-sounds/mode-night-start.ogg",
+        "bytes": 13915,
+        "sha256": "94b8bb5f2d43ab65e4bcc32b28562416e9bc2c51d9fd4be1e333660ee52f977f"
+      },
+      {
+        "url": "pachi-sounds/mode-night.ogg",
+        "bytes": 6103,
+        "sha256": "183eebee20eb0a532b0b85104d139cbf2673eb66d95c3cc733ac9ea98362e7e8"
+      },
+      {
+        "url": "pachi-sounds/mode-puyu-launch.ogg",
+        "bytes": 5859,
+        "sha256": "692ee3a6f1821402ca649ff735bee9591dc4846c8098fc7d6a90fd15fa57c1af"
+      },
+      {
+        "url": "pachi-sounds/mode-puyu-peg.ogg",
+        "bytes": 6317,
+        "sha256": "be97ec4893a02d6eccfb678daa76c83e34cb2583b834ec2593d2641def739fa4"
+      },
+      {
+        "url": "pachi-sounds/mode-puyu-start.ogg",
+        "bytes": 5351,
+        "sha256": "7d3ba0bb5e60a11b5d3e558c141303dcf494256675fbf753c0d252d2cf0481e3"
+      },
+      {
+        "url": "pachi-sounds/mode-yaminabe.ogg",
+        "bytes": 5121,
+        "sha256": "da78c642bbd95da2c364ed0e991ebbfc5a4c0d281165d932b5819e0dd31a39d2"
+      },
+      {
+        "url": "pachi-sounds/peg-a.wav",
+        "bytes": 15920,
+        "sha256": "a7bfd8a1286beefd9f5dd28432e71c2abbf18f5391d8022a2254d8b623c9e874"
+      },
+      {
+        "url": "pachi-sounds/peg-b.wav",
+        "bytes": 15920,
+        "sha256": "57335a617a74cb8409d9cf4aa8899677a7747606aa7a5537caea842ca160e9dd"
+      },
+      {
+        "url": "pachi-sounds/peg-c.wav",
+        "bytes": 16802,
+        "sha256": "8456a8831c82462b327fea44b905f0baf86c3fa6163d0c4d3486421e71b52110"
+      },
+      {
+        "url": "pachi-sounds/start.wav",
+        "bytes": 37970,
+        "sha256": "262f67c66cd9bf5495da450fbf15f25a95a9678041222cc39702b71195280f8f"
+      }
+    ],
+    "debug": {
+      "common": [
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/life-return-1.png",
+          "bytes": 763688,
+          "sha256": "fca92fe96c1b2eb24ba8f8654856c775120dc26333e815a4cc39c00185b90816"
+        },
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/life-return-145.png",
+          "bytes": 842007,
+          "sha256": "ffd849e57a12b55b64cafc6d92a3bdfc39045aee3d718fa503e6f109a4fa7a1a"
+        },
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/life-return-intro.mp4",
+          "bytes": 1365576,
+          "sha256": "4fbf8377fa7198a9e861a2983df84a213e226a1e43362c3160f3cf62d1edab67"
+        },
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/life-return-loop.mp4",
+          "bytes": 2413784,
+          "sha256": "b8aad8539f00d2f67c1262cda3f5c0a9d0d4bac6a51b7ef69b1eaf55e73f185a"
+        },
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/restoration-1.png",
+          "bytes": 631645,
+          "sha256": "d8dc9feeb351bacc89227907caa6dbf113b841c33d0611e8a260aa2433ac7933"
+        },
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/restoration-145.png",
+          "bytes": 679975,
+          "sha256": "746e3dbac1b1f6d8970aec2c53edd3c548e8f27d8154e922261d39506c7f5fb3"
+        },
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/restoration-intro.mp4",
+          "bytes": 1148337,
+          "sha256": "6ff486ba146cd0d10faa7024e32ed322715295326e666ba60130246f431acf13"
+        },
+        {
+          "url": "assets/glass-girl/aftermath-backgrounds-v4/restoration-loop.mp4",
+          "bytes": 2020418,
+          "sha256": "ba66370da5573d804d986a577838e100c9a8e4c1a87cd1fa1764dbda66b7c675"
+        },
+        {
+          "url": "assets/glass-girl/ambient-music-v1/life-return.mp3",
+          "bytes": 4744085,
+          "sha256": "e46d0f79b2bfd79994d9e8194a21f193254a2670e28669a6b347ee5076d158a1"
+        },
+        {
+          "url": "assets/glass-girl/ambient-music-v1/normal.mp3",
+          "bytes": 5673173,
+          "sha256": "e9517ff2f4567052fd0188ab01615b6e3496c58a295c530718426912cc51fa6f"
+        },
+        {
+          "url": "assets/glass-girl/ambient-music-v1/restoration.mp3",
+          "bytes": 3946325,
+          "sha256": "cb888ea27d5b8ee22c184148aaa33659ae102b9addbf2f71d6f8a41b08dbaea3"
+        },
+        {
+          "url": "assets/glass-girl/blender-hair-ink-v5/hair-wind-ink-v5.mp4",
+          "bytes": 1315212,
+          "sha256": "1f569511dc6966318bfe2d1015d6f48ac6f9b2d1ce9972f0b4f427d38ec4a34b"
+        },
+        {
+          "url": "assets/glass-girl/blender-hair-ink-v5/preview-001.png",
+          "bytes": 368746,
+          "sha256": "9d6e68a7d5edbc0e7f5eb516a9f90d221eecbe3840d35cdb5c18c49f336548f3"
+        },
+        {
+          "url": "assets/glass-girl/cabinet-v1/blue-life-layer-v2.png",
+          "bytes": 593679,
+          "sha256": "da5f326bee9935f81632b2acf130156bdd9ffae5a28222964806ec57f8b03236"
+        },
+        {
+          "url": "assets/glass-girl/cabinet-v1/frame-atlas.png",
+          "bytes": 2062920,
+          "sha256": "1be90d49326837211fab2950e0fa83cfb4fea45920d010f52590e68fa1176e35"
+        },
+        {
+          "url": "assets/glass-girl/cabinet-v1/frame-unlit-v2.png",
+          "bytes": 2287819,
+          "sha256": "cb5330370e4a8a88543e929069c2a9827b9cca7a12fdded7643eb608da7b9fb2"
+        },
+        {
+          "url": "assets/glass-girl/cabinet-v1/handle.png",
+          "bytes": 1734774,
+          "sha256": "77bedfa0fbd3b7db7f7a04ee8c7a4f1b974524f15fdbda628c040e16e6a41fb7"
+        },
+        {
+          "url": "assets/glass-girl/cabinet-v1/push.png",
+          "bytes": 2084878,
+          "sha256": "3c54dee8f137a857bc684e4d4b7085e9f35fa67b52e30b36aa035541e4c3797f"
+        },
+        {
+          "url": "assets/glass-girl/counter-frame-v1.png",
+          "bytes": 743629,
+          "sha256": "b5f95f272f2697e70c4d99ef643cb5e3a1805dd2eadf6cb06bcf1f7e2fea7299"
+        },
+        {
+          "url": "assets/glass-girl/floating-glass-v2/shard-long-light.png",
+          "bytes": 688727,
+          "sha256": "38a53ee204e326e562efddaa4753ad85511df81ad6792a2e71c338eadbba7141"
+        },
+        {
+          "url": "assets/glass-girl/floating-glass-v2/shard-long.png",
+          "bytes": 972716,
+          "sha256": "3dce1cdb6fcf310454271599e880d08fc7ce744f58d2f96ce66d69f0482f5bee"
+        },
+        {
+          "url": "assets/glass-girl/floating-glass-v2/shard-wide-light.png",
+          "bytes": 826853,
+          "sha256": "e326127146501e7e82028274c2ab86c9cac9b6ed573c255437ce69e5b3f4dc82"
+        },
+        {
+          "url": "assets/glass-girl/floating-glass-v2/shard-wide.png",
+          "bytes": 982325,
+          "sha256": "a3955f9fb890e0ac4b796bcacb7cb63ced6e6162fc0956fc51a2471a4bb92e6d"
+        },
+        {
+          "url": "assets/glass-girl/flow-animation-v1/broken-sheet-0.png",
+          "bytes": 741108,
+          "sha256": "2e66a17e5bb1a1f64809bea620308132391d04d8ecfbfeafdbbed830fafc3d6b"
+        },
+        {
+          "url": "assets/glass-girl/flow-animation-v1/normal-sheet-0.png",
+          "bytes": 699229,
+          "sha256": "9de19c149c8baaaa583d6dd47f9391b187031d6b0c6921b6df4931238a6999ef"
+        },
+        {
+          "url": "assets/glass-girl/flow-animation-v1/normal-sheet-1.png",
+          "bytes": 685068,
+          "sha256": "e90fa8c6f76e6e66c6b9d6f09c4682a4ddceba1729fe9dd60dcf0b49c7313193"
+        },
+        {
+          "url": "assets/glass-girl/flow-animation-v1/normal-sheet-2.png",
+          "bytes": 699718,
+          "sha256": "4b2fd5dd4bf1ed6b13cca129f2ae8440f594678715dfd776d5028fab260c795f"
+        },
+        {
+          "url": "assets/glass-girl/flow-animation-v1/saved-sheet-0.png",
+          "bytes": 765301,
+          "sha256": "5791a70484493f65128b67674f657ab20d77e2fe4dda6d7ae95ada3824a4d51f"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-music-v1/track-0.mp3",
+          "bytes": 5317781,
+          "sha256": "f555cffb9f339d837ce68f2378a3b8ca99508ee4394fbf0de78a456110239c13"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-music-v1/track-1.mp3",
+          "bytes": 5472725,
+          "sha256": "a8f4f114708d2a5548fd4689e266da5931d3b73cc01cdb1bf292a620f3f6cd35"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-music-v1/track-2.mp3",
+          "bytes": 4915733,
+          "sha256": "dbed90a650332b59a11cdbb58f6f2cd203b65dafa1c81c829fb74e09d8fe7e5a"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-music-v1/track-3.mp3",
+          "bytes": 5281493,
+          "sha256": "f696e8420563b11e081edc5842c7b7387b90415f6cd0510f01aa6577f88e9bd8"
+        },
+        {
+          "url": "assets/glass-girl/live2d-upgrade-v3/glass-girl-deluxe.mp4",
+          "bytes": 6268981,
+          "sha256": "445f88ae51134d2280b5baa945818b3f92eb595030671a937bd591f8e1297880"
+        },
+        {
+          "url": "assets/glass-girl/live2d-upgrade-v3/glass-girl-still.png",
+          "bytes": 1860471,
+          "sha256": "1a8abe752500c78c563f91d280c2669d2b592e659408dbe0cc508b848216be34"
+        },
+        {
+          "url": "assets/glass-girl/live2d-upgrade-v3/nameless-girl-deluxe.mp4",
+          "bytes": 5967579,
+          "sha256": "4954099e0454c16a3f9e063d2f7c933161427b0cb25abacb71a65b9cf64da7c5"
+        },
+        {
+          "url": "assets/glass-girl/live2d-upgrade-v3/nameless-girl-still.png",
+          "bytes": 1663957,
+          "sha256": "ea0a0bc90ca4a9b907d19fb760b35c95991c14a6487d5fc07b4014b1d4910a5d"
+        },
+        {
+          "url": "assets/glass-girl/mechanisms-v1/attacker-door.png",
+          "bytes": 435923,
+          "sha256": "b281fa157212166a0b46fe8bfb29b13fb9e4550af4a572f98d75cff33cc9e723"
+        },
+        {
+          "url": "assets/glass-girl/mechanisms-v1/attacker-frame.png",
+          "bytes": 964554,
+          "sha256": "47d7b31427ea572ff607be0cecd1a0886bbec275207582e6863b3b1c2c3bf0c4"
+        },
+        {
+          "url": "assets/glass-girl/mechanisms-v1/blade.png",
+          "bytes": 1009485,
+          "sha256": "c679706cfe6b800c158bfab609b77b3afd9152afaafa36a904a79e898032c1d8"
+        },
+        {
+          "url": "assets/glass-girl/mechanisms-v1/gate.png",
+          "bytes": 711991,
+          "sha256": "e1553f550ad909ed3e7cf4e91fcf25c18b5012db33c59ddee629de437d320763"
+        },
+        {
+          "url": "assets/glass-girl/mechanisms-v1/hub.png",
+          "bytes": 500358,
+          "sha256": "ed9f00f361f5ee455c390e1504d17d413f94c37d72c4d75cd41170aec440c937"
+        },
+        {
+          "url": "assets/glass-girl/mechanisms-v1/pocket.png",
+          "bytes": 848027,
+          "sha256": "7a973f5e422bd1d4910657c99d7bdc92c370a2b6c56ef6a918af67038fe9ca23"
+        },
+        {
+          "url": "assets/glass-girl/mechanisms-v1/tunnel.png",
+          "bytes": 1180721,
+          "sha256": "0a1e0cd03916b6ff90ab6175bad3a1f2d96f31ee90beac8223baa6d782df9bcd"
+        },
+        {
+          "url": "assets/glass-girl/reward-rush-v1/chrome-ball.png",
+          "bytes": 41409,
+          "sha256": "f2ba5fb047cdc15e7c07d625baf2a66caaa0b770bb567864a033aaa05e5b0509"
+        },
+        {
+          "url": "assets/glass-girl/slot-symbols-v2/crystal-flower.png",
+          "bytes": 2044443,
+          "sha256": "126573068566a5c171e731d06b66d1daf8fd50279adb2e5ad14e482e654095d9"
+        },
+        {
+          "url": "assets/glass-girl/slot-symbols-v2/crystal-seven.png",
+          "bytes": 1851904,
+          "sha256": "4130d1edcfd0c0d55f090c7b1cb158d0de3bc4a42d3d06c7703cd325a540951d"
+        },
+        {
+          "url": "assets/glass-girl/slot-symbols-v2/guardian-feather.png",
+          "bytes": 2078534,
+          "sha256": "eb82b5a47954267e21ae0be987d15ccf659606993406ce675a95d1eb3e7f6c12"
+        },
+        {
+          "url": "assets/glass-girl/slot-symbols-v2/life-drop.png",
+          "bytes": 1979001,
+          "sha256": "da4dc118c310bd48df3f89fcb6b8f445f52d5bb3d17607307724fb6bfd823311"
+        },
+        {
+          "url": "assets/glass-girl/slot-symbols-v2/life-wings.png",
+          "bytes": 2125536,
+          "sha256": "2079aa75544a24d1eb559450ca85dab601415ab24a9bc698938ddc6a451172e7"
+        }
+      ],
+      "mobile": [
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-0.webp",
+          "bytes": 136118,
+          "sha256": "abd641d41c292e424da40b798f8c7fdfd0629eb1575c220e00c7e588f06d07bf"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-1.webp",
+          "bytes": 154348,
+          "sha256": "b450fc28e7ae5838b4ada774b19149c624d89c8f044989fdc3cb965565114fd9"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-10.webp",
+          "bytes": 149882,
+          "sha256": "24927f351fc411a7f9d225c218ff050d14357de7f90f96af33df7677a3a40432"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-11.webp",
+          "bytes": 153220,
+          "sha256": "a265c9dd5aa9461bce14ced7f56240b17db5c7b7a24f8903220e4506c2a67550"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-12.webp",
+          "bytes": 154126,
+          "sha256": "5188368a70676e7bb0514de4262ff8153bbbe6c8788741746a218042170d20a4"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-13.webp",
+          "bytes": 154040,
+          "sha256": "2e3ac207f4b45694ecd8b8b7cc39de953ada9d6b5f1f7b5a1b055f722dc012f3"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-14.webp",
+          "bytes": 154698,
+          "sha256": "4b784cde0776adc600bfa2c381cecb5bd1dc0a58d9b25130773ff8986253b9fa"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-15.webp",
+          "bytes": 150828,
+          "sha256": "66050d2d2855894f23d800c9816b7c60ecd1b0d81ffb5d7bb3697422c7016d3a"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-16.webp",
+          "bytes": 148796,
+          "sha256": "a9c4af727f1d6aa9f1b2d8d3f2928988f496d9d86d05c6bb82fc8c972b578194"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-17.webp",
+          "bytes": 146588,
+          "sha256": "fb29526dcfa2d4dc5a2012e58e0135e5c5c9fd9d0ad0bd164595cebec1bcf6ae"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-2.webp",
+          "bytes": 157068,
+          "sha256": "ce23e571edaac009d411d31d508213c8ccdced7e841860d7cc5a2a4cf247b5a7"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-3.webp",
+          "bytes": 156100,
+          "sha256": "bc736242e2b4aa0b66cce14fe1cc26935e7f9a087f1e014e723a5b285a5c26e2"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-4.webp",
+          "bytes": 154600,
+          "sha256": "8df37bf4dbd4a0b2564752291b257e07b6892bf883a63caf50c47cbf9e806d7f"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-5.webp",
+          "bytes": 148182,
+          "sha256": "71f737d22e2a880a1e5c8d5596319c12660ce117de92a1c97c6ea6d9b33112f6"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-6.webp",
+          "bytes": 142788,
+          "sha256": "983bafa769a312ba0501fde9eb11d02bc7d5258d698e751190f66be4b9070aed"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-7.webp",
+          "bytes": 136698,
+          "sha256": "31f02049bd27794ac25138a8858e93d6fff423b0eab1df8e9f1a3707800d9ee2"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-8.webp",
+          "bytes": 142628,
+          "sha256": "5717170099096e8dac5e3d288378c061e8eed83f7b1f48a0af689d6e922793f3"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/back-girl-overlay/sheet-9.webp",
+          "bytes": 145076,
+          "sha256": "dc977c190c5ccc6cb425a2366d301013be9e47e4605baa893196a6c8102c9b56"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-0.webp",
+          "bytes": 10492,
+          "sha256": "a421cfcfa728f25da11813b542a84dca516bc8564bd9460fd1adaf2ca301f2c0"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-1.webp",
+          "bytes": 15092,
+          "sha256": "5657c24c5b2c0fe4e6cb8f3816fcd4b11c366ebf60ccf0e53cbac0862e6049b9"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-10.webp",
+          "bytes": 152958,
+          "sha256": "1b0cc7e4778d669decb01dde588316c3568e78c80bd63945b582b516fdb6afa1"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-11.webp",
+          "bytes": 6140,
+          "sha256": "6a779428c54a41a7fc47260d7c9631a3292e445770849335c0df0cfeac9d81bf"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-2.webp",
+          "bytes": 2544,
+          "sha256": "ef86f513b5d46cac0c71bb7da664212e15dd0088153338532b04ccf6ce4b9584"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-3.webp",
+          "bytes": 19422,
+          "sha256": "96e2cdbc29933c2cbc7d673446de402d5a59149720f90190816fdeb66f299207"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-4.webp",
+          "bytes": 63146,
+          "sha256": "7d4e55d1a9bef28c4f04af5d57a2ed0e2eed102b55aba8f1d0a6150c13ab16fe"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-5.webp",
+          "bytes": 118054,
+          "sha256": "834033a462e4a73eb97c51a4d365224387737ce9b952da4a344a21c2d5c9658b"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-6.webp",
+          "bytes": 139258,
+          "sha256": "cae19b3c418bb2b7398fcca07e07014a0e1fb28c4dd87532c3ad08dd1dd22fb7"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-7.webp",
+          "bytes": 173326,
+          "sha256": "c870ff586d5f86a8223c8f54de7ab64d94518a41c642c896ddfdb45b11cb4e55"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-8.webp",
+          "bytes": 193434,
+          "sha256": "dbcdde38f5555375b834b47d93d2972007120a4d9ad40c935a3091f7ab0868d3"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/jackpot-transition/sheet-9.webp",
+          "bytes": 196714,
+          "sha256": "37835f98b22d842807b381bc65bd200b0c03ca14317d969b541c3f1f014d0078"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/mode-transition-white/sheet-0.webp",
+          "bytes": 61780,
+          "sha256": "e432315c5827bf28d570bcfd5bf690402123900e7c8a1a2c38c7868a7d74e3b1"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/mode-transition-white/sheet-1.webp",
+          "bytes": 124058,
+          "sha256": "654a63a9b1b1f7e8c7f3ddbc1c5e45ea132d8f1354d2d9579f4a2788876f6e75"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/mode-transition-white/sheet-2.webp",
+          "bytes": 368704,
+          "sha256": "61a94eae1c3b4bc43d0c2c7e13b527fbd40ed50bf17622fbc0665c226d846ee9"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/mode-transition-white/sheet-3.webp",
+          "bytes": 35380,
+          "sha256": "a69ce28b63e359131bd4ad84f42815be8cf290d94882b485aa911433601b1038"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/mode-transition-white/sheet-4.webp",
+          "bytes": 21520,
+          "sha256": "7f2dc233af3d59f2ff9e85afe1a6cc8122a5ae31bc96fe2f3f9f4f6947510fb0"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/premium-wings/wings-0.webp",
+          "bytes": 2266,
+          "sha256": "8478fc019ef5f4004a15a0a9dd3e08385932e65f6ecedae9bd7a14954a96a82f"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/premium-wings/wings-1.webp",
+          "bytes": 37158,
+          "sha256": "7668f880f4413469ee935e1a6de84709a4cca3c3d3dac2f14882f2e338822325"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/premium-wings/wings-2.webp",
+          "bytes": 183464,
+          "sha256": "0c011318bb6cc8b7329d78fbe4e747e5d58d1faf61cebd1fa7ee3b247ecff3f1"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/premium-wings/wings-3.webp",
+          "bytes": 243468,
+          "sha256": "9cde58a20a8bb10333d40eb33c2a359c53483b15028f16863b442f24d763dcaf"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/premium-wings/wings-4.webp",
+          "bytes": 247872,
+          "sha256": "f3bce0b8dd260cc5ca83d03f11d22ee80bceb4942ceb032b0ecfedc05b7a53c7"
+        },
+        {
+          "url": "assets/glass-girl/mobile-v1/premium-wings/wings-5.webp",
+          "bytes": 237252,
+          "sha256": "9b02bb24921cae80c9f8588b58589012b5472452dd99413c2b4ae856b4d1d3ea"
+        }
+      ],
+      "desktop": [
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-0.webp",
+          "bytes": 243158,
+          "sha256": "6cbaefe6bd0c0d9ee2440dbb4a629df15b58408035fe0d5691f109a728fb09f1"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-1.webp",
+          "bytes": 511378,
+          "sha256": "b03b45a8969f7928aa09a95e0a0e4319215f2073d75986d9618bbae5c2c78566"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-10.webp",
+          "bytes": 538254,
+          "sha256": "3848bc6ce6c4926ff51c1d1331c7e67a0f6dd2a95b4d12a01cbb5c9f6b2ed609"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-11.webp",
+          "bytes": 551842,
+          "sha256": "3a831f8c359936867db1bb9b655211a511f78c3130d24a948af80955a84ab3a2"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-12.webp",
+          "bytes": 545272,
+          "sha256": "6f7ee4d47f0604f91deb021ff63dba49d102982a4c2de916f8540383cceab953"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-13.webp",
+          "bytes": 532374,
+          "sha256": "462833e9016965cf50647e2f40414805d280a151c67d7102d1eb79090fd12c31"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-14.webp",
+          "bytes": 510810,
+          "sha256": "2653e796689363f5b5a720f0ab53304fe60f9d5e3f6f608aa5541710cebf70b0"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-15.webp",
+          "bytes": 492554,
+          "sha256": "63f5ce0d3f035f1b4a2641abe47b43db9e9c7d1060823faaf8978b9133cdef3c"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-16.webp",
+          "bytes": 462462,
+          "sha256": "0b2a8fa46fd13b4a53d4b7c05be2cef5030ae911b53591ad27f4619ba989b663"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-17.webp",
+          "bytes": 407066,
+          "sha256": "8e76a6458f7bf2cb806e5b7ea4182a2657199a8eb9d04574386d50eb97b4d1db"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-2.webp",
+          "bytes": 540846,
+          "sha256": "1bae044310763eeb71904ef8ae2d7af7c21a955793456d2447d942b3dc5a2ce2"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-3.webp",
+          "bytes": 551544,
+          "sha256": "43b969e245a56e20a23e72fe816cde4b1dc3d3a98bfd7eee9803df50ea2358e6"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-4.webp",
+          "bytes": 551808,
+          "sha256": "750b6f5af1615a64fb68fe6486985f7213ce45c350acb7cb0d071af791f66f18"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-5.webp",
+          "bytes": 542248,
+          "sha256": "74fef5c89932e81cf0468f8e9e17cb600953dc88b3b2cc0c8254f61f2b7e7b32"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-6.webp",
+          "bytes": 515996,
+          "sha256": "395e0afde2e88bcfe9da7e522330299c3364cc92b34792ccc6da2cae3096fd57"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-7.webp",
+          "bytes": 471358,
+          "sha256": "bb17b257aa4189ca2313c30fb79d8d9d7845eaefcd9e907209eb9b9a20feee4e"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-8.webp",
+          "bytes": 525052,
+          "sha256": "b177171fee4590bbaacbc0650527eac23c754d7f88eb2d0fd7f7b0dd2dfcf98a"
+        },
+        {
+          "url": "assets/glass-girl/back-girl-overlay-v1/sheet-9.webp",
+          "bytes": 533624,
+          "sha256": "d512d9efcdd3c367e293ded521c900a3e580d2e94b0cffa2f8425dc693621bfb"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-0.png",
+          "bytes": 2004745,
+          "sha256": "8a5282c09070129efe4888640fa9b9b2e9777e2c5e223d2ef0c3d1c90ab4c9d6"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-1.png",
+          "bytes": 2389349,
+          "sha256": "82c1abb7844ab2d76fffbbb26708f1411afbd72e0b16b7f0c1d44e12d3e479ba"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-10.png",
+          "bytes": 3180457,
+          "sha256": "f02eea169fd48be2e1d4f267b947fff33a733aed6f5c31de08cdc61858366627"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-11.png",
+          "bytes": 407214,
+          "sha256": "afbaf3a1403e115ab1a8999dccd22d7e117868baa06e4c34bb198e4585936ab7"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-2.png",
+          "bytes": 1644276,
+          "sha256": "3f36786f85f9b409b3df67f0b3883ab824b3b48136eb1befa3f688bf9787f36b"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-3.png",
+          "bytes": 1930513,
+          "sha256": "e169ff63726ff070b0dc924aed2a4269edb71312ab32e9ded5471b14fd88f679"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-4.png",
+          "bytes": 2183821,
+          "sha256": "099c83a89d3d6602b8d3b01b839ff333f860200a29f57525447f994aa0141bc7"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-5.png",
+          "bytes": 3075146,
+          "sha256": "0cdd4c16e7a8abd35a95d8b77f7097f7a4a9f3400a4873a4f139ea33f97db668"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-6.png",
+          "bytes": 3908443,
+          "sha256": "71404a925a3556ff99869d27843b6642ca82484306701dabf603c07c4f0854a7"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-7.png",
+          "bytes": 5115039,
+          "sha256": "8e1f1830d8cee8fd0d246df4e7ddc19cc68330dfde3206a6345c48d584a2ece2"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-8.png",
+          "bytes": 5462768,
+          "sha256": "45c463fbf4e4d529eb0b0a401b18e8bff508cb2657567ed9e360fd808526bec8"
+        },
+        {
+          "url": "assets/glass-girl/jackpot-transition-v2/sheet-9.png",
+          "bytes": 5632581,
+          "sha256": "1f2987aaa21977c9ceff62bdcde854ff31c4e8c83839bdfd455b6d5973d21a23"
+        },
+        {
+          "url": "assets/glass-girl/mode-transition-white-v1/sheet-0.webp",
+          "bytes": 64328,
+          "sha256": "e28ce43551ba4d26f7a5081bcb9424647d68b1d3e6da122dcb27aae5e73352ba"
+        },
+        {
+          "url": "assets/glass-girl/mode-transition-white-v1/sheet-1.webp",
+          "bytes": 156342,
+          "sha256": "7e8e98864b45c2f9265d54d71a6a9af6491e164e03a31338f3f9af87bab32662"
+        },
+        {
+          "url": "assets/glass-girl/mode-transition-white-v1/sheet-2.webp",
+          "bytes": 550726,
+          "sha256": "d395a03cbfe8f52314217b469328fc782e829a6c08448f4dd371e0946c247d9a"
+        },
+        {
+          "url": "assets/glass-girl/mode-transition-white-v1/sheet-3.webp",
+          "bytes": 36104,
+          "sha256": "67e727b6931a2ff04d86f39c71af4f4e94f6325a80d54853b5b848671b431c86"
+        },
+        {
+          "url": "assets/glass-girl/mode-transition-white-v1/sheet-4.webp",
+          "bytes": 22260,
+          "sha256": "0143abd971792189a3216b918444a1149b8a99daa8eb3a4072b4dd49308b97a3"
+        },
+        {
+          "url": "assets/glass-girl/premium-wings-v1/wings-0.webp",
+          "bytes": 6916,
+          "sha256": "f09fad48882ef31955d990de87885204c3ecd5efc75b9dec13892e0a9437b87b"
+        },
+        {
+          "url": "assets/glass-girl/premium-wings-v1/wings-1.webp",
+          "bytes": 102642,
+          "sha256": "e571dc51fc083a2749f0e72cdcc1c1e7c36acf77f347a517aac194a807873be0"
+        },
+        {
+          "url": "assets/glass-girl/premium-wings-v1/wings-2.webp",
+          "bytes": 501560,
+          "sha256": "4b78b7dc9e7c3ff1effb5c34f462963cfeff16dec57387254a30f8dd054cc069"
+        },
+        {
+          "url": "assets/glass-girl/premium-wings-v1/wings-3.webp",
+          "bytes": 672032,
+          "sha256": "e4053b30a6e26bfd6b3159dcb3f166a0a56c4fc553335eafbe9f9281fd725c52"
+        },
+        {
+          "url": "assets/glass-girl/premium-wings-v1/wings-4.webp",
+          "bytes": 670194,
+          "sha256": "c38569ca4f6ce006a653bf73ce85f1900803f3cd0c14c9739a40a5acd531c50a"
+        },
+        {
+          "url": "assets/glass-girl/premium-wings-v1/wings-5.webp",
+          "bytes": 663888,
+          "sha256": "df9daabb9311f059b0184cb8920f5fab983f4e14a9573213ae133fb7b8578833"
+        }
+      ]
+    }
+  }
+}

@@ -1,7 +1,7 @@
 /* Cosmetic only: observes committed credits, never changes balances or lottery. */
 (()=>{'use strict';
  const machine=document.getElementById('pachiDebugMachine');if(!machine)return;
- const canvas=document.createElement('canvas');canvas.width=1042;canvas.height=1618;canvas.setAttribute('aria-hidden','true');canvas.className='glass-payout-flow';
+ const pixelScale=matchMedia('(pointer:coarse)').matches?1:2;const canvas=document.createElement('canvas');canvas.width=521*pixelScale;canvas.height=809*pixelScale;canvas.setAttribute('aria-hidden','true');canvas.className='glass-payout-flow';
  Object.assign(canvas.style,{position:'absolute',left:'-8px',top:'-8px',width:'521px',height:'809px',zIndex:'14',pointerEvents:'none'});machine.append(canvas);
  const ctx=canvas.getContext('2d'),reduced=matchMedia('(prefers-reduced-motion: reduce)'),ballImage=new Image();ballImage.src='assets/glass-girl/reward-rush-v1/chrome-ball.png';
  let particles=[],request=0,last=0,until=0,labelUntil=0,credited=0,events=0,emitted=0,kind='',nextBall=0,pulseAt=0,cumulative=0,sessionToken='',tier='normal';
@@ -14,7 +14,7 @@
    const count=kind==='payout'?(tier==='super'?4:3):kind==='premium'?3:kind==='win'?2:1;
    for(let i=0;i<count&&particles.length<48;i++){particles.push({age:-i*.02,life:1.55,seed:Math.random(),x:350+Math.random()*8,y:688,vx:-90-Math.random()*65,vy:35+Math.random()*20,bounces:0});emitted++;}nextBall=now+65;
   }
-  ctx.setTransform(2,0,0,2,0,0);ctx.clearRect(0,0,521,809);
+  ctx.setTransform(pixelScale,0,0,pixelScale,0,0);ctx.clearRect(0,0,521,809);
   const impulse=Math.min(1,Math.max(0,1-(now-pulseAt)/650)),strong=['win','premium','payout'].includes(kind);
   if(strong&&impulse>0&&!reduced.matches){ctx.save();ctx.beginPath();ctx.roundRect(115,682,267,47,12);ctx.clip();const g=ctx.createRadialGradient(290,711,2,290,711,140);g.addColorStop(0,`rgba(100,224,255,${impulse*.45})`);g.addColorStop(.45,`rgba(15,147,247,${impulse*.22})`);g.addColorStop(1,'rgba(0,120,255,0)');ctx.fillStyle=g;ctx.fillRect(115,682,267,47);ctx.strokeStyle=`rgba(145,239,255,${impulse*.7})`;ctx.lineWidth=1.3;ctx.beginPath();ctx.ellipse(290,713,15+(1-impulse)*95,2+(1-impulse)*11,0,0,Math.PI*2);ctx.stroke();ctx.restore();}
   // Stay inside the lower physical tray, clear of the LCD, handle and controls.

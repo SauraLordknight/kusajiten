@@ -1,7 +1,8 @@
 /* Transparent Blender-rendered white glass; strictly confined behind the cabinet frame. */
 (()=>{'use strict';
  const machine=document.getElementById('pachiDebugMachine');if(!machine)return;
- const base='assets/glass-girl/mode-transition-white-v1/',duration=2.5,reveal=25/24,canvas=document.createElement('canvas'),audio=window.createGlassWhiteTransitionAudio();
+ const mobileSheets=matchMedia('(pointer:coarse), (max-width:767px)').matches;
+ const base=mobileSheets?'assets/glass-girl/mobile-v1/mode-transition-white/':'assets/glass-girl/mode-transition-white-v1/',duration=2.5,reveal=25/24,canvas=document.createElement('canvas'),audio=window.createGlassWhiteTransitionAudio();
  canvas.width=720;canvas.height=860;canvas.className='glass-mode-film';canvas.hidden=true;canvas.setAttribute('aria-hidden','true');machine.append(canvas);
  audio.preload='auto';audio.volume=.85;const ctx=canvas.getContext('2d');let state=null,key='',token='',lastFrame=-1,errors=[],trial=null,raf=0;
  document.addEventListener('glass-volume-change',()=>{audio.volume=.85*(window.GlassVolume?.sfx??1);});

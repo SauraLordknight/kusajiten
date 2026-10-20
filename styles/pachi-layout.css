@@ -217,3 +217,11 @@
 .glass-cabinet-loading[hidden]{display:none!important}
 .glass-cabinet-loading p{max-width:32em;line-height:1.7;color:#e9fcff!important}
 .glass-cabinet-loading button{min-height:44px;padding:8px 20px;color:#103747;background:#e6faff;border:1px solid #80d8ef;border-radius:6px}
+
+.glass-cabinet-loading progress{width:min(340px,85%);height:18px;border:1px solid #79bdd1;border-radius:999px;overflow:hidden;background:#193444;accent-color:#68e2f0}
+.glass-cabinet-loading progress::-webkit-progress-bar{background:#193444;border-radius:999px}
+.glass-cabinet-loading progress::-webkit-progress-value{background:linear-gradient(90deg,#3a9ed0,#9cf8dc);border-radius:999px;transition:width .15s ease}
+.glass-cabinet-loading progress::-moz-progress-bar{background:#68e2f0;border-radius:999px}
+.pachi-download-percent{color:#f1ffff!important;font-weight:700;font-variant-numeric:tabular-nums;font-size:16px}
+.pachi-download-note{color:#c1e0ea!important;max-width:30em;line-height:1.6;overflow-wrap:anywhere}
+.glass-cabinet-loading button[hidden]{display:none!important}

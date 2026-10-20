@@ -4,3 +4,7 @@
   Cache-Control: no-cache
 /site.webmanifest
   Cache-Control: no-cache
+/pachi-download-manifest.json
+  Cache-Control: no-cache
+/pachi-assets-sw.js
+  Cache-Control: no-cache

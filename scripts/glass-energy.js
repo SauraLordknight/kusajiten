@@ -23,6 +23,7 @@
  const preview=document.createElement('button');preview.id='glassEnergyPreview';preview.type='button';preview.textContent='大当たり点灯テスト';preview.title='光だけを約4秒確認します。抽選・賞球は変わりません。';
  controls.append(toggle,preview);
  const update=()=>{
+  if(document.getElementById('kusa-pachi-window')?.classList.contains('glass-cabinet-loading-active'))return;
   const ready=machine.classList.contains('has-continuous-skin')&&assetsReady;
   // Reuse the same image/compositing surface at every scale; a second full-frame
   // surface causes a lower-resolution raster on mobile during SVG blending.

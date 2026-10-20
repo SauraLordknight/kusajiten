@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="assets/gacha-frames/frames.css?v=20261016-local-art">
 
 <link rel="stylesheet" href="styles/site-theme.css?v=20261018-service-panels-compact">
-<link rel="stylesheet" href="styles/pachi-layout.css?v=20261020-ios-memory">
+<link rel="stylesheet" href="styles/pachi-layout.css?v=20261020-download-v1">
 <link rel="stylesheet" href="styles/glass-player-services.css?v=20261017-glass-titles">
 <link rel="stylesheet" href="styles/glass-story.css?v=20261020-theme-contrast">
 <script defer src="scripts/glass-ranking-config.js?v=20261016-v1"></script>
@@ -56,12 +56,13 @@
 <link rel="stylesheet" href="styles/glass-howto.css?v=20261018-handle-copy-v2">
 <script defer src="scripts/glass-howto.js?v=20261018-handle-copy-v2"></script>
 <script src="scripts/glass-asset-bank.js?v=20261020-ios-memory"></script>
-<script defer src="scripts/glass-cabinet-skin.js?v=20261020-ios-memory"></script>
-<script defer src="scripts/glass-payout-visual.js?v=20261016-all-awards-large"></script>
+<script defer src="scripts/pachi-download.js?v=20261020-download-v1"></script>
+<script defer src="scripts/glass-cabinet-skin.js?v=20261020-download-v1"></script>
+<script defer src="scripts/glass-payout-visual.js?v=20261020-download-v1"></script>
 <script defer src="assets/glass-girl/reward-rush-v2/sound-data.js?v=20261016-real-steel"></script>
 <script defer src="scripts/glass-reward-audio.js?v=20261016-single-crystal-real-steel"></script>
-<script defer src="scripts/glass-energy.js?v=20261020-ios-memory"></script>
-<script defer src="scripts/glass-board-scene.js?v=20261020-ios-memory"></script>
+<script defer src="scripts/glass-energy.js?v=20261020-download-v1"></script>
+<script defer src="scripts/glass-board-scene.js?v=20261020-download-v1"></script>
 <script defer src="scripts/glass-handle-bgm.js?v=20261016-transition-mute"></script>
 <script defer src="scripts/glass-volume.js?v=20261016-effects-double"></script>
 <script defer src="scripts/glass-aftermath.js?v=20261020-ios-memory"></script>
@@ -73,9 +74,9 @@
 <script defer src="assets/glass-girl/game-audio-v14/sound-bank.js?v=20261014-synchronized-sheet-glass"></script>
 <script defer src="scripts/glass-game-audio.js?v=20261016-single-credit-peg85"></script>
 <script defer src="scripts/glass-jackpot-music.js?v=20261016-seven-reveal"></script>
-<script defer src="scripts/glass-jackpot-transition.js?v=20261020-ios-memory"></script>
+<script defer src="scripts/glass-jackpot-transition.js?v=20261020-download-v1"></script>
 <script defer src="assets/glass-girl/mode-transition-white-v1/sound-data.js?v=20261016"></script>
-<script defer src="scripts/glass-mode-transition.js?v=20261020-ios-memory"></script>
+<script defer src="scripts/glass-mode-transition.js?v=20261020-download-v1"></script>
 
 <script defer src="scripts/window-theme.js?v=20261009static"></script>
 <link rel="stylesheet" href="styles/glass-cosmos-theme.css?v=20261020-scroll-performance">
@@ -3260,13 +3261,13 @@ filterNames();
     updateDebugHud();
   }
   let machineSelectionToken=0,requestedMachine=null;
-  document.addEventListener('glass-cabinet-retry',()=>chooseMachine('debug'));
+  document.addEventListener('glass-cabinet-retry',event=>chooseMachine(event.detail?.machine||'debug'));
   async function chooseMachine(machine, skipStory = false) {
     if (!player || !['kusa', 'debug'].includes(machine)) return;
     const selection=++machineSelectionToken;requestedMachine=machine;
-    if(machine==='debug'&&!window.GlassCabinetSkin?.ready){
+    if(!window.GlassCabinetSkin?.downloaded(machine)||machine==='debug'&&!window.GlassCabinetSkin?.ready){
       stopFiring();stopLoop();$('pachiMachineSelect').hidden=true;$('pachiGame').hidden=false;$('pachiDebugMachine').hidden=true;
-      const ready=await window.GlassCabinetSkin?.prepare();
+      const ready=await window.GlassCabinetSkin?.prepare(machine);
       if(!ready||selection!==machineSelectionToken||!player||panel.hidden||!$('kusa-pachi-window').open)return;
     }
 
@@ -3385,6 +3386,7 @@ filterNames();
   }
   function finishGlassStory(){
     $('glassStoryDialog').hidden=true;
+    if(!$('kusa-pachi-window').open||panel.hidden)return;
     chooseMachine('debug',true);
   }
   $('glassStoryAdvance').addEventListener('click',()=>{
@@ -3400,6 +3402,7 @@ filterNames();
   },true);
   function reopenMachineSelect() {
     if (!player) return;
+    machineSelectionToken++;requestedMachine=null;window.GlassCabinetSkin?.cancel();
     if(activeMachine==='debug'&&glassGame){
       stopFiring();
       if(!glassGame.save()){announce('記録を保存できないため、台を変更できません。',2200);return;}
@@ -4588,7 +4591,7 @@ filterNames();
     shell.classList.toggle('is-collapsed', !open);
     $('pachiToggle').setAttribute('aria-expanded', String(open));
     $('pachiToggle').setAttribute('aria-label', open ? '草パチを閉じる' : '草パチを開く');
-    if(open&&!$('pachiGame').hidden&&requestedMachine==='debug'&&!window.GlassCabinetSkin?.ready){chooseMachine('debug');return;}
+    if(open&&!$('pachiGame').hidden&&requestedMachine&&(!window.GlassCabinetSkin?.downloaded(requestedMachine)||requestedMachine==='debug'&&!window.GlassCabinetSkin?.ready)){chooseMachine(requestedMachine);return;}
     if(activeMachine==='debug'){
       if(open){renderGlassMachine();startLoop();}
       else {stopFiring();stopLoop();glassGame?.save();}

@@ -5,9 +5,13 @@
  film.width=480;film.height=624;film.className='glass-jackpot-film';spill.width=521;spill.height=809;spill.className='glass-jackpot-spill';
  for(const c of [film,spill]){c.hidden=true;c.setAttribute('aria-hidden','true');}
  machine.append(film,spill);
- const ctx=film.getContext('2d'),outside=spill.getContext('2d');let errors=[],state=null,key='',lastFrame=-1,trial=null,trialRaf=0,trialId=0;
+ const ctx=film.getContext('2d'),outside=spill.getContext('2d');let errors=[],state=null,key='',lastFrame=-1,trial=null,trialRaf=0,trialId=0,lastLight='';
  const duration=7.2,board=window.GlassCabinetLayout.lcd;
- const bank=new GlassAssetBank(Array.from({length:12},(_,i)=>`assets/glass-girl/jackpot-transition-v2/sheet-${i}.png`),{onReady:()=>{lastFrame=-1;paint();}});
+ // Keep the cinematic timeline and draw bounds; mobile sheets use one quarter of
+ // the decoded pixels so image expansion does not stall the active transition.
+ const mobileSheets=matchMedia('(pointer:coarse), (max-width:767px)').matches;
+ const sheetBase=mobileSheets?'assets/glass-girl/mobile-v1/jackpot-transition/':'assets/glass-girl/jackpot-transition-v2/';
+ const bank=new GlassAssetBank(Array.from({length:12},(_,i)=>`${sheetBase}sheet-${i}.${mobileSheets?'webp':'png'}`),{onReady:()=>{lastFrame=-1;paint();}});
  function paint(){
   if(!state||document.getElementById('pachiMachine').dataset.activeMachine!=='debug'||machine.hidden){film.hidden=spill.hidden=true;machine.classList.remove('glass-transition-active');window.GlassHandleBgm?.setTransitionActive('black-film',false);window.GlassTransitionAudio?.stop();return;}
   const trialReturning=!!trial&&trial.elapsed>=duration+4,trialTime=trial?trial.elapsed-(trialReturning?duration+4:0):0;
@@ -18,10 +22,11 @@
   machine.classList.toggle('glass-transition-active',active);
   window.GlassHandleBgm?.setTransitionActive('black-film',active);
   const energy=t<1.5?.12*Math.sin(Math.PI*t/1.5):t<4?.03:t<6?.03+.97*((t-4)/2)**2:t<6.65?1:Math.max(0,1-(t-6.65)/.55);
-  machine.style.setProperty('--glass-transition-light',String(energy));
+  const light=String(mobileSheets?Math.round(energy*20)/20:energy);
+  if(light!==lastLight){lastLight=light;machine.style.setProperty('--glass-transition-light',light);}
   if(film.hidden===active)film.hidden=!active;const hideSpill=!active||t<6||t>=6.65;if(spill.hidden!==hideSpill)spill.hidden=hideSpill;
-  if(!active){bank.release();ctx.clearRect(0,0,480,624);outside.clearRect(0,0,521,809);lastFrame=-1;return;}
-  const image=bank.use(Math.floor(index/12));if(lastFrame===index&&image)return;lastFrame=index;
+  if(!active){window.GlassBoardScene?.setOccluded(false);bank.release();ctx.clearRect(0,0,480,624);outside.clearRect(0,0,521,809);lastFrame=-1;return;}
+  const image=bank.use(Math.floor(index/12));window.GlassBoardScene?.setOccluded(image?(index>=23&&index<=119||index>=129&&index<=131):t>=1.25);if(lastFrame===index&&image)return;lastFrame=index;
   ctx.clearRect(0,0,480,624);outside.clearRect(0,0,521,809);
   if(!image){ctx.fillStyle='#000';ctx.globalAlpha=Math.min(1,t/1.25);ctx.fillRect(0,0,480,624);ctx.globalAlpha=1;return;}
   const sheet=image,n=index%12,w=sheet.width/4,h=sheet.height/3;
@@ -40,7 +45,7 @@
  const stopTrial=()=>{trial=null;cancelAnimationFrame(trialRaf);trialRaf=0;lastFrame=-1;};
  function trialTick(now){if(!trial)return;const dt=trial.last&&!document.hidden?Math.min(.1,(now-trial.last)/1000):0;trial.last=now;trial.elapsed+=dt;if(trial.elapsed>=duration*2+5){stopTrial();paint();return;}paint();trialRaf=requestAnimationFrame(trialTick);}
  async function preview(){if(!state||machine.hidden||state.transitionRemaining>0||state.returnTransitionRemaining>0||state.jackpotSession)return false;window.GlassTransitionAudio?.unlock();if(!state||machine.hidden||document.getElementById('pachiMachine').dataset.activeMachine!=='debug'||state.transitionRemaining>0||state.returnTransitionRemaining>0||state.jackpotSession)return false;stopTrial();trialId++;trial={elapsed:0,last:0,choice:Math.random()<.5?0:1};paint();trialRaf=requestAnimationFrame(trialTick);return true;}
- const clear=()=>{stopTrial();bank.release({retry:true});state=null;window.GlassTransitionAudio?.stop();window.GlassHandleBgm?.setTransitionActive('black-film',false);film.hidden=spill.hidden=true;machine.classList.remove('glass-transition-active');window.GlassBoardScene?.setJackpotScene(false);lastFrame=-1;};
+ const clear=()=>{window.GlassBoardScene?.setOccluded(false);stopTrial();bank.release({retry:true});state=null;window.GlassTransitionAudio?.stop();window.GlassHandleBgm?.setTransitionActive('black-film',false);film.hidden=spill.hidden=true;machine.classList.remove('glass-transition-active');window.GlassBoardScene?.setJackpotScene(false);lastFrame=-1;};
  new MutationObserver(()=>{if(document.getElementById('pachiMachine').dataset.activeMachine!=='debug')clear();else paint();}).observe(document.getElementById('pachiMachine'),{attributes:true,attributeFilter:['data-active-machine']});
  document.addEventListener('glass-cabinet-released',clear);
  document.addEventListener('visibilitychange',()=>{lastFrame=-1;paint();});
