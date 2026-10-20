@@ -35,6 +35,10 @@
  for(const node of [...game.children])if(node!==machine&&node!==debugMachine&&node.tagName==='DETAILS')content.append(node);
  for(const node of [...document.getElementById('pachiPanel').children])if(node.tagName==='DETAILS')content.append(node);
  const saveMessage=document.getElementById('pachiSaveMessage');if(saveMessage)content.append(saveMessage);
+ const soundtrack=document.createElement('section');soundtrack.className='glass-soundtrack';soundtrack.setAttribute('aria-labelledby','glassSoundtrackTitle');
+ soundtrack.innerHTML='<h3 id="glassSoundtrackTitle">🎼 ガラスの少女 収録曲</h3><p class="glass-soundtrack-note">ゲーム内で流れる楽曲</p><h4>大当たり・超大当たり</h4><ul><li><span>零</span><small>作曲：Saura</small></li><li><span>決戦</span><small>作曲：Saura</small></li><li><span>奔流</span><small>作曲：Saura</small></li><li><span>勇者</span><small>作曲：Saura</small></li></ul><h4>背景モード</h4><ul><li><span>無音の雪原</span><small>作曲：Saura</small></li><li><span>硝子の誓い</span><small>作曲：Saura</small></li><li><span>消え残る灯</span><small>作曲：Saura</small></li></ul>';
+ content.append(soundtrack);
+
  readouts.append(game.querySelector('.pachi-stats'));
  for(const selector of ['.pachi-display']){const node=game.querySelector(selector);if(node)readouts.append(node);}
  rail.append(game.querySelector('.pachi-controls'));
