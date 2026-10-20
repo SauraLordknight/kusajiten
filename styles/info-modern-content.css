@@ -10,7 +10,7 @@
   text-align: start;
   scroll-padding: 24px;
 }
-#siteInfoDialog .site-info-content > :is(.info-card, .policy-banner, .request-box, .migration-notice, .site-purpose, .admin-details) {
+#siteInfoDialog .site-info-content > :is(.info-card, .kusa-publication-policy, .request-box, .migration-notice, .site-purpose, .admin-details) {
   box-sizing: border-box;
   width: 100%;
   max-width: 74ch;

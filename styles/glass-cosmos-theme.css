@@ -66,7 +66,7 @@ html[data-site-theme="glass-cosmos"] .base-theme :is(.theme-window-head,.profile
   color:#f0f8ff!important;text-shadow:0 1px 1px #172d4980;
 }
 html[data-site-theme="glass-cosmos"] .base-theme .directory-head #directoryTitle.section-heading {background:none;box-shadow:none}
-html[data-site-theme="glass-cosmos"] .base-theme :is(.site-purpose,.site-information,.info-card,.request-box,.policy-banner,.migration-notice,.admin-details,.note) {
+html[data-site-theme="glass-cosmos"] .base-theme :is(.site-purpose,.site-information,.info-card,.request-box,.kusa-publication-policy,.migration-notice,.admin-details,.note) {
   background:#f8fbff68;border-color:var(--theme-line);color:var(--theme-ink);
 }
 html[data-site-theme="glass-cosmos"] .base-theme :is(.section,.named-item,.site-shop-body,.kusa-profile-grid,.kusa-profile-management,.site-info-content) {

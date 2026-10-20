@@ -74,12 +74,12 @@
   const supportIds=new Set(['siteAdmin','profile-offer','correction-request']);
   [...infoPages.keys()].forEach((page,i)=>{
     const row=entries[i];if(page===purpose){row.remove();return;}
-    let key=(page===migration||page.id==='how-to-play')?'quick':learningIds.has(page.id)?'learn':supportIds.has(page.id)||page.classList.contains('policy-banner')||/プロフィール掲載/.test(row.textContent)?'support':'info';
+    let key=(page===migration||page.id==='how-to-play')?'quick':learningIds.has(page.id)?'learn':supportIds.has(page.id)||page.classList.contains('kusa-publication-policy')||/プロフィール掲載/.test(row.textContent)?'support':'info';
     if(page===migration)row.textContent='💾 データ保存・読み込み';
     if(page.id==='how-to-use')row.textContent='使い方';
     if(page.id==='how-to-play')row.textContent='遊び方';
     if(page.id==='revision-history')row.textContent='更新履歴';
-    if(page.classList.contains('policy-banner'))row.textContent='掲載方針';
+    if(page.classList.contains('kusa-publication-policy'))row.textContent='掲載方針';
     menuGroups.get(key).links.append(row);
   });
   menuGroups.get('quick').links.append(button('🎨 着せ替え',()=>document.getElementById('siteThemeOpen').click()));

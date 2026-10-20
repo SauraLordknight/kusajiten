@@ -56,7 +56,7 @@ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-the
   color:var(--skin-ink);text-shadow:none;
 }
 html[data-site-theme="neon-arcade"] .base-theme .logo h1 {color:#90f3ff;text-shadow:2px 1px #9e3ca5,0 0 14px #58e7f849}
-html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.site-nav,.screen-notice-bar,.screen-dock,.screen-management-launch,.migration-notice,.site-purpose,.site-information,.info-card,.request-box,.policy-banner,.sidebar-block,.named-directory,.site-shop,.kusa-games-hub,.theme-window,.site-theme-dialog,.profile-management-dialog,.named-directory-dialog,.site-info-dialog) {
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.site-nav,.screen-notice-bar,.screen-dock,.screen-management-launch,.migration-notice,.site-purpose,.site-information,.info-card,.request-box,.kusa-publication-policy,.sidebar-block,.named-directory,.site-shop,.kusa-games-hub,.theme-window,.site-theme-dialog,.profile-management-dialog,.named-directory-dialog,.site-info-dialog) {
   background:var(--skin-panel);color:var(--skin-ink);border-color:var(--skin-line);
   box-shadow:inset 0 1px #ffffff14,0 1px 6px var(--skin-glow);
 }
@@ -197,3 +197,8 @@ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-the
 html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme dialog :is(.site-info-content,.detail-body,.shop-product,.site-menu-group){color:var(--skin-ink)}
 /* Wallet remains a nonvisual animation target for capsule rewards. */
 #kusaShopDialog .commerce-wallet[hidden],.commerce-dialog .commerce-wallet[hidden]{display:none!important}
+
+/* Only the window is opaque; keep the surrounding world unobscured. */
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme dialog::backdrop{
+ background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
