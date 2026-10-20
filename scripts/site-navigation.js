@@ -3,7 +3,16 @@
  const nav=document.getElementById('siteNavigation'),menu=document.querySelector('.site-menu-toggle');
  menu.addEventListener('click',()=>{const open=nav.classList.toggle('is-open');menu.setAttribute('aria-expanded',String(open));});
  nav.addEventListener('click',e=>{if(e.target.closest('a')){nav.classList.remove('is-open');menu.setAttribute('aria-expanded','false');}});
- const resources=document.querySelector('.kusa-profile-resources');const fit=()=>resources.querySelectorAll('strong').forEach(n=>n.classList.toggle('has-long-value',n.textContent.length>=9));new MutationObserver(fit).observe(resources,{subtree:true,childList:true,characterData:true});fit();
+ const resources=document.querySelector('.kusa-profile-resources');let fitFrame=0;
+ const fit=()=>{fitFrame=0;resources.querySelectorAll('strong').forEach(n=>{
+   n.style.removeProperty('font-size');n.style.removeProperty('transform');n.classList.remove('has-long-value');
+   const parentStyle=getComputedStyle(n.parentElement);const available=n.parentElement.getBoundingClientRect().right-parseFloat(parentStyle.paddingRight)-n.getBoundingClientRect().left-2;if(available<=0)return;
+   const natural=n.scrollWidth,base=parseFloat(getComputedStyle(n).fontSize);
+   if(natural>available){const size=Math.max(9,base*available/natural);n.style.fontSize=size+'px';if(n.scrollWidth>available)n.style.transform='scaleX('+(available/n.scrollWidth)+')';}
+   n.title=n.textContent;
+ });};
+ const schedule=()=>{if(!fitFrame)fitFrame=requestAnimationFrame(fit);};
+ new MutationObserver(schedule).observe(resources,{subtree:true,childList:true,characterData:true});new ResizeObserver(schedule).observe(resources);window.addEventListener('resize',schedule);document.fonts.ready.then(schedule);schedule();
  document.querySelectorAll('[data-shop-shortcut]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('kusaShopOpen').click();document.querySelector('[data-shop-tab="'+b.dataset.shopShortcut+'"]').click();}));
  document.querySelector('.directory-head .search-box button').addEventListener('click',()=>document.getElementById('searchInput').dispatchEvent(new Event('input',{bubbles:true})));
  document.querySelectorAll('.named-item').forEach((n,i)=>{let number=n.querySelector('.directory-index');if(!number){number=document.createElement('em');number.className='directory-index';number.setAttribute('aria-hidden','true');n.prepend(number);}number.textContent=String(i+1).padStart(3,'0')+'：';});

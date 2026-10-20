@@ -64,6 +64,7 @@
   const infoPages=new Map([...infoContent.children].map(page=>[page,page===migration?'データ保存':page===purpose?'この事典について・掲載方針の要点':page.querySelector('h2,summary')?.textContent.trim()||'サイトの案内']));
   const entries=[...panes.menu.querySelectorAll('.site-info-index button')];[...infoPages.keys()].forEach((page,i)=>entries[i].addEventListener('click',()=>openInfo(page)));
   function openInfo(page, target = page) {
+    closeMenu();
     infoPages.forEach((_,n) => { n.hidden = n !== page; });
     infoTitle.textContent = infoPages.get(page); if (page.matches('details')) page.open = true;
     if (!infoDialog.open) infoDialog.showModal();
@@ -82,14 +83,23 @@
   }))).observe(body, {childList:true});
   const dock=document.querySelector('.screen-dock');dock.querySelectorAll('[data-screen-view]').forEach(n=>n.addEventListener('click',()=>show(n.dataset.screenView)));
   document.querySelectorAll('[data-named-directory-open]').forEach(n=>n.addEventListener('click',event=>{event.preventDefault();openNamedDirectory();}));
+  const menuDialog=document.createElement('dialog');menuDialog.id='siteMenuDrawer';menuDialog.className='site-menu-drawer';menuDialog.setAttribute('aria-labelledby','siteMenuDrawerTitle');
+  const menuHeader=make('header','site-menu-drawer-head'),menuHeading=make('h2','','メニュー');menuHeading.id='siteMenuDrawerTitle';
+  const menuClose=button('× 閉じる',closeMenu);menuHeader.append(menuHeading,menuClose);menuDialog.append(menuHeader,panes.menu);(document.querySelector('.base-theme')||body).append(menuDialog);
+  const menuToggle=document.querySelector('.site-menu-toggle');menuToggle.setAttribute('aria-controls',menuDialog.id);menuToggle.setAttribute('aria-haspopup','dialog');
+  function closeMenu(){if(menuDialog.open)menuDialog.close();}
+  function openMenu(){panes.menu.hidden=false;if(!menuDialog.open)menuDialog.showModal();menuToggle.setAttribute('aria-expanded','true');menuClose.focus({preventScroll:true});}
+  menuDialog.addEventListener('close',()=>{menuToggle.setAttribute('aria-expanded','false');menuToggle.focus({preventScroll:true});});
+  menuDialog.addEventListener('click',e=>{if(e.target===menuDialog){const r=menuDialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right)closeMenu();}else if(e.target.closest('button,a'))closeMenu();});
   let current = 'directory', returnFocus = null;
   const mobile = matchMedia('(max-width: 799px)');
   function show(view, focus = true) {
+    if(view==='menu'){openMenu();return;}
     if (!panes[view]) return;
     if (current === 'directory' && view !== 'directory') returnFocus = document.activeElement;
     current = view; body.dataset.screenView = view;
-    if(view==='games'||mobile.matches)panes.games.prepend(hub);
-    else services.append(hub);
+    if(!mobile.matches && view==='games')panes.games.prepend(hub);
+    else if(hub.parentNode!==services)services.append(hub);
     Object.entries(panes).forEach(([key,n]) => { n.hidden = key !== view; });
     panelTitle.textContent = labels[view];
     dock.querySelectorAll('button').forEach(n => n.setAttribute('aria-current', n.dataset.screenView === view ? 'page' : 'false'));
@@ -126,8 +136,7 @@
     if (id) openTarget(document.getElementById(id));
   }
   function arrange() {
-    if (mobile.matches) { panes.games.prepend(hub); panes.shop.append(shop); }
-    else { services.append(shop, hub); }
+    services.append(shop, hub);
     body.classList.add('screen-shell'); show(current, false);
   }
   function fit() {
@@ -145,7 +154,7 @@
       if (target && (!a.closest('.detail-modal,.commemorative-medal-modal,dialog') || a.closest('#siteInfoDialog'))) { e.preventDefault(); history.replaceState(null, '', a.hash); openTarget(target); }
     }
     if (e.target.closest('#capsuleInventoryBadge')) openTarget(document.getElementById('capsuleInventoryTitle'));
-    if (e.target.closest('.site-menu-toggle')) show('menu');
+    if (e.target.closest('.site-menu-toggle')) {e.preventDefault();e.stopImmediatePropagation();openMenu();}
   }, true);
   // Individual game windows own game state and scrolling now.
   document.addEventListener('keydown', e => {

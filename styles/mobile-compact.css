@@ -17,3 +17,42 @@
  .screen-shell .named-directory .directory-head{padding:3px 6px}
  .screen-shell .screen-dock{gap:2px;padding-top:3px;padding-inline:4px}
 }
+/* Keep resource values from contributing their unbroken width to the page. */
+.screen-shell #kusaProfile,.screen-shell .kusa-profile-resources,.screen-shell .kusa-profile-resources>span{min-width:0;max-width:100%;box-sizing:border-box}
+.screen-shell .kusa-profile-resources>span{overflow:hidden}
+.screen-shell .kusa-profile-resources strong{display:block;min-width:0;width:max-content;max-width:none;white-space:nowrap;transform-origin:left center}
+.site-menu-drawer{position:fixed;inset:0 0 0 auto;margin:0;width:min(380px,92vw);height:100dvh;max-height:100dvh;max-width:92vw;padding:0;border:0;border-left:1px solid var(--theme-line);background:var(--theme-panel);color:var(--theme-ink);box-shadow:-12px 0 40px #0004;overflow:hidden}
+.site-menu-drawer[open]{display:flex;flex-direction:column;animation:site-menu-slide .22s ease-out}
+.site-menu-drawer::backdrop{background:#07111b80}
+.site-menu-drawer-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;padding-top:max(12px,env(safe-area-inset-top));border-bottom:1px solid var(--theme-line)}
+.site-menu-drawer-head h2{margin:0;font-size:18px}
+.site-menu-drawer .screen-pane{overflow:auto;flex:1;min-height:0;padding-bottom:env(safe-area-inset-bottom)}
+.site-menu-drawer .screen-menu-links{position:static;display:flex;flex-wrap:wrap;padding:10px;gap:8px}
+.site-menu-drawer .site-info-index{display:grid;grid-template-columns:1fr;padding:10px;gap:8px}
+@keyframes site-menu-slide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){.site-menu-drawer[open]{animation:none}}
+@media(max-width:799px){
+ body.screen-shell{height:auto;min-height:100dvh;overflow-y:auto}
+ .screen-shell main.wrap{flex:none;min-height:0;max-width:100%;box-sizing:border-box}
+ .screen-shell .screen-dock,.screen-shell .screen-notice-bar,.screen-shell .site-nav{display:none!important}
+ .screen-shell .screen-management-launch{display:block;width:100%;min-height:40px}
+ .screen-shell .site-services{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;align-items:stretch}
+ .screen-shell .site-services>*{min-width:0;max-width:100%;margin:0;box-sizing:border-box}
+ .screen-shell .site-services .section-heading{font-size:12px;padding:5px 4px}
+ .screen-shell .site-shop-body{display:flex;flex-direction:column;gap:4px;padding:4px}
+ .screen-shell .shop-art{display:none}
+ .screen-shell .kusa-shop-open{width:100%;min-width:0;min-height:44px;padding:4px;font-size:12px}
+ .screen-shell .kusa-shop-open small,.screen-shell .service-caption,.screen-shell .kusa-games-icons small,.screen-shell .kusa-games-hub>div>p{display:none}
+ .screen-shell .shop-shortcuts{display:flex;gap:3px;width:100%}
+ .screen-shell .shop-shortcuts button{flex:1;min-width:0;min-height:36px;font-size:10px;padding:3px}
+ .screen-shell .kusa-games-icons{display:flex;gap:2px;padding:4px}
+ .screen-shell .kusa-games-icons button{display:flex;flex:1;min-width:0;flex-direction:column;align-items:center;justify-content:center;min-height:84px;padding:3px 1px;font-size:10px;gap:4px}
+ .screen-shell .kusa-games-icons strong{font-size:10px;white-space:nowrap}
+ .screen-shell .kusa-games-icons .theme-sprite{max-width:32px;max-height:32px}
+ .screen-shell .screen-workspace,.screen-shell .screen-pane[data-pane=directory],.screen-shell .directory-layout,.screen-shell .named-directory{height:auto;max-height:none;min-height:0;overflow:visible;flex:none}
+ .screen-shell .named-directory{width:100%;box-sizing:border-box;min-width:0}
+ .screen-shell .directory-head{position:static;flex-wrap:wrap}
+ .screen-shell .screen-panel-head{display:none}
+ .screen-shell:not([data-screen-view=directory]) .screen-workspace{position:relative;inset:auto}
+ .screen-shell .screen-pane[data-pane=games]:not([hidden]){min-height:300px}
+}
