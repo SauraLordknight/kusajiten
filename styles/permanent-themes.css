@@ -190,7 +190,7 @@ html.night[data-site-theme="mint-soda"]{--skin-glass:#102f2e33}
 }
 
 /* Reading windows use a dense panel; the main page keeps its glass finish. */
-html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(dialog,.site-menu-drawer):not(.fishing-dialog){
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(dialog,.site-menu-drawer):not(.fishing-dialog):not(.person-detail-host){
  --skin-glass:var(--skin-panel);--theme-panel:var(--skin-panel);
  background:var(--skin-panel);color:var(--skin-ink);
 }
@@ -201,4 +201,13 @@ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-the
 /* Only the window is opaque; keep the surrounding world unobscured. */
 html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme dialog::backdrop{
  background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+
+/* The full-viewport person host is only a transparent top-layer carrier. */
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme .person-detail-host,
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.detail-modal,.news-modal,.commemorative-medal-modal,.pachi-share-modal,.pachi-result-modal){
+ background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme #detailModal .detail-panel{
+ background:var(--skin-panel);color:var(--skin-ink);backdrop-filter:none;-webkit-backdrop-filter:none;
 }
