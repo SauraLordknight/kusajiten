@@ -63,6 +63,23 @@
   infoClose.addEventListener('click',()=>infoDialog.close());
   const infoPages=new Map([...infoContent.children].map(page=>[page,page===migration?'データ保存':page===purpose?'この事典について・掲載方針の要点':page.querySelector('h2,summary')?.textContent.trim()||'サイトの案内']));
   const entries=[...panes.menu.querySelectorAll('.site-info-index button')];[...infoPages.keys()].forEach((page,i)=>entries[i].addEventListener('click',()=>openInfo(page)));
+  // One entry per destination; background reading belongs at the bottom.
+  const menuIndex=panes.menu.querySelector('.site-info-index');
+  const learningIds=new Set(['about-kusa','name-types','kusa-history','how-to-use','kusa-glossary','revision-history']);
+  const learningFooter=make('footer','site-menu-learning');
+  const learningTitle=make('h3','','🌱 kusaを知る');
+  const learningLinks=make('nav','site-info-index');learningLinks.setAttribute('aria-label','kusaの解説');
+  learningFooter.append(learningTitle,learningLinks);
+  [...infoPages.keys()].forEach((page,i)=>{
+    if(page===purpose){entries[i].remove();return;}
+    if(learningIds.has(page.id))learningLinks.append(entries[i]);
+    if(page.id==='how-to-use')entries[i].textContent='使い方';
+    if(page.id==='revision-history')entries[i].textContent='更新履歴';
+  });
+  const appearance=button('着せ替え',()=>document.getElementById('siteThemeOpen').click());
+  menuIndex.prepend(appearance,entries[0]);
+  panes.menu.querySelectorAll('.screen-menu-links,.site-information,.note,footer').forEach(n=>n.remove());
+  panes.menu.append(learningFooter);
   function openInfo(page, target = page) {
     closeMenu();
     infoPages.forEach((_,n) => { n.hidden = n !== page; });
