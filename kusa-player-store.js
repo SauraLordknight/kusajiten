@@ -74,6 +74,7 @@
   function normalizePlayer(value = {}, id) {
     return {
       id,
+      claimedAnnouncements: Array.isArray(value.claimedAnnouncements) ? [...new Set(value.claimedAnnouncements.filter(id => typeof id === 'string' && id.length < 100))] : [],
       name: typeof value.name === 'string' ? value.name.trim().slice(0, 20) : 'プレイヤー',
       grass: KusaAmounts.normalize(value.grass),
       balls: KusaAmounts.normalize(value.balls),
@@ -377,7 +378,32 @@
     }
   });
 
+  function claimLaunchGift() {
+    state = readRawStore();
+    const player = selected(), giftId = '20261020-launch';
+    if (!player) return {ok:false, message:'育成・カード管理からデータを選択または作成してください。'};
+    if (player.claimedAnnouncements.includes(giftId)) return {ok:false, message:'このデータでは受け取り済みです。'};
+    const next = normalizeStore(state), target = next.players[player.id];
+    target.grass = KusaAmounts.add(target.grass, 10000);
+    target.claimedAnnouncements.push(giftId);
+    const profiles = readProfiles();
+    const profile = profiles.find(p => p.rankingId === player.id);
+    if (profile) profile.grass = target.grass;
+    const medal = readJson('kusaMedalSaveV1', {});
+    if (!medal.accounts || typeof medal.accounts !== 'object') medal.accounts = {};
+    const account = medal.accounts[player.id] || {};
+    account.chips = KusaAmounts.add(KusaAmounts.normalize(account.chips), 1000);
+    medal.accounts[player.id] = account;
+    if (!commitEntries([[PROFILE_KEY, JSON.stringify(profiles)], ['kusaMedalSaveV1', JSON.stringify(medal)], [KEY, JSON.stringify(next)]])) return {ok:false, message:'保存できませんでした。もう一度お試しください。'};
+    state = next;
+    emit('kusa-player-changed', {playerId:player.id});
+    emit('kusa-pachi-profile-changed', {playerId:player.id});
+    emit('kusa-medal-save-changed', {playerId:player.id});
+    return {ok:true, message:'草10,000とチップ1,000を受け取りました！'};
+  }
+
   window.KusaPlayerStore = Object.freeze({
+    claimLaunchGift,
     key: KEY,
     read: () => exportData(),
     listPlayers,

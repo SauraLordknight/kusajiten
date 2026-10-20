@@ -1,6 +1,6 @@
 /* Add announcements here with a permanent unique id and an explicit JST date. */
 (()=>{'use strict';
- const announcements=[{id:'20261020-test-1',date:'2026-10-20T10:02:46+09:00',title:'テスト',body:'あいうえを'}];
+ const announcements=[{id:'20261020-launch',date:'2026-10-20T21:00:00+09:00',title:'kusa事典、大規模アップデート！',body:'kusa事典が新しく生まれ変わりました。草ガチャ・草パチ・草釣りをはじめ、遊びやすさやデザインを見直し、新しい楽しみも加えています。\n\n日ごろ遊んでくださっている皆さんへ、作者から感謝を込めて草10,000とチップ1,000をお贈りします。\n\n新しくなったkusa事典を、これからもよろしくお願いします。',gift:true}];
  const storageKey='kusa-site-announcements-read-v1';let read=new Set();
  function load(){try{const ids=JSON.parse(localStorage.getItem(storageKey)||'[]');if(Array.isArray(ids))read=new Set(ids.filter(id=>typeof id==='string'));}catch{}}
  load();
@@ -24,7 +24,38 @@
    const time=document.createElement('time');time.dateTime=a.date;time.textContent=dateText(a.date);const title=document.createElement('strong');title.textContent=a.title;const status=document.createElement('span');status.className='announcement-read-status';status.textContent=read.has(a.id)?'既読':'未読';row.append(time,title,status);row.addEventListener('click',()=>openArticle(a));list.append(row);}
   all.disabled=unread===0;
  }
- function openArticle(a){read.add(a.id);save();list.hidden=true;article.hidden=false;back.hidden=false;all.hidden=true;article.replaceChildren();const title=document.createElement('h3');title.textContent=a.title;const time=document.createElement('time');time.dateTime=a.date;time.textContent=dateText(a.date);const text=document.createElement('p');text.textContent=a.body;article.append(time,title,text);article.focus({preventScroll:true});}
+ function openArticle(a){read.add(a.id);save();list.hidden=true;article.hidden=false;back.hidden=false;all.hidden=true;article.replaceChildren();const title=document.createElement('h3');title.textContent=a.title;const time=document.createElement('time');time.dateTime=a.date;time.textContent=dateText(a.date);const text=document.createElement('p');text.textContent=a.body;article.append(time,title,text);if(a.gift)appendGift();article.focus({preventScroll:true});}
+ let giftAudio = null;
+ function playGiftChime(){
+  try {
+   const Audio = window.AudioContext || window.webkitAudioContext;
+   if(!Audio)return;
+   giftAudio ||= new Audio();
+   const play=()=>{
+    const ac=giftAudio;
+    // Identical notes, timing, waveform and volume to the daily pachinko refill.
+    [523,659,784].forEach((frequency,i)=>{
+     const oscillator=ac.createOscillator(),gain=ac.createGain(),start=ac.currentTime+i*.105;
+     oscillator.type='sine';oscillator.frequency.value=frequency;
+     gain.gain.setValueAtTime(.0001,start);
+     gain.gain.exponentialRampToValueAtTime(.11,start+.015);
+     gain.gain.exponentialRampToValueAtTime(.0001,start+.28);
+     oscillator.connect(gain).connect(ac.destination);
+     oscillator.onended=()=>{oscillator.disconnect();gain.disconnect();};
+     oscillator.start(start);oscillator.stop(start+.29);
+    });
+   };
+   if(giftAudio.state==='running')play();else giftAudio.resume().then(play).catch(()=>{});
+  } catch {}
+ }
+ function appendGift(){
+  const button=document.createElement('button');button.type='button';button.className='announcement-gift';
+  const status=document.createElement('p');status.setAttribute('role','status');
+  const update=()=>{const player=window.KusaPlayerStore?.getSelected();const claimed=player?.claimedAnnouncements?.includes('20261020-launch');button.disabled=!player||!!claimed;button.textContent=claimed?'受け取り済み':'プレゼントを受け取る';status.textContent=player?(claimed?'このデータでは受け取り済みです。':'現在選択中のデータで1回受け取れます。'): '育成・カード管理からデータを選択または作成してください。';};
+  button.addEventListener('click',()=>{button.disabled=true;const result=window.KusaPlayerStore?.claimLaunchGift();update();if(result?.ok)playGiftChime();status.textContent=result?.message||'受け取れませんでした。';});
+  article.append(button,status);update();
+ }
+ window.addEventListener('kusa-player-changed',()=>{if(!article.hidden){const a=announcements.find(a=>a.id==='20261020-launch');openArticle(a);}});
  function showList(){article.hidden=true;list.hidden=false;back.hidden=true;all.hidden=false;render();}
  back.addEventListener('click',()=>{showList();list.querySelector('button')?.focus();});all.addEventListener('click',()=>{announcements.forEach(a=>read.add(a.id));save();});
  function open(){returnFocus=document.activeElement;document.getElementById('siteMenuDrawer')?.close();load();showList();if(!dialog.open)dialog.showModal();close.focus({preventScroll:true});}
