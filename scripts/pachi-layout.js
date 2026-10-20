@@ -37,6 +37,7 @@
  const saveMessage=document.getElementById('pachiSaveMessage');if(saveMessage)content.append(saveMessage);
  const soundtrack=document.createElement('section');soundtrack.className='glass-soundtrack';soundtrack.setAttribute('aria-labelledby','glassSoundtrackTitle');
  soundtrack.innerHTML='<h3 id="glassSoundtrackTitle">🎼 ガラスの少女 収録曲</h3><p class="glass-soundtrack-note">ゲーム内で流れる楽曲</p><h4>大当たり・超大当たり</h4><ul><li><span>ガラスの少女 — 零</span> <small>作曲：Saura</small></li><li><span>ガラスの少女 - 決戦</span> <small>作曲：Saura</small></li><li><span>ガラスの少女 - 奔流</span> <small>作曲：Saura</small></li><li><span>ガラスの少女 - 勇者</span> <small>作曲：Saura</small></li></ul><h4>背景モード</h4><ul><li><span>無音の雪原</span> <small>作曲：Saura</small></li><li><span>硝子の誓い</span> <small>作曲：Saura</small></li><li><span>消え残る灯</span> <small>作曲：Saura</small></li></ul>';
+ const originalNotice=document.createElement('p');originalNotice.className='glass-original-notice';originalNotice.textContent='本台の物語・演出・ゲーム内容は、作者によるオリジナルです。';originalNotice.hidden=true;content.prepend(originalNotice);
  content.append(soundtrack);
 
  readouts.append(game.querySelector('.pachi-stats'));
@@ -78,6 +79,7 @@
  if(!machine.dataset.activeMachine)machine.dataset.activeMachine='kusa';
  function syncActiveMachine(){
   const debug=machine.dataset.activeMachine==='debug';
+  originalNotice.hidden=!debug;
   win.classList.toggle('pachi-debug-active',debug);
   machine.hidden=debug;
   debugStage.hidden=!debug;
