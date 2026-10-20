@@ -124,3 +124,6 @@
   #siteInfoDialog .site-info-content h2 { margin-bottom: 20px; }
   #siteInfoDialog .migration-action { padding: 14px; }
 }
+/* Explicitly reveal the selected page even when a theme supplies entry effects. */
+#siteInfoDialog .site-info-content > :not([hidden]){display:block!important;visibility:visible!important;opacity:1!important;transform:none!important}
+#siteInfoDialog .site-info-content > :not([hidden]) :is(p,li,small){color:inherit}

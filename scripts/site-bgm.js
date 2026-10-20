@@ -16,7 +16,7 @@
   async function sync(){
     const request=++generation,track=resolveTrack();
     if(track!==currentTrack){stopSound();currentTrack=track;}
-    music.volume=Math.max(0,Math.min(.3,preferences().bgmVolume??.12));
+    music.volume=Math.max(0,Math.min(1,preferences().bgmVolume??.5));
     if(!allowed()){stopSound();paintButton();return;}
     try{
       if(track==='silent-snowfield'){
@@ -47,7 +47,7 @@
   function observeGames(){for(const id of ['kusa-pachi-window','pachiSelectionWindow']){const dialog=document.getElementById(id);if(dialog)new MutationObserver(sync).observe(dialog,{attributes:true,attributeFilter:['open']});}}
   if(document.readyState==='complete')observeGames();else document.addEventListener('DOMContentLoaded',observeGames,{once:true});
   new MutationObserver(sync).observe(document.body,{attributes:true,attributeFilter:['class']});
-  window.KusaSiteBgm=Object.freeze({play,pause,snapshot:()=>({on,track:resolveTrack(),title:trackName(),
+  window.KusaSiteBgm=Object.freeze({play,pause,setVolume:value=>{music.volume=Math.max(0,Math.min(1,Number(value)||0));},snapshot:()=>({on,track:resolveTrack(),title:trackName(),
     playing:resolveTrack()==='silent-snowfield'?!music.paused:false,currentTime:music.currentTime,source:music.currentSrc||music.src,volume:music.volume,gamePaused:gameOpen(),error})});
-  paintButton();
+  sync();
 })();

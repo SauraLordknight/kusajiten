@@ -82,6 +82,10 @@
     menuGroups.get(key).links.append(row);
   });
   menuGroups.get('quick').links.append(button('🎨 着せ替え',()=>document.getElementById('siteThemeOpen').click()));
+  const primaryBgm=document.getElementById('siteBgmToggle');
+  const menuBgm=button('',()=>primaryBgm.click());menuBgm.id='siteMenuBgmToggle';
+  const syncMenuBgm=()=>{menuBgm.textContent='♪ '+primaryBgm.textContent;menuBgm.setAttribute('aria-pressed',primaryBgm.getAttribute('aria-pressed')||'false');menuBgm.title=primaryBgm.title;};
+  new MutationObserver(syncMenuBgm).observe(primaryBgm,{childList:true,attributes:true,attributeFilter:['aria-pressed','title']});syncMenuBgm();menuGroups.get('quick').links.append(menuBgm);
   const requestLink=menuIndex.querySelector('a');if(requestLink)menuGroups.get('support').links.append(requestLink);
   panes.menu.querySelectorAll('.screen-menu-links,.site-information,.note,footer').forEach(n=>n.remove());menuIndex.remove();
   menuGroups.forEach(({group})=>panes.menu.append(group));
@@ -90,7 +94,8 @@
     infoPages.forEach((_,n) => { n.hidden = n !== page; });
     infoTitle.textContent = infoPages.get(page); if (page.matches('details')) page.open = true;
     if (!infoDialog.open) infoDialog.showModal();
-    infoContent.scrollTop = 0; infoClose.focus({preventScroll:true});
+    infoDialog.scrollTop=0; infoContent.scrollTop = 0; infoClose.focus({preventScroll:true});
+    requestAnimationFrame(()=>{if(infoDialog.open){infoDialog.scrollTop=0;infoContent.scrollTop=0;page.scrollTop=0;}});
     if (target !== page && !target.matches('h2,summary')) requestAnimationFrame(() => target.scrollIntoView({block:'start',behavior:'instant'}));
   }
   infoDialog.addEventListener('click', e => {

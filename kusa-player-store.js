@@ -111,7 +111,8 @@
       frame: value.frame === 'simple' ? 'simple' : 'basic',
       night: value.night === true,
       bgmTrack: ['theme','silent-snowfield'].includes(value.bgmTrack) ? value.bgmTrack : 'theme',
-      bgmVolume: Number.isFinite(value.bgmVolume) ? Math.max(0, Math.min(.3, value.bgmVolume)) : .12};
+      bgmVolume: Number.isFinite(value.bgmVolume) && (value.bgmVolumeUserSet === true || value.bgmVolume !== .12) ? Math.max(0, Math.min(1, value.bgmVolume)) : .5,
+      bgmVolumeUserSet: value.bgmVolumeUserSet === true || (Number.isFinite(value.bgmVolume) && value.bgmVolume !== .12 && value.bgmVolume !== .5)};
   }
 
   function readRawStore() {
