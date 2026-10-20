@@ -402,7 +402,7 @@
             <div id="pachiAnnouncement" class="pachi-announcement" aria-live="polite">中央のスタートチャッカーを狙おう！</div>
             <div class="pachi-omen-meter" aria-hidden="true"><span>草気配</span><i></i><i></i><i></i></div>
           </div>
-          <div class="pachi-stats"><div><small>持ち球</small><strong id="pachiBalls">5,000</strong></div><div><small>総回転数</small><strong id="pachiSpins">0</strong></div><div><small>大当たり</small><strong id="pachiHits">0</strong></div><div><small>連チャン</small><strong id="pachiStreak">0</strong></div></div>
+          <div class="pachi-stats"><div><small>持ち球</small><strong id="pachiBalls">5,000</strong></div><div><small>本日の回転数</small><strong id="pachiSpins">0</strong></div><div><small>大当たり</small><strong id="pachiHits">0</strong></div><div><small>連チャン</small><strong id="pachiStreak">0</strong></div></div>
           <div class="pachi-combo" hidden="" style="display:none!important"><span id="pachiCombo">START連続入賞 0</span><span id="pachiComboEffect">3・5・10・20で演出解放</span></div>
           <div class="pachi-combo" id="pachiPocketNote" aria-live="off" hidden="" style="display:none!important">サイド +2球 ／ START +2球</div>
           <div class="pachi-board-wrap">
@@ -1993,6 +1993,7 @@ initGacha();
 filterNames();
 </script>
 <script src="scripts/debug-pachi-physics.js?v=20261017-unified-prize-field"></script>
+<script src="scripts/pachi-daily-counters.js?v=20261020-daily"></script>
 <script src="scripts/glass-pachi-runtime.js?v=20261019-player-isolation"></script>
 <script src="scripts/glass-pachi-wallet.js?v=20261018-unlimited-wallet"></script>
 <script src="scripts/glass-crystal-symbols.js?v=20261020-ios-memory"></script>
@@ -3135,10 +3136,11 @@ filterNames();
     $('pachiWagerNote').textContent = `1発${player.wager}球消費・残り${KusaAmounts.format(KusaAmounts.div(player.balls,player.wager))}発${player.pendingJackpot ? '（JP中は倍率固定）' : ''}`;
     $('pachiWager').disabled = !!player.pendingJackpot || !!payoutFinishTimer || balls.length > 0;
     $('pachiBalls').textContent = KusaAmounts.format(player.balls);
-    $('pachiSpins').textContent = player.spins.toLocaleString('ja-JP');
-    $('pachiHits').textContent = player.hits.toLocaleString('ja-JP');
-    $('pachiStreak').textContent = player.streak.toLocaleString('ja-JP');
-    $('pachiStreak').title = `${player.streak.toLocaleString('ja-JP')}連チャン`;
+    const daily=window.KusaDailyPachiCounters.read('kusa',player.rankingId,{spins:player.spins,hits:player.hits,streak:player.streak});
+    $('pachiSpins').textContent = daily.spins.toLocaleString('ja-JP');
+    $('pachiHits').textContent = daily.hits.toLocaleString('ja-JP');
+    $('pachiStreak').textContent = daily.streak.toLocaleString('ja-JP');
+    $('pachiStreak').title = `本日 ${daily.streak.toLocaleString('ja-JP')}連チャン`;
     const streakCellWidth = $('pachiStreak').parentElement.clientWidth - 8;
     $('pachiStreak').style.fontSize = `${Math.max(6, Math.min(19, streakCellWidth / Math.max(1, $('pachiStreak').textContent.length * .62)))}px`;
     $('pachiMode').textContent = player.rushLeft > 0
@@ -3197,8 +3199,9 @@ filterNames();
     set('pachiWagerNote',`${s.rate}パチ：1発${s.rate}球・賞球${s.rate}倍${firing||!glassGame.canChangeRate?'／球・変動・払い出し終了後に切替できます':''}`);
     set('glassSettingsRecords',`持ち球 ${KusaAmounts.format(s.balls)}球／総回転 ${s.spins.toLocaleString('ja-JP')}回／当たり ${s.hits.toLocaleString('ja-JP')}回`);
     if($('pachiSettingsDialog')?.open)updateExchangeUI();
-    set('pdmBalls',KusaAmounts.format(s.balls));set('pdmSpins',s.spins);set('pdmHits',s.hits);set('pdmStreak',s.streak);
-    set('glassTotalSpins',s.spins);set('glassRegularHits',s.regularHits);set('glassJackpotHits',s.jackpotHits);set('glassJackpotChain',s.jackpotChain);
+    const daily=window.KusaDailyPachiCounters.read('glass',player.rankingId,{spins:s.spins,hits:s.hits,streak:s.streak,regularHits:s.regularHits,jackpotHits:s.jackpotHits,chain:s.jackpotChain});
+    set('pdmBalls',KusaAmounts.format(s.balls));set('pdmSpins',daily.spins);set('pdmHits',daily.hits);set('pdmStreak',daily.streak);
+    set('glassTotalSpins',daily.spins);set('glassRegularHits',daily.regularHits);set('glassJackpotHits',daily.jackpotHits);set('glassJackpotChain',daily.chain);
     for(const [id,value]of [['pachiDebugShots',s.shots],['pachiDebugStarts',s.starts],['pachiDebugSides',s.sides],['pachiDebugOuts',s.outs]])set(id,value);
     set('pachiDebugRate',s.shots?(s.starts/s.shots*100).toFixed(2)+'%':'0.00%');
     set('pdmAnnouncement',glassGame.saveError||'ガラスの少女');
@@ -5149,6 +5152,7 @@ filterNames();
       }else updateBallCount();
     }catch{}
   }
+  window.addEventListener('pachi-counter-day-changed',()=>{if(player)updateUI();});
   window.addEventListener('kusa-pachi-profile-changed',refreshSharedGrass);
   window.addEventListener('kusa-player-changed',refreshSharedGrass);
   window.addEventListener('storage',event=>{if(event.key===profileKey)refreshSharedGrass(event);});
