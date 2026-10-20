@@ -173,10 +173,6 @@ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-the
 /* Bring the soda glass into the right side of the content, rather than cropping it off-screen. */
 html[data-site-theme="mint-soda"]{--skin-glass:#f6fffb33}
 html.night[data-site-theme="mint-soda"]{--skin-glass:#102f2e33}
-html[data-site-theme="mint-soda"] .base-theme::before{
- background-color:var(--skin-page);background-size:auto 100%;
- background-position:calc(50% - clamp(80px,9vw,170px)) center;
-}
 @media(max-width:799px){
  html[data-site-theme="mint-soda"] .base-theme::before{background-position:right center;background-size:auto 100%}
 }
