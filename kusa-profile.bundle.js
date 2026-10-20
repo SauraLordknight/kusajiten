@@ -1837,7 +1837,7 @@ const names={grass:'草',balls:'持ち球',chips:'チップ',bait:'餌',capsules
 const icons={grass:'🌿',balls:'🔵',chips:'💠',bait:'🦐',capsules:'🎁'};
 for(const quality of Object.keys(CAPSULES)){names[quality]=`${CAPSULES[quality].name}カプセル`;icons[quality]='🎁';}
 const dialog=document.createElement('dialog');dialog.id='kusaFishingWindow';dialog.className='fishing-dialog theme-window';dialog.setAttribute('aria-labelledby','fishingTitle');
-dialog.innerHTML=`<header class="theme-window-head fishing-head"><div><small>KUSA FISHING</small><h2 id="fishingTitle">草釣り</h2></div><div><button id="fishingSound" type="button" aria-pressed="true">音 ON</button><button id="fishingClose" type="button">× 閉じる</button></div></header>
+dialog.innerHTML=`<header class="theme-window-head fishing-head"><div><small>KUSA FISHING</small><h2 id="fishingTitle">草釣り</h2></div><div><button id="fishingExpand" type="button" aria-pressed="false">画面を拡大</button><button id="fishingOptions" type="button" aria-expanded="false" hidden>設定</button><button id="fishingSound" type="button" aria-pressed="true">音 ON</button><button id="fishingClose" type="button">× 閉じる</button></div></header>
 <div class="fishing-hud" aria-label="現在の所持品">${['grass','balls','chips','bait','capsules'].map(k=>`<div data-fishing-resource="${k}"><span>${icons[k]} ${names[k]}</span><strong id="fishing-${k}">0</strong></div>`).join('')}</div>
 <div class="fishing-info"><span id="fishingPlayer"></span><span id="fishingPeriod"></span></div>
 <p id="fishingCrystalStatus" class="fishing-crystal-status" role="timer" aria-live="off" aria-label="結晶の加護の残り時間" hidden></p>
@@ -1849,6 +1849,21 @@ dialog.innerHTML=`<header class="theme-window-head fishing-head"><div><small>KUS
 <section><h3>この釣り場での記録</h3><p id="fishingRecords">釣り上げ 0回</p><p id="fishingResult" aria-live="polite">水の音を聞きながら、のんびりどうぞ。</p></section></aside></div>
 <section id="fishingExchange" class="fishing-exchange" hidden><h3>🪱 餌の交換所</h3><p>10草 → 餌1個 ／ 餌1個 → 5草</p><div class="fishing-exchange-columns">${['buy','sell'].map((k,i)=>`<div><h4>${i?'餌を草に戻す':'草で餌を用意する'}</h4><label for="fishingQuantity-${k}">餌の個数</label><input id="fishingQuantity-${k}" type="text" value="1" inputmode="numeric"><div><button type="button" data-fishing-quick="${k}:half">半分</button><button type="button" data-fishing-quick="${k}:all">すべて</button></div><p id="fishingPreview-${k}"></p><button type="button" data-fishing-exchange="${k}">${i?'餌を草に戻す':'草を餌に交換'}</button></div>`).join('')}</div><p id="fishingExchangeStatus" role="status"></p><button id="fishingExchangeClose" type="button">交換所を閉じる</button></section>`;
 document.body.append(dialog);
+const expandedPhone=()=>dialog.classList.contains('fishing-expanded')&&matchMedia('(max-width:799px),(hover:none) and (pointer:coarse)').matches;
+const stageNode=dialog.querySelector('.fishing-stage'),mainNode=dialog.querySelector('.fishing-main');
+function fitExpanded(){
+  if(!expandedPhone()){stageNode.style.removeProperty('width');stageNode.style.removeProperty('height');return;}
+  const landscape=matchMedia('(orientation:landscape)').matches;
+  const walk=dialog.querySelector('.fishing-walk-controls'),actions=dialog.querySelector('.fishing-actions');if(!walk)return;
+  const availableHeight=mainNode.clientHeight-(landscape?0:walk.offsetHeight+actions.offsetHeight+12);
+  const availableWidth=mainNode.clientWidth-(landscape?172:0);
+  const width=Math.max(0,Math.min(availableWidth,availableHeight*1.5));stageNode.style.width=width+'px';stageNode.style.height=width/1.5+'px';
+}
+function setExpanded(on){dialog.classList.toggle('fishing-expanded',on);$('fishingExpand').textContent=on?'元に戻す':'画面を拡大';$('fishingExpand').setAttribute('aria-pressed',String(on));$('fishingOptions').hidden=!on;dialog.classList.remove('fishing-options-open');$('fishingOptions').setAttribute('aria-expanded','false');requestAnimationFrame(fitExpanded);}
+$('fishingExpand').onclick=()=>setExpanded(!dialog.classList.contains('fishing-expanded'));
+$('fishingOptions').onclick=()=>{const on=dialog.classList.toggle('fishing-options-open');$('fishingOptions').setAttribute('aria-expanded',String(on));};
+new ResizeObserver(()=>requestAnimationFrame(fitExpanded)).observe(mainNode);window.addEventListener('resize',fitExpanded);
+
 // Legacy Windows emoji fonts do not contain the newer worm and coin glyphs.
 for(const node of dialog.querySelectorAll('button,h3'))node.textContent=node.textContent.replaceAll('🪱','🦐');
 new ResizeObserver(entries=>dialog.style.setProperty('--fishing-head-height',`${entries[0].target.getBoundingClientRect().height}px`)).observe(dialog.querySelector('.fishing-head'));
@@ -1862,7 +1877,7 @@ const crystalEffect=new FishingCrystalEffect(dialog.querySelector('.fishing-stag
 const controls=document.createElement('div');controls.className='fishing-walk-controls';controls.innerHTML='<div class="fishing-dpad" role="group" aria-label="移動"><button type="button" data-walk="up" aria-label="上へ歩く">▲</button><button type="button" data-walk="left" aria-label="左へ歩く">◀</button><button type="button" data-walk="down" aria-label="下へ歩く">▼</button><button type="button" data-walk="right" aria-label="右へ歩く">▶</button></div><p>矢印・WASD／方向ボタン長押しで歩く<br>水辺・家具・出口で「決定」。Enter・Spaceも使えます。</p>';dialog.querySelector('.fishing-actions').before(controls);
 let playerId='',location='house',phase='idle',phaseAt=0,busy=false,timer=0,interval=0,castId='',sound=true,returnFocus=null;
 let context=null,positionDirty=false,positionSaving=false,lastPositionSave=0;
-const blocked=()=>busy||['plant','blessing'].includes(phase)||dialogue.locked||!dialog.open||!$('fishingExchange').hidden||!!document.querySelector('.kusa-action-dialog[open]');
+const blocked=()=>dialog.classList.contains('fishing-options-open')||busy||['plant','blessing'].includes(phase)||dialogue.locked||!dialog.open||!$('fishingExchange').hidden||!!document.querySelector('.kusa-action-dialog[open]');
 scene.isBlocked=blocked;
 scene.onMove=(p,next)=>{positionDirty=true;context=next;dialogue.hideNotice();if(!castId&&!['casting','waiting','bite','reeling','reward'].includes(phase))location=p.map==='house'?'house':next==='river'||next==='sea'?next:'map';soundscape.update({...p});updateControls();};
 scene.onStep=surface=>soundscape.step(surface);
@@ -2007,10 +2022,10 @@ async function open(){
   refresh();scene.start();ambience();interval=setInterval(()=>{if(!document.hidden){refresh();if(Date.now()-lastPositionSave>2000)persistPosition();}},1000);$('fishingAction').focus();
   document.querySelectorAll('[data-fishing-open]').forEach(b=>b.setAttribute('aria-pressed','true'));
 }
-function closed(){dialogue.reset();plantEffect.stop();crystalEffect.stop();crystalResult=null;scene.endCoffee(false);if(['resting','plant','blessing'].includes(phase))phase='idle';persistPosition();held.clear();clearTimeout(timer);clearRewardEffects();clearInterval(interval);scene.stop();stopAudio();document.querySelectorAll('[data-fishing-open]').forEach(b=>b.setAttribute('aria-pressed','false'));returnFocus?.focus();}
+function closed(){setExpanded(false);dialogue.reset();plantEffect.stop();crystalEffect.stop();crystalResult=null;scene.endCoffee(false);if(['resting','plant','blessing'].includes(phase))phase='idle';persistPosition();held.clear();clearTimeout(timer);clearRewardEffects();clearInterval(interval);scene.stop();stopAudio();document.querySelectorAll('[data-fishing-open]').forEach(b=>b.setAttribute('aria-pressed','false'));returnFocus?.focus();}
 dialog.addEventListener('close',closed);$('fishingClose').onclick=()=>dialog.close();
 $('fishingAction').onclick=()=>{scene.input(null);if(dialogue.locked)dialogue.activate();else if(phase==='plant')plantEffect.stop(true);else if(phase==='blessing')crystalEffect.stop(true);else if(phase==='resting')scene.endCoffee();else if(phase==='bite')reel();else if(context==='plant')offerPlant();else if(context==='coffee')offerCoffee();else if(context==='exit')changeLocation('map');else if(context==='home')changeLocation('house');else if(context==='river'||context==='sea')cast();};
-dialog.addEventListener('cancel',e=>{if(dialogue.locked){e.preventDefault();if(dialogue.choiceOpen)dialogue.choose(1);else dialogue.advance();}});
+dialog.addEventListener('cancel',e=>{if(dialog.classList.contains('fishing-expanded')){e.preventDefault();setExpanded(false);return;}if(dialogue.locked){e.preventDefault();if(dialogue.choiceOpen)dialogue.choose(1);else dialogue.advance();}});
 $('fishingBack').onclick=()=>changeLocation('map');
 dialog.addEventListener('click',async e=>{
   const b=e.target.closest('button');if(!b)return;
@@ -2032,7 +2047,7 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){dialogue.r
 for(const event of ['kusa-player-changed','kusa-medal-save-changed','kusa-gacha-inventory-changed','kusa-theme-changed'])window.addEventListener(event,()=>{if(!busy)refresh();});
 window.addEventListener('storage',()=>{if(dialog.open)refresh();});
 const walkKeys={ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down',ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right'};const held=new Set();
-document.addEventListener('keydown',e=>{if(!dialog.open)return;if(dialogue.key(e))return;if(['plant','blessing'].includes(phase)&&['Enter','Space'].includes(e.code)){e.preventDefault();if(!e.repeat){if(phase==='blessing')crystalEffect.stop(true);else plantEffect.stop(true);}return;}if(blocked()||['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))return;if(walkKeys[e.code]){e.preventDefault();held.add(e.code);scene.input(walkKeys[e.code]);}else if((e.code==='Space'||e.code==='Enter')&&!e.repeat){e.preventDefault();if(e.target===windowPlant)offerPlant();else $('fishingAction').click();}});
+document.addEventListener('keydown',e=>{if(!dialog.open)return;if(e.target.closest('.fishing-head')&&['Enter','Space'].includes(e.code))return;if(dialogue.key(e))return;if(['plant','blessing'].includes(phase)&&['Enter','Space'].includes(e.code)){e.preventDefault();if(!e.repeat){if(phase==='blessing')crystalEffect.stop(true);else plantEffect.stop(true);}return;}if(blocked()||['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))return;if(walkKeys[e.code]){e.preventDefault();held.add(e.code);scene.input(walkKeys[e.code]);}else if((e.code==='Space'||e.code==='Enter')&&!e.repeat){e.preventDefault();if(e.target===windowPlant)offerPlant();else $('fishingAction').click();}});
 document.addEventListener('keyup',e=>{if(!walkKeys[e.code])return;held.delete(e.code);scene.input(held.size?walkKeys[[...held].at(-1)]:null);});
 for(const b of controls.querySelectorAll('[data-walk]')){
   b.onpointerdown=e=>{e.preventDefault();if(b.disabled||blocked())return;b.setPointerCapture(e.pointerId);scene.input(b.dataset.walk);};
