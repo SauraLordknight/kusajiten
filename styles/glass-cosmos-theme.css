@@ -210,7 +210,13 @@ html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile .commemorative-me
 }
 
 @media(max-width:799px),(hover:none) and (pointer:coarse){
- html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop{bottom:auto;height:100lvh;transform:translateZ(0);contain:paint}
+ html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop{top:calc(-1 * max(32px, env(safe-area-inset-top, 0px)));bottom:auto;height:calc(100vh + 64px);height:calc(100lvh + max(32px, env(safe-area-inset-top, 0px)) + max(32px, env(safe-area-inset-bottom, 0px)));transform:translateZ(0);contain:paint}
  html[data-site-theme="glass-cosmos"] .base-theme :is(.named-directory,.sidebar-block){backdrop-filter:none;-webkit-backdrop-filter:none}
 }
 html[data-site-theme="glass-cosmos"][data-theme-scrolling="true"] .base-theme :is(.site-shop,.kusa-games-hub,.sidebar-block,.named-directory,.kusa-profile,.theme-window,.profile-management-dialog,.site-theme-dialog,.named-directory-dialog,.site-info-dialog){backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+
+/* Keep the mobile layer tree stable while scrolling; do not toggle panel blur. */
+@media(max-width:799px),(hover:none) and (pointer:coarse){
+ html[data-site-theme="glass-cosmos"] .base-theme{background-image:none;background-attachment:scroll}
+ html[data-site-theme="glass-cosmos"] .base-theme :is(.site-shop,.kusa-games-hub,.sidebar-block,.named-directory,.kusa-profile,.theme-window,.profile-management-dialog,.site-theme-dialog,.named-directory-dialog,.site-info-dialog){backdrop-filter:none;-webkit-backdrop-filter:none}
+}
