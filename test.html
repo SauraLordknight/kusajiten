@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="assets/gacha-frames/frames.css?v=20261016-local-art">
 
 <link rel="stylesheet" href="styles/site-theme.css?v=20261018-service-panels-compact">
-<link rel="stylesheet" href="styles/pachi-layout.css?v=20261020-soundtrack-filenames">
+<link rel="stylesheet" href="styles/pachi-layout.css?v=20261020-ios-memory">
 <link rel="stylesheet" href="styles/glass-player-services.css?v=20261017-glass-titles">
 <link rel="stylesheet" href="styles/glass-story.css?v=20261020-theme-contrast">
 <script defer src="scripts/glass-ranking-config.js?v=20261016-v1"></script>
@@ -55,15 +55,16 @@
 <script defer src="scripts/pachi-layout.js?v=20261020-soundtrack-filenames"></script>
 <link rel="stylesheet" href="styles/glass-howto.css?v=20261018-handle-copy-v2">
 <script defer src="scripts/glass-howto.js?v=20261018-handle-copy-v2"></script>
-<script defer src="scripts/glass-cabinet-skin.js?v=20261014-full-lcd-v1"></script>
+<script src="scripts/glass-asset-bank.js?v=20261020-ios-memory"></script>
+<script defer src="scripts/glass-cabinet-skin.js?v=20261020-ios-memory"></script>
 <script defer src="scripts/glass-payout-visual.js?v=20261016-all-awards-large"></script>
 <script defer src="assets/glass-girl/reward-rush-v2/sound-data.js?v=20261016-real-steel"></script>
 <script defer src="scripts/glass-reward-audio.js?v=20261016-single-crystal-real-steel"></script>
-<script defer src="scripts/glass-energy.js?v=20261017-scroll-performance"></script>
-<script defer src="scripts/glass-board-scene.js?v=20261017-scroll-performance"></script>
+<script defer src="scripts/glass-energy.js?v=20261020-ios-memory"></script>
+<script defer src="scripts/glass-board-scene.js?v=20261020-ios-memory"></script>
 <script defer src="scripts/glass-handle-bgm.js?v=20261016-transition-mute"></script>
 <script defer src="scripts/glass-volume.js?v=20261016-effects-double"></script>
-<script defer src="scripts/glass-aftermath.js?v=20261019-continuous-scroll-bgm"></script>
+<script defer src="scripts/glass-aftermath.js?v=20261020-ios-memory"></script>
 <link rel="stylesheet" href="styles/glass-jackpot-transition.css?v=20261015-white-mode">
 <script defer src="scripts/glass-white-transition-audio.js?v=20261016-shared-transition-audio"></script>
 <script defer src="assets/glass-girl/transition-audio-v5/sound-data.js?v=20261016"></script>
@@ -72,15 +73,15 @@
 <script defer src="assets/glass-girl/game-audio-v14/sound-bank.js?v=20261014-synchronized-sheet-glass"></script>
 <script defer src="scripts/glass-game-audio.js?v=20261016-single-credit-peg85"></script>
 <script defer src="scripts/glass-jackpot-music.js?v=20261016-seven-reveal"></script>
-<script defer src="scripts/glass-jackpot-transition.js?v=mobile-performance-20261016-stable-jackpot-scene"></script>
+<script defer src="scripts/glass-jackpot-transition.js?v=20261020-ios-memory"></script>
 <script defer src="assets/glass-girl/mode-transition-white-v1/sound-data.js?v=20261016"></script>
-<script defer src="scripts/glass-mode-transition.js?v=mobile-performance-20261016-audio-fixed"></script>
+<script defer src="scripts/glass-mode-transition.js?v=20261020-ios-memory"></script>
 
 <script defer src="scripts/window-theme.js?v=20261009static"></script>
 <link rel="stylesheet" href="styles/glass-cosmos-theme.css?v=20261020-scroll-performance">
 <link rel="stylesheet" href="styles/permanent-themes.css?v=20261020-scroll-performance">
 <link rel="stylesheet" href="styles/text-contrast.css?v=20261019-audit">
-<script defer src="scripts/glass-cosmos-runtime.js?v=20261020-scroll-performance"></script>
+<script defer src="scripts/glass-cosmos-runtime.js?v=20261020-ios-memory"></script>
 <link rel="stylesheet" href="styles/mobile-compact.css?v=20261020-inline-drawer">
 <link rel="stylesheet" href="styles/site-announcements.css?v=20261020-mail">
 </head>
@@ -1975,8 +1976,8 @@ filterNames();
 <script src="scripts/debug-pachi-physics.js?v=20261017-unified-prize-field"></script>
 <script src="scripts/glass-pachi-runtime.js?v=20261019-player-isolation"></script>
 <script src="scripts/glass-pachi-wallet.js?v=20261018-unlimited-wallet"></script>
-<script src="scripts/glass-crystal-symbols.js?v=20261016-seven-crystal"></script>
-<script src="scripts/glass-mechanism-art.js?v=20261017-prize-fields"></script>
+<script src="scripts/glass-crystal-symbols.js?v=20261020-ios-memory"></script>
+<script src="scripts/glass-mechanism-art.js?v=20261020-ios-memory"></script>
 <script>
 (() => {
   'use strict';
@@ -2018,8 +2019,8 @@ filterNames();
         width:`${debugScreenX(lcd.width)}px`, height:`${debugScreenY(lcd.height)}px`
       });
     }
-    canvas.width = width; canvas.height = height;
-    ballsCanvas.width = width + (activeMachine === 'debug' ? DEBUG_BALLS_PAD : 0); ballsCanvas.height = height;
+    if(canvas.width!==width)canvas.width=width;if(canvas.height!==height)canvas.height=height;
+    const ballsWidth = width + (activeMachine === 'debug' ? DEBUG_BALLS_PAD : 0);if(ballsCanvas.width!==ballsWidth)ballsCanvas.width=ballsWidth;if(ballsCanvas.height!==height)ballsCanvas.height=height;
     if(activeMachine === 'debug')Object.assign(ballsCanvas.style,{left:`${7-DEBUG_BALLS_PAD}px`,width:`${width+DEBUG_BALLS_PAD}px`});
     ballSprites.clear();
     // Story entry may already have made this canvas visible before selection.
@@ -3258,8 +3259,17 @@ filterNames();
     debugStats.shots = debugStats.starts = debugStats.sides = debugStats.outs = 0;
     updateDebugHud();
   }
-  function chooseMachine(machine, skipStory = false) {
+  let machineSelectionToken=0,requestedMachine=null;
+  document.addEventListener('glass-cabinet-retry',()=>chooseMachine('debug'));
+  async function chooseMachine(machine, skipStory = false) {
     if (!player || !['kusa', 'debug'].includes(machine)) return;
+    const selection=++machineSelectionToken;requestedMachine=machine;
+    if(machine==='debug'&&!window.GlassCabinetSkin?.ready){
+      stopFiring();stopLoop();$('pachiMachineSelect').hidden=true;$('pachiGame').hidden=false;$('pachiDebugMachine').hidden=true;
+      const ready=await window.GlassCabinetSkin?.prepare();
+      if(!ready||selection!==machineSelectionToken||!player||panel.hidden||!$('kusa-pachi-window').open)return;
+    }
+
     if(machine==='debug'&&!skipStory&&!glassStorySeenToday()){
       recordGlassStorySeenToday();
       activeMachine='debug';
@@ -3295,6 +3305,7 @@ filterNames();
     if (machine === 'debug') renderGlassMachine();
     drawBoardScenery();
     drawBoard();
+    requestAnimationFrame(()=>{if(activeMachine===machine&&!panel.hidden){drawBoardScenery();drawBoard();}});
     announce(machine === 'debug' ? 'ガラスの少女：右下のハンドルを押し続けて発射します。' : `ようこそ、${player.name}さん！ ハンドルを調整して発射！`);
     unlockAudio();
     startLoop();
@@ -3508,6 +3519,7 @@ filterNames();
     renderProfiles();
   }
   function fire() {
+    if($('kusa-pachi-window').classList.contains('glass-cabinet-loading-active'))return;
     if(activeMachine==='debug'){
       if(!glassGame||pageSuspended||document.hidden||panel.hidden||$('pachiGame').hidden)return;
       if(!glassGame.fire(Number($('pdmPower').value)/100)){
@@ -4576,6 +4588,7 @@ filterNames();
     shell.classList.toggle('is-collapsed', !open);
     $('pachiToggle').setAttribute('aria-expanded', String(open));
     $('pachiToggle').setAttribute('aria-label', open ? '草パチを閉じる' : '草パチを開く');
+    if(open&&!$('pachiGame').hidden&&requestedMachine==='debug'&&!window.GlassCabinetSkin?.ready){chooseMachine('debug');return;}
     if(activeMachine==='debug'){
       if(open){renderGlassMachine();startLoop();}
       else {stopFiring();stopLoop();glassGame?.save();}
@@ -5087,10 +5100,7 @@ filterNames();
   window.addEventListener('focus', resumeFromBackground);
   document.addEventListener('freeze', pauseForBackground);
   document.addEventListener('resume', resumeFromBackground);
-  canvas.addEventListener('contextlost', event => event.preventDefault());
-  canvas.addEventListener('contextrestored', restoreCanvases);
-  $('pachiBallsCanvas').addEventListener('contextlost', event => event.preventDefault());
-  $('pachiBallsCanvas').addEventListener('contextrestored', restoreCanvases);
+  for(const id of ['pachiCanvas','pachiBallsCanvas','pachiDebugCanvas','pachiDebugBallsCanvas']){const surface=$(id);surface.addEventListener('contextlost',event=>event.preventDefault());surface.addEventListener('contextrestored',()=>{ballSprites.clear();restoreCanvases();window.GlassBoardScene?.refresh();});}
   window.addEventListener('kusa-rewards-changed', () => updateExchangeUI());
   function refreshSharedGrass(event){
     if(!player)return;

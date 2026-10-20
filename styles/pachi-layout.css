@@ -211,3 +211,9 @@
 .glass-soundtrack li{display:block;min-width:0;padding:8px 10px;border-radius:6px;background:color-mix(in srgb,var(--theme-ink) 7%,transparent)}
 .glass-soundtrack li span{font-weight:600;overflow-wrap:anywhere}.glass-soundtrack li small{flex:none;color:var(--theme-ink);font-size:11px}
 @media(max-width:520px){.glass-soundtrack{padding:10px}.glass-soundtrack ul{grid-template-columns:1fr}.glass-soundtrack li{min-height:36px}}
+/* Never expose the development-shaped fallback while the real cabinet is loading. */
+.pdm-machine:not(.has-continuous-skin){visibility:hidden}
+.glass-cabinet-loading{position:absolute;inset:var(--cabinet-header-height,80px) 0 0;z-index:90;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;background:#071722;color:#e9fcff;text-align:center}
+.glass-cabinet-loading[hidden]{display:none!important}
+.glass-cabinet-loading p{max-width:32em;line-height:1.7;color:#e9fcff!important}
+.glass-cabinet-loading button{min-height:44px;padding:8px 20px;color:#103747;background:#e6faff;border:1px solid #80d8ef;border-radius:6px}

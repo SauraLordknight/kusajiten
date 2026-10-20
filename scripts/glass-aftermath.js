@@ -8,12 +8,12 @@
  let playbackRaf=0,playbackLast=0,mediaPhase='intro';
  const films={};
  for(const kind of ['restoration','life-return']){
-  const poster=new Image();poster.src=base+kind+'-1.png';const still=new Image();still.src=base+kind+'-145.png';
-  const clips={poster,still};for(const phase of ['intro','loop']){const v=document.createElement('video');v.hidden=true;v.muted=v.defaultMuted=true;v.playsInline=true;v.loop=phase==='loop';v.preload='metadata';v.src=base+kind+'-'+phase+'.mp4';v.setAttribute('aria-hidden','true');machine.append(v);clips[phase]=v;v.addEventListener('loadeddata',()=>window.GlassBoardScene?.refresh());if(phase==='intro')v.addEventListener('ended',()=>{if(video===v&&effective()?.aftermath?.kind===kind){mediaPhase='loop';video=null;sync();window.GlassBoardScene?.refresh();}});v.addEventListener('error',()=>{error='背景動画を読み込めません';});}films[kind]=clips;
+  const poster=new Image();poster.datasetSource=base+kind+'-1.png';const still=new Image();still.datasetSource=base+kind+'-145.png';
+  const clips={poster,still};for(const phase of ['intro','loop']){const v=document.createElement('video');v.hidden=true;v.muted=v.defaultMuted=true;v.playsInline=true;v.loop=phase==='loop';v.preload='none';v.dataset.source=base+kind+'-'+phase+'.mp4';v.setAttribute('aria-hidden','true');machine.append(v);clips[phase]=v;v.addEventListener('loadeddata',()=>window.GlassBoardScene?.refresh());if(phase==='intro')v.addEventListener('ended',()=>{if(video===v&&effective()?.aftermath?.kind===kind){mediaPhase='loop';video=null;sync();window.GlassBoardScene?.refresh();}});v.addEventListener('error',()=>{error='背景動画を読み込めません';});}films[kind]=clips;
  }
  // Scroll throttling affects pictures only. Music follows the open game/tab,
  // including while the cabinet moves out of the scroll viewport.
- const active=()=>!document.hidden&&!document.getElementById('pachiPanel').hidden&&!document.getElementById('pachiGame').hidden&&document.getElementById('pachiMachine').dataset.activeMachine==='debug';
+ const active=()=>!!document.getElementById('kusa-pachi-window')?.open&&!document.hidden&&!document.getElementById('pachiPanel').hidden&&!document.getElementById('pachiGame').hidden&&document.getElementById('pachiMachine').dataset.activeMachine==='debug';
  const visible=()=>machine.dataset.scrolling!=='true'&&active();
  const enabled=()=>localStorage.getItem('glassGirlAmbientMusicV1')!=='off';
  const musicGate=window.GlassHandleBgm.register(audio,{allowed:()=>active()&&enabled()});
@@ -21,10 +21,17 @@
  function wakePlayback(){if(!playbackRaf&&visible()&&effective()?.aftermath)playbackRaf=requestAnimationFrame(playbackTick);}
  function playbackTick(now){playbackRaf=0;const dt=playbackLast?Math.min(.1,(now-playbackLast)/1000):0;playbackLast=now;if(!visible()){playbackLast=0;sync();return;}if(trial){trial.elapsed+=dt;if(trial.elapsed>=(window.GlassPachiRuntime?.aftermathDurations[trial.kind]||200))trial=null;}sync();wakePlayback();}
  function seek(media,t){if(!Number.isFinite(t))return;if(media.loop&&Number.isFinite(media.duration)&&media.duration>0)t%=media.duration;try{media.currentTime=t;}catch{}}
+ function unloadMedia(){video?.pause();video=null;for(const clips of Object.values(films)){for(const phase of ['intro','loop']){const v=clips[phase];if(v.hasAttribute('src')){v.pause();v.removeAttribute('src');v.load();}}clips.poster.removeAttribute('src');clips.still.removeAttribute('src');}if(audio.hasAttribute('src')){audio.pause();audio.removeAttribute('src');audio.load();}token='';}
  function sync(){
+  if(!active()){unloadMedia();musicGate.update({active:false,volume:1});return;}
   const s=effective(),a=s?.aftermath,blocked=!!(s?.jackpotSession||s?.pending||s?.transitionRemaining||s?.returnTransitionRemaining),next=a?.kind||'normal',nextToken=key+':'+next+':'+(a?.id||0),elapsed=a?.elapsed||0;
   if(token!==nextToken)mediaPhase=elapsed<6?'intro':'loop';else if(elapsed>=6)mediaPhase='loop';
   const v=a?films[a.kind]?.[mediaPhase]:null;
+  for(const [kind,clips]of Object.entries(films)){
+   if(kind===a?.kind){for(const phase of ['intro','loop']){const old=clips[phase];if(old!==v&&old.hasAttribute('src')){old.pause();old.removeAttribute('src');old.load();}}for(const im of [clips.poster,clips.still])if(!im.hasAttribute('src'))im.src=im.datasetSource;if(v&&!v.hasAttribute('src')){v.preload='auto';v.src=v.dataset.source;}}
+   else{for(const phase of ['intro','loop']){const old=clips[phase];if(old.hasAttribute('src')){old.pause();old.removeAttribute('src');old.load();}}clips.poster.removeAttribute('src');clips.still.removeAttribute('src');}
+  }
+
   if(v!==video||token!==nextToken){video?.pause();video=v;if(v)seek(v,mediaPhase==='intro'?elapsed:Math.max(0,elapsed-6)%10);}
   for(const clips of Object.values(films))for(const phase of ['intro','loop'])if(clips[phase]!==video||!visible()||blocked||reduced.matches)clips[phase].pause();
   if(video&&visible()&&!blocked&&!reduced.matches){if(video.paused&&(!video.ended||mediaPhase==='loop'))video.play().catch(()=>{});}

@@ -15,23 +15,21 @@
  const girlProjection=Object.freeze({x:120,y:232,width:200,height:300});
  const girl=document.createElement('video');girl.hidden=true;girl.setAttribute('aria-hidden','true');
  girl.muted=true;girl.defaultMuted=true;girl.loop=true;girl.playsInline=true;
- girl.setAttribute('playsinline','');girl.preload='auto';girl.src=girlBase+'hair-wind-ink-v5.mp4';
+ girl.setAttribute('playsinline','');girl.preload='none';
  machine.append(girl);
- const girlPoster=new Image();girlPoster.src=girlBase+'preview-001.png';
+ const girlPoster=new Image();
  // Native v5 body/hair render with its actual alpha, not a white-color key.
- const girlAlpha=[],girlAlphaBase='assets/glass-girl/back-girl-overlay-v1/';
- let girlAlphaReady=false,girlAlphaError='';
- Promise.all(Array.from({length:18},(_,i)=>new Promise((resolve,reject)=>{const im=new Image();girlAlpha[i]=im;im.onload=resolve;im.onerror=reject;im.src=girlAlphaBase+'sheet-'+i+'.webp';}))).then(()=>{girlAlphaReady=true;wake();}).catch(()=>{girlAlphaError='alpha-load';});
+ const girlAlphaBase='assets/glass-girl/back-girl-overlay-v1/';
+ const alphaBank=new GlassAssetBank(Array.from({length:18},(_,i)=>girlAlphaBase+'sheet-'+i+'.webp'),{onReady:wake});
  let girlEnabled=true,girlMotion=!reduced.matches,girlLoaded=false,girlError='',jackpotScene=false;
- const jackpotVideos=['glass-girl','nameless-girl'].map(slug=>{const v=document.createElement('video');v.hidden=true;v.muted=v.defaultMuted=true;v.loop=true;v.playsInline=true;v.preload='auto';v.src=`assets/glass-girl/live2d-upgrade-v3/${slug}-deluxe.mp4`;machine.append(v);v.addEventListener('loadeddata',wake);return v;});
- const jackpotPosters=['glass-girl','nameless-girl'].map(slug=>{const im=new Image();im.src=`assets/glass-girl/live2d-upgrade-v3/${slug}-still.png`;im.onload=()=>wake();return im;});
+ const jackpotVideos=['glass-girl','nameless-girl'].map(slug=>{const v=document.createElement('video');v.hidden=true;v.muted=v.defaultMuted=true;v.loop=true;v.playsInline=true;v.preload='none';v.dataset.source=`assets/glass-girl/live2d-upgrade-v3/${slug}-deluxe.mp4`;machine.append(v);v.addEventListener('loadeddata',wake);return v;});
+ const jackpotPosters=['glass-girl','nameless-girl'].map(slug=>{const im=new Image();im.datasetSource=`assets/glass-girl/live2d-upgrade-v3/${slug}-still.png`;im.onload=()=>wake();return im;});
  let jackpotIndex=0,jackpotReady=false,entrance=0,presentationToken='';
  const premiumBase='assets/glass-girl/premium-wings-v1/';
- let premiumManifest=null,premiumImages={},premiumReady=false,premiumError='',premiumElapsed=0,premiumActive=false,premiumTrial=false;
- Promise.resolve({wings:{width:640,height:360,frames:72,sheets:Array.from({length:6},(_,i)=>`wings-${i}.webp`)}}).then(async m=>{
-  premiumManifest=m;await Promise.all(m.wings.sheets.map(file=>new Promise((resolve,reject)=>{const im=new Image();premiumImages[file]=im;im.onload=resolve;im.onerror=reject;im.src=premiumBase+file;})));premiumReady=true;wake();
- }).catch(e=>{premiumError=String(e);});
- function drawPremiumSprite(kind,frame,x,y,w,h){const m=premiumManifest[kind];frame=Math.max(0,Math.min(m.frames-1,frame));ctx.drawImage(premiumImages[m.sheets[Math.floor(frame/12)]],frame%4*m.width,Math.floor(frame%12/4)*m.height,m.width,m.height,x,y,w,h);}
+ const premiumManifest={wings:{width:640,height:360,frames:72,sheets:Array.from({length:6},(_,i)=>`wings-${i}.webp`)}};
+ const premiumBank=new GlassAssetBank(premiumManifest.wings.sheets.map(file=>premiumBase+file),{onReady:wake});
+ let premiumElapsed=0,premiumActive=false,premiumTrial=false;
+ function drawPremiumSprite(kind,frame,x,y,w,h){const m=premiumManifest[kind];frame=Math.max(0,Math.min(m.frames-1,frame));const image=premiumBank.use(Math.floor(frame/12));if(image)ctx.drawImage(image,frame%4*m.width,Math.floor(frame%12/4)*m.height,m.width,m.height,x,y,w,h);else{ctx.save();ctx.strokeStyle='#bdf4ff';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x+w/2,y+h/2,w*.4,h*.3,0,0,Math.PI*2);ctx.stroke();ctx.restore();}}
  function specialChange(active){if(premiumActive!==active){premiumActive=active;field.dispatchEvent(new Event('pachi-debug-overlay-change'));}wake();}
  // Reserved center x140..300,y230..420: future girl and flowing figures remain clear.
  const pieces=[
@@ -48,16 +46,29 @@
   {x:306,y:185,size:34,type:'long',angle:1.2,phase:1,period:23,far:true},
   {x:125,y:444,size:37,type:'wide',angle:2,phase:2,period:26,far:true}
  ];
+ const cabinetOpen=()=>document.getElementById('kusa-pachi-window')?.open&&document.getElementById('pachiMachine').dataset.activeMachine==='debug'&&!document.getElementById('pachiPanel').hidden&&!document.getElementById('pachiGame').hidden;
  function visible(){return machine.dataset.scrolling!=='true'&&document.getElementById('pachiMachine').dataset.activeMachine==='debug'&&!document.hidden&&canvas.getBoundingClientRect().width>0&&!document.getElementById('pachiPanel').hidden&&!document.getElementById('pachiGame').hidden;}
+ function unloadVideo(v){if(v.hasAttribute('src')){v.pause();v.removeAttribute('src');v.load();}}
+ function releaseMedia(){unloadVideo(girl);jackpotVideos.forEach(unloadVideo);girlLoaded=false;girlPoster.removeAttribute('src');jackpotPosters.forEach(im=>im.removeAttribute('src'));alphaBank.release({retry:true});premiumBank.release({retry:true});}
  function syncGirl(){
-  jackpotVideos.forEach((v,i)=>{if(visible()&&jackpotScene&&jackpotReady&&!reduced.matches&&i===jackpotIndex){if(v.paused)v.play().catch(()=>{});}else v.pause();});
-  const playing=visible()&&enabled&&girlEnabled&&girlMotion&&girlLoaded&&!jackpotScene;
+  if(!cabinetOpen()){releaseMedia();return;}
+  loadBase();
+  if(!girlPoster.hasAttribute('src'))girlPoster.src=girlBase+'preview-001.png';
+  jackpotVideos.forEach((v,i)=>{
+   if(jackpotScene&&i===jackpotIndex){const poster=jackpotPosters[i];if(!poster.hasAttribute('src'))poster.src=poster.datasetSource;
+    if(visible()&&jackpotReady&&!reduced.matches){if(!v.hasAttribute('src')){v.preload='auto';v.src=v.dataset.source;}if(v.paused)v.play().catch(()=>{});}else v.pause();
+   }else unloadVideo(v);
+  });
+  if(jackpotScene){unloadVideo(girl);girlLoaded=false;alphaBank.release();return;}
+  const playing=visible()&&enabled&&girlEnabled&&girlMotion;
   if(!playing){girl.pause();return;}
+  if(!girl.hasAttribute('src')){girl.preload='auto';girl.src=girlBase+'hair-wind-ink-v5.mp4';}
   if(girl.paused)girl.play().catch(()=>{girlError='autoplay-blocked';});
  }
  function paint(){
   // Preserve the actual previous picture until the black film becomes opaque.
-  if(transitionHold)return;
+  if(!visible()||transitionHold)return;
+  if(!premiumActive)premiumBank.release();
   ctx.setTransform(canvas.width/440,0,0,canvas.height/570,0,0);ctx.clearRect(0,0,440,570);
   if(!enabled&&!jackpotScene&&!window.GlassAftermath?.snapshot().active)return;
   ctx.fillStyle='#fff';ctx.fillRect(0,0,440,570);
@@ -70,11 +81,12 @@
    paintCount++;return;
   }
   if(window.GlassAftermath?.draw(ctx,440,570)){
-   if(girlEnabled&&girlAlphaReady){const frame=Math.floor(girl.currentTime*24)%288,sheet=girlAlpha[Math.floor(frame/16)],cell=frame%16;
-    ctx.drawImage(sheet,cell%4*320,Math.floor(cell/4)*480,320,480,girlProjection.x,girlProjection.y,girlProjection.width,girlProjection.height);}
-   if(premiumActive&&premiumReady){ctx.save();ctx.globalAlpha=Math.min(1,Math.max(0,(6.4-premiumElapsed)/.4));drawPremiumSprite('wings',Math.floor(premiumElapsed*12),40,242,360,202.5);ctx.restore();}
+   if(girlEnabled){const frame=Math.floor(girl.currentTime*24)%288,sheet=alphaBank.use(Math.floor(frame/16)),cell=frame%16;
+    if(sheet)ctx.drawImage(sheet,cell%4*320,Math.floor(cell/4)*480,320,480,girlProjection.x,girlProjection.y,girlProjection.width,girlProjection.height);}
+   if(premiumActive){ctx.save();ctx.globalAlpha=Math.min(1,Math.max(0,(6.4-premiumElapsed)/.4));drawPremiumSprite('wings',Math.floor(premiumElapsed*12),40,242,360,202.5);ctx.restore();}
    paintCount++;return;
   }
+  alphaBank.release();
   if(girlEnabled){
    const source=girlLoaded&&girl.readyState>=2?girl:girlPoster.complete&&girlPoster.naturalWidth?girlPoster:null;
    if(source){
@@ -85,7 +97,7 @@
   }
   // Transparent wings are an additive presentation, not a replacement scene.
   // The root floats at the upper back (y353), over the unchanged hair image.
-  if(premiumActive&&premiumReady){
+  if(premiumActive){
    ctx.save();ctx.globalAlpha=Math.min(1,Math.max(0,(6.4-premiumElapsed)/.4));
    drawPremiumSprite('wings',Math.floor(premiumElapsed*12),40,242,360,202.5);ctx.restore();
   }
@@ -109,7 +121,7 @@
   if(now-last>=1000/30){const dt=Math.min((now-last)/1000,.1);if(motion)time+=dt;if(jackpotScene&&jackpotReady)entrance+=dt;if(premiumTrial){premiumElapsed+=dt;if(premiumElapsed>=6.4){premiumTrial=false;specialChange(false);}}last=now;paint();}
   if(window.GlassAftermath?.snapshot().active||premiumActive||jackpotScene||enabled&&(motion||(girlEnabled&&girlMotion&&girlLoaded)))raf=requestAnimationFrame(frame);
  }
- function wake(){syncGirl();paint();if(visible()&&(window.GlassAftermath?.snapshot().active||premiumActive||jackpotScene||enabled&&(motion||(girlEnabled&&girlMotion&&girlLoaded)))&&!raf)raf=requestAnimationFrame(frame);}
+ function wake(){syncGirl();if(!cabinetOpen()){last=0;cancelAnimationFrame(raf);raf=0;return;}paint();if(visible()&&(window.GlassAftermath?.snapshot().active||premiumActive||jackpotScene||enabled&&(motion||(girlEnabled&&girlMotion&&girlLoaded)))&&!raf)raf=requestAnimationFrame(frame);}
  const controls=document.createElement('div');controls.className='glass-board-controls';
  controls.style.cssText='position:relative;z-index:36;display:flex;justify-content:center;gap:8px;padding:6px;margin-top:40px;';
  controls.style.flexWrap='wrap';
@@ -117,7 +129,7 @@
  for(const button of [toggle,pause,girlToggle,girlPause])button.type='button';
  controls.append(toggle,pause,girlToggle,girlPause);
  const specialPreview=document.createElement('button');specialPreview.type='button';specialPreview.textContent='特別当たり演出を見る';specialPreview.id='glassPremiumWingsPreview';controls.append(specialPreview);
- specialPreview.onclick=()=>{if(!premiumReady||jackpotScene)return;premiumTrial=true;premiumElapsed=0;specialChange(true);};
+ specialPreview.onclick=()=>{if(jackpotScene)return;premiumTrial=true;premiumElapsed=0;specialChange(true);};
  function labels(){toggle.textContent=enabled?'ガラス背景 ON':'ガラス背景 OFF';toggle.setAttribute('aria-pressed',String(enabled));pause.textContent=motion?'浮遊 ON':'浮遊 OFF';pause.setAttribute('aria-pressed',String(motion));girlToggle.textContent=girlEnabled?'少女 ON':'少女 OFF';girlToggle.setAttribute('aria-pressed',String(girlEnabled));girlPause.textContent=girlMotion?'少女の揺れ ON':'少女の揺れ OFF';girlPause.setAttribute('aria-pressed',String(girlMotion));}
  function notify(){machine.dataset.boardScene=enabled?'on':'off';field.dispatchEvent(new Event('pachi-debug-overlay-change'));labels();wake();}
  toggle.addEventListener('click',()=>{enabled=!enabled;notify();});pause.addEventListener('click',()=>{motion=!motion;last=0;notify();});
@@ -128,17 +140,21 @@
  reduced.addEventListener('change',()=>{motion=girlMotion=!reduced.matches;last=0;labels();wake();});
  new MutationObserver(wake).observe(document.body,{subtree:true,attributes:true,attributeFilter:['hidden','open','data-active-machine','data-scrolling']});
  document.addEventListener('visibilitychange',()=>{last=0;wake();});
- girl.addEventListener('loadeddata',()=>{girlLoaded=true;girlError='';wake();});
- girl.addEventListener('error',()=>{girlLoaded=false;girlError='video-load';wake();});
+ girl.addEventListener('loadeddata',()=>{if(!cabinetOpen())return;girlLoaded=true;girlError='';wake();});
+ girl.addEventListener('error',()=>{if(!girl.hasAttribute('src'))return;girlLoaded=false;girlError='video-load';wake();});
  girlPoster.addEventListener('load',wake);
  const files={long:'shard-long.png',wide:'shard-wide.png',longLight:'shard-long-light.png',wideLight:'shard-wide-light.png'};
- Promise.all(Object.entries(files).map(([key,file])=>new Promise((resolve,reject)=>{const img=new Image();images[key]=img;img.onload=resolve;img.onerror=reject;img.src=base+file;}))).then(()=>{loaded=true;notify();}).catch(()=>{enabled=false;machine.dataset.boardSceneError='image-load';notify();});
-window.GlassBoardScene=Object.freeze({refresh:wake,holdForTransition:(s,key)=>{const blackOut=window.GlassPachiRuntime.config.transitionSeconds-1.25;transitionHold=holdKey===key&&!!(s.jackpotSession?.phase==='reveal'||s.transitionRemaining>blackOut||s.returnTransitionRemaining>blackOut);holdKey=key;},updateSpecial:s=>{if(s.pending||s.jackpotSession||s.transitionRemaining||s.returnTransitionRemaining){premiumTrial=false;specialChange(false);return;}if(premiumTrial)return;premiumElapsed=s.clock-s.lastSettleAt;specialChange(!!(s.lastHit&&!s.lastJackpot&&s.lastBaseAward===500&&s.afterRemaining>0));},snapshot:()=>({transitionHold,special:{active:premiumActive,trial:premiumTrial,ready:premiumReady,elapsed:premiumElapsed,error:premiumError},enabled,motion,loaded,time,paintCount,jackpotScene,jackpot:{index:jackpotIndex,ready:jackpotReady,entrance,direction:jackpotIndex===0?'from-bottom':'from-top',playing:!jackpotVideos[jackpotIndex].paused,token:presentationToken,error:jackpotVideos[jackpotIndex].error?.message||''},pieces:pieces.length,girl:{alphaReady:girlAlphaReady,alphaError:girlAlphaError,alphaVisible:girlEnabled&&girlAlphaReady&&!!window.GlassAftermath?.snapshot().active&&!jackpotScene,alphaFrame:Math.floor(girl.currentTime*24)%288,enabled:girlEnabled,motion:girlMotion,loaded:girlLoaded,currentTime:girl.currentTime,paused:girl.paused,error:girlError,projection:girlProjection}}),setEnabled:value=>{enabled=!!value;notify();},setJackpotScene:(value,options={})=>{
+ let baseLoading=null;
+ function loadBase(){if(baseLoading)return;baseLoading=Promise.all(Object.entries(files).map(([key,file])=>new Promise((resolve,reject)=>{const img=new Image();images[key]=img;img.onload=resolve;img.onerror=reject;img.src=base+file;}))).then(()=>{loaded=true;notify();}).catch(()=>{enabled=false;machine.dataset.boardSceneError='image-load';notify();});}
+ document.addEventListener('glass-cabinet-released',()=>{releaseMedia();cancelAnimationFrame(raf);raf=0;last=0;});
+
+window.GlassBoardScene=Object.freeze({refresh:wake,holdForTransition:(s,key)=>{const blackOut=window.GlassPachiRuntime.config.transitionSeconds-1.25;transitionHold=holdKey===key&&!!(s.jackpotSession?.phase==='reveal'||s.transitionRemaining>blackOut||s.returnTransitionRemaining>blackOut);holdKey=key;},updateSpecial:s=>{if(s.pending||s.jackpotSession||s.transitionRemaining||s.returnTransitionRemaining){premiumTrial=false;specialChange(false);return;}if(premiumTrial)return;premiumElapsed=s.clock-s.lastSettleAt;specialChange(!!(s.lastHit&&!s.lastJackpot&&s.lastBaseAward===500&&s.afterRemaining>0));},snapshot:()=>({transitionHold,special:{active:premiumActive,trial:premiumTrial,ready:premiumBank.cache.size>0,elapsed:premiumElapsed,error:premiumBank.error,cache:premiumBank.snapshot()},enabled,motion,loaded,time,paintCount,jackpotScene,jackpot:{index:jackpotIndex,ready:jackpotReady,entrance,direction:jackpotIndex===0?'from-bottom':'from-top',playing:!jackpotVideos[jackpotIndex].paused,token:presentationToken,error:jackpotVideos[jackpotIndex].error?.message||''},pieces:pieces.length,girl:{alphaReady:alphaBank.cache.size>0,alphaError:alphaBank.error,cache:alphaBank.snapshot(),alphaVisible:girlEnabled&&alphaBank.cache.size>0&&!!window.GlassAftermath?.snapshot().active&&!jackpotScene,alphaFrame:Math.floor(girl.currentTime*24)%288,enabled:girlEnabled,motion:girlMotion,loaded:girlLoaded,currentTime:girl.currentTime,paused:girl.paused,error:girlError,projection:girlProjection}}),setEnabled:value=>{enabled=!!value;notify();},setJackpotScene:(value,options={})=>{
   const index=options.index===1?1:0,token=options.token||'',ready=options.ready!==false;
   if(jackpotScene===!!value&&jackpotReady===(!!value&&ready)&&(!value||index===jackpotIndex&&token===presentationToken))return;
-  if(value&&(token!==presentationToken||index!==jackpotIndex)){presentationToken=token;jackpotIndex=index;entrance=0;jackpotVideos[index].currentTime=0;}
+  if(value&&(token!==presentationToken||index!==jackpotIndex)){presentationToken=token;jackpotIndex=index;entrance=0;try{jackpotVideos[index].currentTime=0;}catch{}}
   if(value&&ready&&!jackpotReady)entrance=0;
   jackpotScene=!!value;jackpotReady=!!value&&ready;machine.classList.toggle('glass-jackpot-character-active',jackpotScene);field.dispatchEvent(new Event('pachi-debug-overlay-change'));wake();
  }});
+ canvas.addEventListener('contextlost',e=>e.preventDefault());canvas.addEventListener('contextrestored',()=>{last=0;wake();});
  labels();
 })();

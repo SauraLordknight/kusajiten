@@ -3,15 +3,13 @@
  'use strict';
  const crops={gate:[154,113,1864,499],blade:[423,20,178,1465],hub:[352,383,526,512],tunnel:[382,58,260,1404],pocket:[60,168,1662,600],'attacker-frame':[57,82,1989,563],'attacker-door':[39,295,2095,130]};
  const directory=new URL('../assets/glass-girl/mechanisms-v1/',document.currentScript.src),images={},failed=[],reduce=matchMedia('(prefers-reduced-motion: reduce)');
- for(const key of Object.keys(crops)){
-  const img=new Image();images[key]=img;
-  img.onload=()=>document.getElementById('pachiDebugCanvas')?.dispatchEvent(new Event('pachi-debug-overlay-change'));
-  img.onerror=()=>{failed.push(key);img.onload();};img.src=new URL(key+'.png',directory).href;
- }
+ const keys=Object.keys(crops);
+ const bank=new GlassAssetBank(keys.map(key=>new URL(key+'.png',directory).href),{capacity:keys.length,onReady:()=>{for(let i=0;i<keys.length;i++)if(bank.peek(i))images[keys[i]]=bank.peek(i);},transform:(im,index)=>{const[x,y,w,h]=crops[keys[index]],scale=Math.min(1,1024/Math.max(w,h)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(w*scale));c.height=Math.max(1,Math.round(h*scale));c.getContext('2d').drawImage(im,x,y,w,h,0,0,c.width,c.height);c.complete=true;c.naturalWidth=c.width;c.naturalHeight=c.height;c.src=im.src;return c;}});
+ document.addEventListener('glass-cabinet-released',()=>{for(const key of keys)delete images[key];});
  function sprite(ctx,key,x,y,w,h,angle=0,alpha=1){
-  const im=images[key];if(!im.complete||!im.naturalWidth)return false;
+  const im=images[key];if(!im?.complete||!im.naturalWidth)return false;
   ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha*=alpha;
-  ctx.drawImage(im,...crops[key],-w/2,-h/2,w,h);ctx.restore();return true;
+  ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore();return true;
  }
  function strip(ctx,s,key='attacker-door',width=4){
   const dx=s.b.x-s.a.x,dy=s.b.y-s.a.y,length=Math.hypot(dx,dy),angle=Math.atan2(dy,dx);
@@ -64,5 +62,5 @@
   if(diagnostic)p.draw(ctx,{ink:'#235169',line:'#20a6d4'});
   ctx.restore();
  }
- root.GlassMechanismArt=Object.freeze({draw,geometry,snapshot:()=>({loaded:Object.keys(crops).filter(k=>images[k].complete&&images[k].naturalWidth),failed:[...failed],files:Object.fromEntries(Object.entries(images).map(([k,v])=>[k,v.src])),crops})});
+ root.GlassMechanismArt=Object.freeze({draw,geometry,prepare:()=>bank.prepareAll(),snapshot:()=>({loaded:Object.keys(crops).filter(k=>images[k]?.complete&&images[k]?.naturalWidth),failed:[...failed],cache:bank.snapshot(),files:Object.fromEntries(keys.map(k=>[k,new URL(k+'.png',directory).href])),crops})});
 })(window);

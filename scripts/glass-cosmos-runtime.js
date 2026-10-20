@@ -80,6 +80,7 @@
   function updatePlayback() {
     if (!activated) return;
     appliedMotion = motion.matches;
+    if(document.querySelector('#kusa-pachi-window[open],#pachiSelectionWindow[open]')){for(const host of [backdrop,portrait]){host?._video?.pause();host?._setAnimatedImage(false);}return;}
     for (const host of [backdrop, portrait]) {
       if (!host) continue;
       if(scrolling&&!document.hidden&&!motion.matches){host._video?.pause();if(host._useAnimatedImage)host._setAnimatedImage(false);continue;}
@@ -175,6 +176,8 @@
   });
   window.addEventListener('pageshow', sync);
   for (const type of ['kusa-theme-changed','kusa-theme-applied','kusa-player-changed']) window.addEventListener(type, sync);
+  function observeGameWindows(){for(const id of ['kusa-pachi-window','pachiSelectionWindow']){const n=document.getElementById(id);if(n)new MutationObserver(updatePlayback).observe(n,{attributes:true,attributeFilter:['open']});}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',observeGameWindows,{once:true});else observeGameWindows();
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync, {once: true});
   else sync();
 })();

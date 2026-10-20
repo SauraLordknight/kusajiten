@@ -5,12 +5,9 @@
   const order=Object.keys(files),images={},failed=[];
   const script=document.currentScript;
   const directory=new URL('../assets/glass-girl/slot-symbols-v2/',script.src);
-  for(const [key,file]of Object.entries(files)){
-    const img=new Image();images[key]=img;
-    img.onload=()=>document.getElementById('pachiDebugCanvas')?.dispatchEvent(new Event('pachi-debug-overlay-change'));
-    img.onerror=()=>{failed.push(key);img.onload();};
-    img.src=new URL(file+'.png',directory).href;
-  }
+  for(const key of order)images[key]=new Image();
+  const bank=new GlassAssetBank(order.map(key=>new URL(files[key]+'.png',directory).href),{capacity:order.length,onReady:()=>{for(let i=0;i<order.length;i++)if(bank.peek(i))images[order[i]]=bank.peek(i);document.getElementById('pachiDebugCanvas')?.dispatchEvent(new Event('pachi-debug-overlay-change'));},transform:im=>{const scale=Math.min(1,512/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*scale));c.height=Math.max(1,Math.round(im.height*scale));c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.complete=true;c.naturalWidth=c.width;c.naturalHeight=c.height;c.src=im.src;return c;}});
+  document.addEventListener('glass-cabinet-released',()=>{for(const key of order)images[key]=new Image();});
   const reduce=matchMedia('(prefers-reduced-motion: reduce)');
   const glowDuration=state=>state?.afterDuration>0?state.afterDuration*.96:1.15;
   function animating(state,reducedMotion=reduce.matches){return !!state&&!reducedMotion&&(state.jackpotSession?.phase==='reveal'||!state.current&&state.lastAward>0&&state.clock>=state.lastSettleAt&&state.clock-state.lastSettleAt<glowDuration(state));}
@@ -76,5 +73,5 @@
     }
     ctx.restore();
   }
-  root.GlassCrystalSymbols=Object.freeze({draw,animating,snapshot:()=>({loaded:order.filter(k=>images[k].complete&&images[k].naturalWidth),failed:[...failed],files:Object.fromEntries(order.map(k=>[k,images[k].src]))})});
+  root.GlassCrystalSymbols=Object.freeze({prepare:()=>bank.prepareAll(),draw,animating,snapshot:()=>({loaded:order.filter(k=>images[k].complete&&images[k].naturalWidth),failed:bank.error?[bank.error]:[...failed],cache:bank.snapshot(),files:Object.fromEntries(order.map(k=>[k,images[k].src]))})});
 })(window);
