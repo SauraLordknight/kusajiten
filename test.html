@@ -34,7 +34,7 @@
 <link rel="stylesheet" href="styles/glass-energy.css?v=20261011-original-layers">
 <link rel="stylesheet" href="styles/glass-counter.css?v=20261018-actual-fit">
 <link rel="stylesheet" href="styles/site-skins.css?v=20261009themes">
-<link rel="stylesheet" href="styles/info-modern-content.css?v=20261020-bgm-menu-reading">
+<link rel="stylesheet" href="styles/info-modern-content.css?v=20261020-readable-windows">
 <link rel="stylesheet" href="styles/modern-dialog-content.css?v=20261016">
 <link rel="stylesheet" href="styles/card-presentation.css?v=20261016-square">
 <link rel="stylesheet" href="styles/animated-gacha-cards.css?v=20261018-omega-sigil-v4">
@@ -49,7 +49,7 @@
 <script defer src="scripts/theme-controller.js?v=20261020-bgm-menu-reading"></script>
 <script defer src="scripts/site-bgm.js?v=20261020-bgm-menu-reading"></script>
 
-<script defer src="scripts/screen-layout.js?v=20261020-scroll-performance"></script>
+<script defer src="scripts/screen-layout.js?v=20261020-readable-windows"></script>
 <script defer src="scripts/site-announcements.js?v=20261020-launch-gift"></script>
 <script defer src="scripts/game-windows.js?v=20261020-story-window"></script>
 <script defer src="scripts/pachi-layout.js?v=20261020-original-notice"></script>
@@ -80,7 +80,7 @@
 
 <script defer src="scripts/window-theme.js?v=20261009static"></script>
 <link rel="stylesheet" href="styles/glass-cosmos-theme.css?v=20261020-safe-background-v2">
-<link rel="stylesheet" href="styles/permanent-themes.css?v=20261020-safe-background-v2">
+<link rel="stylesheet" href="styles/permanent-themes.css?v=20261020-readable-windows">
 <link rel="stylesheet" href="styles/text-contrast.css?v=20261019-audit">
 <script defer src="scripts/glass-cosmos-runtime.js?v=20261020-ios-memory"></script>
 <link rel="stylesheet" href="styles/mobile-compact.css?v=20261020-inline-drawer">
@@ -123,7 +123,7 @@
   <dialog id="kusaShopDialog" class="commerce-dialog theme-window" aria-labelledby="kusaShopTitle">
     <div class="commerce-sticky">
     <header class="theme-window-head"><div><small>KUSA SHOP</small><h2 id="kusaShopTitle">草むらショップ</h2></div><button type="button" data-commerce-close="kusaShopDialog" aria-label="ショップを閉じる">×</button></header>
-    <div class="commerce-wallet"><span>💠 チップ <strong id="shopChips">0</strong></span><span>🎨 草彩片 <strong id="shopPaint">0</strong></span></div>
+    <div class="commerce-wallet" hidden aria-hidden="true"><span>💠 チップ <strong id="shopChips">0</strong></span><span>🎨 草彩片 <strong id="shopPaint">0</strong></span></div>
     <div class="shop-tabs" role="tablist" aria-label="ショップの商品"><button id="shopSuppliesTab" type="button" role="tab" data-shop-tab="supplies" aria-selected="true" aria-controls="shopContent">補給品</button><button id="shopSkinsTab" type="button" role="tab" data-shop-tab="skins" aria-selected="false" aria-controls="shopContent">スキン・テーマ</button></div>
     </div>
     <div id="shopContent" role="tabpanel"></div><p id="shopMessage" role="status" aria-live="polite"></p>
@@ -178,7 +178,7 @@
       <details><summary>次の抽選での実際の排出率を見る</summary><table class="gacha-rates-table"><caption>現在の所持カードとキーの効果を反映した確率</caption><thead><tr><th scope="col">レアリティ</th><th scope="col">次の1回</th></tr></thead><tbody id="gachaCurrentRates"></tbody></table></details>
       <h3>未獲得カードの優先について</h3>
       <p>図鑑が完成するまでは、未獲得カードを優先します。通常時は、未獲得カードがないレアリティが抽選対象から外れるため、実際の排出率が変わります。図鑑完成後は、獲得済みカードも含めて抽選します。</p>
-      <p>オーロラキー中はUR・GODR・ΩRを各1/3で抽選します。選ばれたレアリティ内に未獲得カードがない場合は、そのレアリティの獲得済みカードも対象になります。</p>
+      <p>オーロラキー中は???・???・???を各1/3で抽選します。選ばれたレアリティ内に未獲得カードがない場合は、そのレアリティの獲得済みカードも対象になります。</p>
       <p class="gacha-rates-note">表示は1回ごとの確率です。一定回数での獲得を保証するものではありません。</p>
     </div>
   </dialog>
@@ -1346,7 +1346,7 @@ function renderGachaRates(pools, allCards) {
   const aurora = aggregate(getGachaRarityDistribution(pools, true));
   const currentPools = getGachaDrawPools(pools, readGachaState().obtainedCards, allCards, active);
   const current = aggregate(getGachaRarityDistribution(currentPools, active));
-  const labels = [['N', 'N（草・用語）'], ['R', 'R'], ['SR', 'SR'], ['SSR', 'SSR'], ['UR', 'UR'], ['GODR', 'GODR'], ['Ω', 'ΩR']];
+  const labels = [['N', 'N（草・用語）'], ['R', 'R'], ['SR', 'SR'], ['SSR', 'SSR'], ['UR', '???'], ['GODR', '???'], ['Ω', '???']];
   const rows = values => labels.map(([rarity, label]) => {
     const row = document.createElement('tr');
     const heading = document.createElement('th'); heading.scope = 'row'; heading.textContent = label; row.append(heading);
@@ -1357,7 +1357,7 @@ function renderGachaRates(pools, allCards) {
   });
   document.getElementById('gachaBaseRates').replaceChildren(...rows([normal, aurora]));
   document.getElementById('gachaCurrentRates').replaceChildren(...rows([current]));
-  document.getElementById('gachaRatesStatus').textContent = active ? '現在：オーロラキー発動中（UR・GODR・ΩRが各1/3）' : '現在：通常抽選';
+  document.getElementById('gachaRatesStatus').textContent = active ? '現在：オーロラキー発動中（???・???・???が各1/3）' : '現在：通常抽選';
 }
 
 function formatRemaining(milliseconds) {

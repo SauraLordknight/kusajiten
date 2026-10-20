@@ -188,3 +188,12 @@ html.night[data-site-theme="mint-soda"]{--skin-glass:#102f2e33}
  html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.named-item,.filter-bar,.type-filter-bar,.kana-nav,.service-caption,.kusa-profile-panel,.site-menu-group){text-shadow:0 1px 1px var(--skin-text-edge)}
  html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.profile-management-dialog,.commerce-dialog,.site-info-dialog,.site-theme-dialog,.named-directory-dialog)::backdrop{backdrop-filter:none;-webkit-backdrop-filter:none}
 }
+
+/* Reading windows use a dense panel; the main page keeps its glass finish. */
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(dialog,.site-menu-drawer):not(.fishing-dialog){
+ --skin-glass:var(--skin-panel);--theme-panel:var(--skin-panel);
+ background:var(--skin-panel);color:var(--skin-ink);
+}
+html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme dialog :is(.site-info-content,.detail-body,.shop-product,.site-menu-group){color:var(--skin-ink)}
+/* Wallet remains a nonvisual animation target for capsule rewards. */
+#kusaShopDialog .commerce-wallet[hidden],.commerce-dialog .commerce-wallet[hidden]{display:none!important}

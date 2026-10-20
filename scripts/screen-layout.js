@@ -91,7 +91,7 @@
   menuGroups.forEach(({group})=>panes.menu.append(group));
   function openInfo(page, target = page) {
     closeMenu();
-    infoPages.forEach((_,n) => { n.hidden = n !== page; });
+    infoPages.forEach((_,n) => { n.hidden = n !== page; n.classList.toggle('site-info-active', n === page); });
     infoTitle.textContent = infoPages.get(page); if (page.matches('details')) page.open = true;
     if (!infoDialog.open) infoDialog.showModal();
     infoDialog.scrollTop=0; infoContent.scrollTop = 0; infoClose.focus({preventScroll:true});

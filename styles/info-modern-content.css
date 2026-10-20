@@ -127,3 +127,11 @@
 /* Explicitly reveal the selected page even when a theme supplies entry effects. */
 #siteInfoDialog .site-info-content > :not([hidden]){display:block!important;visibility:visible!important;opacity:1!important;transform:none!important}
 #siteInfoDialog .site-info-content > :not([hidden]) :is(p,li,small){color:inherit}
+
+/* Content in a modal must not depend on page scroll/reveal state. */
+#siteInfoDialog .site-info-content > .site-info-active:not([hidden]){
+ display:block!important;visibility:visible!important;opacity:1!important;
+ transform:none!important;content-visibility:visible;color:var(--theme-ink,#203020);
+}
+#siteInfoDialog .site-info-active :is(p,h2,h3,summary,li){color:inherit}
+.commerce-dialog .commerce-wallet[hidden]{display:none!important}
