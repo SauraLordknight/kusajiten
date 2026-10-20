@@ -135,3 +135,6 @@
 }
 #siteInfoDialog .site-info-active :is(p,h2,h3,summary,li){color:inherit}
 .commerce-dialog .commerce-wallet[hidden]{display:none!important}
+
+#siteInfoDialog .play-guide-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:14px;border:1px solid var(--theme-line);border-radius:8px;background:var(--info-soft);font-weight:700;font-size:14px;line-height:1.7}
+#siteInfoDialog .play-guide-flow span{max-width:100%;overflow-wrap:anywhere}

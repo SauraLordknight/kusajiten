@@ -61,7 +61,7 @@
   panes.menu.querySelectorAll('.screen-menu-links button').forEach((n,i)=>n.addEventListener('click',()=>targets[i]==='siteThemeOpen'?document.getElementById(targets[i]).click():openTarget(document.getElementById(targets[i]))));
   const infoDialog=document.getElementById('siteInfoDialog'),infoTitle=document.getElementById('siteInfoTitle'),infoClose=infoDialog.querySelector('.site-info-head button'),infoContent=infoDialog.querySelector('.site-info-content');
   infoClose.addEventListener('click',()=>infoDialog.close());
-  const infoPages=new Map([...infoContent.children].map(page=>[page,page===migration?'データ保存':page===purpose?'この事典について・掲載方針の要点':page.querySelector('h2,summary')?.textContent.trim()||'サイトの案内']));
+  const infoPages=new Map([...infoContent.children].map(page=>[page,page===migration?'データ保存':page===purpose?'この事典について・掲載方針の要点':page.id==='how-to-play'?'遊び方':page.querySelector('h2,summary')?.textContent.trim()||'サイトの案内']));
   const entries=[...panes.menu.querySelectorAll('.site-info-index button')];[...infoPages.keys()].forEach((page,i)=>entries[i].addEventListener('click',()=>openInfo(page)));
   // Keep one destination per row, grouped by the task visitors want to do.
   const menuIndex=panes.menu.querySelector('.site-info-index');
@@ -74,9 +74,10 @@
   const supportIds=new Set(['siteAdmin','profile-offer','correction-request']);
   [...infoPages.keys()].forEach((page,i)=>{
     const row=entries[i];if(page===purpose){row.remove();return;}
-    let key=page===migration?'quick':learningIds.has(page.id)?'learn':supportIds.has(page.id)||page.classList.contains('policy-banner')||/プロフィール掲載/.test(row.textContent)?'support':'info';
+    let key=(page===migration||page.id==='how-to-play')?'quick':learningIds.has(page.id)?'learn':supportIds.has(page.id)||page.classList.contains('policy-banner')||/プロフィール掲載/.test(row.textContent)?'support':'info';
     if(page===migration)row.textContent='💾 データ保存・読み込み';
     if(page.id==='how-to-use')row.textContent='使い方';
+    if(page.id==='how-to-play')row.textContent='遊び方';
     if(page.id==='revision-history')row.textContent='更新履歴';
     if(page.classList.contains('policy-banner'))row.textContent='掲載方針';
     menuGroups.get(key).links.append(row);
