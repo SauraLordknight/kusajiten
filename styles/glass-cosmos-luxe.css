@@ -1,0 +1,48 @@
+/* Lightweight glass ornaments: static gradients, short transform/opacity animation. */
+html[data-site-theme="glass-cosmos"] .base-theme{
+ --crystal-edge:#b8d8eb;--crystal-light:#e9faff;--crystal-gold:#cfb977;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.site-shop,.kusa-games-hub,.kusa-profile,.sidebar-block,.named-directory,.theme-window:not(.screen-game-window):not(.screen-workspace),.site-theme-dialog,.profile-management-dialog,.named-directory-dialog,.site-menu-drawer){
+ border-color:var(--crystal-edge);
+ box-shadow:inset 0 0 0 1px #ffffffd9,inset 0 0 0 3px #84b4d12e,0 0 0 1px #63849c73,0 7px 22px #17394b1a;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.theme-window-head,.site-info-head,.profile-management-dialog>header,.named-directory-dialog>header,.site-menu-drawer-head,.section-heading,#kusaGamesTitle){
+ position:relative;isolation:isolate;
+ border-bottom:1px solid #c0e8f1;
+ background-image:linear-gradient(115deg,#102b43eb,#33546cde 65%,#6a90a3cf);
+ box-shadow:inset 0 1px 0 #fff9,inset 0 -2px 0 #9ddbe52e;
+}
+/* Four small crystal facets stay inside the heading, away from its controls. */
+html[data-site-theme="glass-cosmos"] .base-theme :is(.theme-window-head,.site-info-head,.profile-management-dialog>header,.named-directory-dialog>header,.site-menu-drawer-head)::before{
+ content:"";position:absolute;inset:3px;pointer-events:none;z-index:-1;
+ background:conic-gradient(from 45deg,#f7ffff,#7bacc7,#ecfaff,#ad9359,#f7ffff) top left / 7px 7px no-repeat,
+ conic-gradient(from 45deg,#f7ffff,#7bacc7,#ecfaff,#ad9359,#f7ffff) top right / 7px 7px no-repeat,
+ conic-gradient(from 45deg,#f7ffff,#7bacc7,#ecfaff,#ad9359,#f7ffff) bottom left / 7px 7px no-repeat,
+ conic-gradient(from 45deg,#f7ffff,#7bacc7,#ecfaff,#ad9359,#f7ffff) bottom right / 7px 7px no-repeat;
+}
+/* This line animates once on opening; it never spans the world backdrop. */
+html[data-site-theme="glass-cosmos"] .base-theme :is(dialog[open],.detail-modal.is-open,.news-modal.is-open) .theme-window-head::after{
+ content:"";position:absolute;left:0;right:0;bottom:0;height:2px;pointer-events:none;
+ background:linear-gradient(90deg,transparent,#a6eaff,#fff5cc,#a6eaff,transparent);
+ transform-origin:left;animation:glass-crystal-entry .65s ease-out both;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.theme-window-head,.site-menu-drawer-head) :is(h2,h3){
+ color:#f5fcff;text-shadow:0 1px 1px #0b213e;
+ letter-spacing:.035em;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(.screen-button,.site-utility,.site-menu-toggle,.shop-tabs button,.commerce-dialog button,.site-theme-dialog button,.kusa-profile-panel button,.kusa-shop-open,.shop-shortcuts button){
+ background-image:linear-gradient(115deg,#ffffff9c 0%,#ffffff24 38%,#b8def131 39%,#ffffff75 42%,#ffffff12 46%,#ffffff38 100%);
+ border-color:#88adc4;box-shadow:inset 0 1px 0 #ffffffdb,inset 0 -1px 0 #49728d24;
+ transition:border-color .14s ease,box-shadow .14s ease;
+}
+html[data-site-theme="glass-cosmos"] .base-theme :is(button:active,button:focus-visible,[aria-selected="true"],[aria-pressed="true"]):not(.pdm-handle):not(.pachi-fire){
+ border-color:#42abc8;box-shadow:inset 0 0 0 1px #c2f2ff,0 0 0 2px #64cce542;
+}
+html[data-site-theme="glass-cosmos"] .base-theme .shop-tabs [aria-selected="true"]{
+ border-bottom:3px solid #74ddf4;
+}
+@keyframes glass-crystal-entry{0%{transform:scaleX(0);opacity:0}25%{opacity:1}100%{transform:scaleX(1);opacity:.65}}
+@media(prefers-reduced-motion:reduce){
+ html[data-site-theme="glass-cosmos"] .base-theme .theme-window-head::after{animation:none!important}
+ html[data-site-theme="glass-cosmos"] .base-theme button{transition:none!important}
+}
