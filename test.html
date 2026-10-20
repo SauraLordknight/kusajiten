@@ -19,7 +19,7 @@
 <script src="scripts/site-theme-bootstrap.js?v=20261019-prices-rewards"></script>
 <script src="scripts/shared-pachi-setting.js?v=20261018-fortune-1000"></script>
 <script src="scripts/ranking-participation.js?v=20261017-opt-in"></script>
-<link rel="stylesheet" href="kusa-pachi.css?v=20261019-crystal-feather">
+<link rel="stylesheet" href="kusa-pachi.css?v=20261020-board-selection-fix">
 <link rel="stylesheet" href="kusa-profile.css?v=20261019-data-management">
 <link rel="stylesheet" href="kusa-commerce.css?v=20261018-wallet-window">
 <link rel="stylesheet" href="styles/fishing.css?v=20261020-fullscreen-messages">
@@ -4343,6 +4343,17 @@ filterNames();
     const ctx = sceneryCtx;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     if (activeMachine === 'debug') { drawDebugScenery(ctx); return; }
+    // Paint the base into the bitmap itself; transparent scenery otherwise
+    // inherits a white theme/compositor surface on mobile.
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'source-over';
+    const base = ctx.createLinearGradient(0, 0, 0, H);
+    base.addColorStop(0, '#0b3b38');
+    base.addColorStop(.52, '#145445');
+    base.addColorStop(1, '#093728');
+    ctx.fillStyle = base;
+    ctx.fillRect(0, 0, W, H);
     ctx.fillStyle = 'rgba(144,209,150,.11)';
     ctx.beginPath(); ctx.arc(219, 156, 102, 0, Math.PI * 2); ctx.fill();
     ctx.fillStyle = 'rgba(190,236,170,.09)';
