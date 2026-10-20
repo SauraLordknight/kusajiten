@@ -63,23 +63,28 @@
   infoClose.addEventListener('click',()=>infoDialog.close());
   const infoPages=new Map([...infoContent.children].map(page=>[page,page===migration?'データ保存':page===purpose?'この事典について・掲載方針の要点':page.querySelector('h2,summary')?.textContent.trim()||'サイトの案内']));
   const entries=[...panes.menu.querySelectorAll('.site-info-index button')];[...infoPages.keys()].forEach((page,i)=>entries[i].addEventListener('click',()=>openInfo(page)));
-  // One entry per destination; background reading belongs at the bottom.
+  // Keep one destination per row, grouped by the task visitors want to do.
   const menuIndex=panes.menu.querySelector('.site-info-index');
+  const menuGroups=new Map();
+  for(const [key,label] of [['quick','よく使う操作'],['support','運営・お問い合わせ'],['info','サイト情報'],['learn','🌱 kusaを知る']]){
+    const group=document.createElement(key==='learn'?'details':'section');group.className='site-menu-group';
+    const heading=make(key==='learn'?'summary':'h3','',label),links=make('nav','site-menu-rows');links.setAttribute('aria-label',label);group.append(heading,links);menuGroups.set(key,{group,links});
+  }
   const learningIds=new Set(['about-kusa','name-types','kusa-history','how-to-use','kusa-glossary','revision-history']);
-  const learningFooter=make('footer','site-menu-learning');
-  const learningTitle=make('h3','','🌱 kusaを知る');
-  const learningLinks=make('nav','site-info-index');learningLinks.setAttribute('aria-label','kusaの解説');
-  learningFooter.append(learningTitle,learningLinks);
+  const supportIds=new Set(['siteAdmin','profile-offer','correction-request']);
   [...infoPages.keys()].forEach((page,i)=>{
-    if(page===purpose){entries[i].remove();return;}
-    if(learningIds.has(page.id))learningLinks.append(entries[i]);
-    if(page.id==='how-to-use')entries[i].textContent='使い方';
-    if(page.id==='revision-history')entries[i].textContent='更新履歴';
+    const row=entries[i];if(page===purpose){row.remove();return;}
+    let key=page===migration?'quick':learningIds.has(page.id)?'learn':supportIds.has(page.id)||page.classList.contains('policy-banner')||/プロフィール掲載/.test(row.textContent)?'support':'info';
+    if(page===migration)row.textContent='💾 データ保存・読み込み';
+    if(page.id==='how-to-use')row.textContent='使い方';
+    if(page.id==='revision-history')row.textContent='更新履歴';
+    if(page.classList.contains('policy-banner'))row.textContent='掲載方針';
+    menuGroups.get(key).links.append(row);
   });
-  const appearance=button('着せ替え',()=>document.getElementById('siteThemeOpen').click());
-  menuIndex.prepend(appearance,entries[0]);
-  panes.menu.querySelectorAll('.screen-menu-links,.site-information,.note,footer').forEach(n=>n.remove());
-  panes.menu.append(learningFooter);
+  menuGroups.get('quick').links.append(button('🎨 着せ替え',()=>document.getElementById('siteThemeOpen').click()));
+  const requestLink=menuIndex.querySelector('a');if(requestLink)menuGroups.get('support').links.append(requestLink);
+  panes.menu.querySelectorAll('.screen-menu-links,.site-information,.note,footer').forEach(n=>n.remove());menuIndex.remove();
+  menuGroups.forEach(({group})=>panes.menu.append(group));
   function openInfo(page, target = page) {
     closeMenu();
     infoPages.forEach((_,n) => { n.hidden = n !== page; });
