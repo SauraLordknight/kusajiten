@@ -8,3 +8,63 @@
   Cache-Control: no-cache
 /pachi-assets-sw.js
   Cache-Control: no-cache
+/robots.txt
+  Cache-Control: no-cache
+/sitemap.xml
+  Cache-Control: no-cache
+/404.html
+  X-Robots-Tag: noindex
+/404
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v1/preview.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v1/preview
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v2/preview.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v2/preview
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v3/preview.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v3/preview
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v4/preview.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v4/preview
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v5/preview.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/blender-hair-ink-v5/preview
+  X-Robots-Tag: noindex
+/assets/glass-girl/mechanisms-v1/preview.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/mechanisms-v1/preview
+  X-Robots-Tag: noindex
+/assets/glass-girl/slot-symbols-v2/preview.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/slot-symbols-v2/preview
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/155620.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/155620
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/336425.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/336425
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/379008.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/379008
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/382690.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/382690
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/426058.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/426058
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/cc0-legalcode.html
+  X-Robots-Tag: noindex
+/assets/glass-girl/transition-audio-v1/license-evidence/cc0-legalcode
+  X-Robots-Tag: noindex
