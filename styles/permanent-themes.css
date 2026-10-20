@@ -170,3 +170,13 @@ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-the
 html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.profile-management-dialog,.commerce-dialog) :is(.kusa-profile-panel,.shop-product,.commerce-wallet,.commerce-sticky){background:transparent}
 /* One backdrop blur per modal avoids readable text from the underlying page. */
 html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme :is(.profile-management-dialog,.commerce-dialog,.site-info-dialog,.site-theme-dialog,.named-directory-dialog)::backdrop{background:#06132633;backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
+/* Bring the soda glass into the right side of the content, rather than cropping it off-screen. */
+html[data-site-theme="mint-soda"]{--skin-glass:#f6fffb33}
+html.night[data-site-theme="mint-soda"]{--skin-glass:#102f2e33}
+html[data-site-theme="mint-soda"] .base-theme::before{
+ background-color:var(--skin-page);background-size:auto 100%;
+ background-position:calc(50% - clamp(80px,9vw,170px)) center;
+}
+@media(max-width:799px){
+ html[data-site-theme="mint-soda"] .base-theme::before{background-position:right center;background-size:auto 100%}
+}
