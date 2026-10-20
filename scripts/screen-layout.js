@@ -167,6 +167,7 @@
     body.classList.add('screen-shell'); show(current, false);
   }
   function fit() {
+    if(mobile.matches){body.classList.remove('screen-flow');return;}
     // Short screens, enlarged text and unusually long names get an accessible scrolling fallback.
     body.classList.remove('screen-flow');
     const top = `${profile.getBoundingClientRect().bottom - main.getBoundingClientRect().top + 5}px`;
@@ -188,10 +189,10 @@
     if (e.target.closest('#capsuleInventoryBadge') && ['Enter',' '].includes(e.key)) openTarget(document.getElementById('capsuleInventoryTitle'));
     if (e.key === 'Escape' && !document.querySelector('dialog[open],.detail-modal.is-open,.commemorative-medal-modal:not([hidden])')) closeWorkspace();
   }, true);
-  mobile.addEventListener('change', arrange); window.addEventListener('resize', fit); window.addEventListener('hashchange', routeHash);
+  mobile.addEventListener('change', arrange); window.addEventListener('resize',()=>{if(!mobile.matches)scheduleFit();}); window.addEventListener('hashchange', routeHash);
   let fitFrame = 0;
   function scheduleFit() { if (!fitFrame) fitFrame = requestAnimationFrame(() => { fitFrame = 0; fit(); }); }
-  new ResizeObserver(scheduleFit).observe(profile);
+  new ResizeObserver(()=>{if(!mobile.matches)scheduleFit();}).observe(profile);
   // Reloads return to the directory; deliberate external deep links still work.
   const reload=performance.getEntriesByType('navigation')[0]?.type==='reload';
   if(reload){history.replaceState(null,'',location.pathname+location.search);if('scrollRestoration' in history)history.scrollRestoration='manual';window.scrollTo(0,0);}

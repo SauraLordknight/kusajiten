@@ -17,6 +17,7 @@
   let activated = false;
   let motionWatch = null;
   let appliedMotion = motion.matches;
+  let scrolling=false,scrollTimer=0;
 
   function element(tag, className) {
     const node = document.createElement(tag);
@@ -81,6 +82,7 @@
     appliedMotion = motion.matches;
     for (const host of [backdrop, portrait]) {
       if (!host) continue;
+      if(scrolling&&!document.hidden&&!motion.matches){host._video?.pause();if(host._useAnimatedImage)host._setAnimatedImage(false);continue;}
       const shouldPlay = !document.hidden && !motion.matches && (host !== portrait || profileVisible);
       if (!shouldPlay) {
         host._video?.pause();
@@ -114,7 +116,7 @@
   function sync() {
     const active = root.dataset.siteTheme === THEME;
     if (!active) {
-      activated = false;
+      activated = false;clearTimeout(scrollTimer);scrolling=false;delete root.dataset.themeScrolling;
       clearInterval(motionWatch);
       motionWatch = null;
       visibility?.disconnect();
@@ -154,6 +156,13 @@
       }, 1000);
     }
   }
+  // Freeze the current decorative movie frame during scrolling, then resume it.
+  function scrollSettled(){scrollTimer=0;scrolling=false;delete root.dataset.themeScrolling;updatePlayback();}
+  document.addEventListener('scroll',()=>{
+    if(!activated)return;
+    if(!scrolling){scrolling=true;root.dataset.themeScrolling='true';updatePlayback();}
+    clearTimeout(scrollTimer);scrollTimer=setTimeout(scrollSettled,180);
+  },{capture:true,passive:true});
   new MutationObserver(sync).observe(root, {attributes: true, attributeFilter: ['data-site-theme']});
   document.addEventListener('visibilitychange', updatePlayback);
   if (motion.addEventListener) motion.addEventListener('change', updatePlayback);

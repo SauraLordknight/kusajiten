@@ -208,3 +208,9 @@ html[data-site-theme="glass-cosmos"] .base-theme .kusa-profile .commemorative-me
   html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop video,
   html[data-site-theme="glass-cosmos"] .glass-theme-portrait video {display:none}
 }
+
+@media(max-width:799px),(hover:none) and (pointer:coarse){
+ html[data-site-theme="glass-cosmos"] .glass-cosmos-backdrop{bottom:auto;height:100lvh;transform:translateZ(0);contain:paint}
+ html[data-site-theme="glass-cosmos"] .base-theme :is(.named-directory,.sidebar-block){backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+html[data-site-theme="glass-cosmos"][data-theme-scrolling="true"] .base-theme :is(.site-shop,.kusa-games-hub,.sidebar-block,.named-directory,.kusa-profile,.theme-window,.profile-management-dialog,.site-theme-dialog,.named-directory-dialog,.site-info-dialog){backdrop-filter:none!important;-webkit-backdrop-filter:none!important}

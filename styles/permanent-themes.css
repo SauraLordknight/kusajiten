@@ -176,3 +176,8 @@ html.night[data-site-theme="mint-soda"]{--skin-glass:#102f2e33}
 @media(max-width:799px){
  html[data-site-theme="mint-soda"] .base-theme::before{background-position:right center;background-size:auto 100%}
 }
+
+/* Address-bar expansion must not resize the fixed artwork on every scroll tick. */
+@media(max-width:799px),(hover:none) and (pointer:coarse){
+ html:is([data-site-theme="mint-soda"],[data-site-theme="neon-arcade"]) .base-theme::before{bottom:auto;height:100lvh;transform:translateZ(0);contain:paint}
+}
