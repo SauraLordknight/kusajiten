@@ -99,7 +99,7 @@ export function createCommemorativeUI(save,{refresh}) {
       const token=document.createElement('div');token.className=`commemorative-medal-token ${record?'is-real':'is-locked'}`;
       if(record)poster(token);else{token.textContent='?';token.setAttribute('aria-label','未取得。デザインはメダル作成後に公開されます。');}
       const body=document.createElement('div'),title=document.createElement('h3'),description=document.createElement('p');
-      title.textContent='全カード加工記念';description.textContent='図鑑のすべてのカードを、一度以上加工する。';
+      title.textContent='全カード加工記念';description.textContent=`現在の図鑑にある全${format(ids.length)}種類のカードを、一度以上加工する。`;
       const progress=document.createElement('div');progress.className='commemorative-medal-progress';
       const label=document.createElement('span');label.textContent='加工済みカード';
       const value=document.createElement('strong');value.textContent=`${format(current)} / ${format(ids.length)}`;

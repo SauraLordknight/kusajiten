@@ -777,7 +777,7 @@ cleanTrackingParameters();
 function applyRequestedNameSplits() {
   const replacements = {
     'あ': ['おえちゃん', 'onjs'],
-    'か': ['かねる', 'ゲイ', 'QR', 'ガチシコマン'],
+    'か': ['かねる', 'ゲイ', 'QR', 'ガチシコマン', '国旗ニキ', 'カニ', '草猫'],
     'さ': ['しそ', 'シャドバンガイジ'],
     'な': ['ニートだけど', '生首'],
     'は': ['PB', 'ふぁぼ', 'ふむ', 'ぷゆゆパン', 'ぷゆゆ特化の可愛い魔法', 'ホイ卒', '包丁おじ'],
@@ -802,7 +802,8 @@ function applyRequestedNameSplits() {
       leaf.textContent = '🌱';
       const label = document.createElement('span');
       label.className = 'name';
-      label.textContent = name;
+      label.textContent = name === 'カニ' ? 'カニ（🦀）' : name;
+      if (name === 'カニ') item.dataset.searchAliases = '🦀';
       item.append(leaf, label);
       list.appendChild(item);
     });
@@ -864,6 +865,29 @@ const gachaDetailText = document.getElementById('gachaDetailText');
 const gachaDetailClose = document.getElementById('gachaDetailClose');
 // kusaで確認できた情報だけをここへ追加する。未確認の名前は空のまま保持する。
 const namedDetails = Object.freeze({
+  '国旗ニキ': {
+    description: '「国旗ニキ」の名前で掲載しているコテハン。詳しい活動内容は整理中。',
+    classification: '情報不足',
+    topics: '詳しい話題は整理中。',
+    confidence: '提供情報',
+    summary: '国旗ニキの名前で掲載しているコテハン。'
+  },
+  'カニ': {
+    description: 'まるで🦀自身が話しているかのような語り口が特徴の人物。',
+    classification: '交流型・キャラクター表現型',
+    activity: '発言では、🦀が話しているかのような語り口が見られる。',
+    topics: '🦀が話しているかのような語り口。',
+    confidence: '提供情報',
+    summary: 'まるで🦀自身が話しているかのような語り口が特徴。'
+  },
+  '草猫': {
+    description: '「草猫」の名前で掲載している人物。詳しい活動内容は整理中。',
+    classification: '情報不足',
+    topics: '詳しい話題は整理中。',
+    confidence: '提供情報',
+    summary: '草猫の名前で掲載している人物。'
+  },
+
   'らべんだー': {
     description: '公開投稿では、日常の雑談やお絵描き、食べ物・動画などの話題を扱うネームド。ファンアートを描いてもらったオリジナルのアイコンを使用している。',
     classification: '交流型・お絵描き話題型',
@@ -1108,7 +1132,7 @@ const namedDetails = Object.freeze({
   'おえちゃん': {
     description: '「おえちゃん」の話題をよく投稿していたことから「おえガイジ」と呼ばれるようになり、その後「おえちゃん」と呼ぶ人も現れたネームド。本人は実在する配信者と区別しやすい「おえガイ」という呼称を希望している。',
     classification: 'ネームド・ファン活動型',
-    topics: 'おえちゃんに関する話題、「冷食系」や「クライオジェン」といったプロフィール表現、推しリストの曲など。',
+    topics: 'おえちゃん(配信者の方)に関する話題',
     preferences: 'おえちゃん関連の話題や、推しリストに登録したファンソングへの関心が確認されている。',
     activity: '本人から提供された説明をもとに整理。正確な開始時期は未確認。',
     confidence: '本人説明',
@@ -1143,6 +1167,7 @@ const namedDetails = Object.freeze({
 // 現時点で呼ばれ方の根拠を確定できるものだけ、ここへ個別登録する。
 // 未登録の名前はすべて「判定保留」として扱う。
 const typeByName = Object.freeze({
+  '国旗ニキ': 'handle',
   'きぃうぃ': 'handle',
   'キルリヤ大佐': 'handle',
   '中受': 'both',
@@ -1254,6 +1279,7 @@ const namedCardEmoji = Object.freeze({
   '霊王': '👻', 'ロゼ': '🌹', 'ロリガイ': '🧸', 'らべんだー': '💜', 'ラテアート': '☕',
   'リコーダーガイジ': '🎵', 'ワイテルズjc': '🎓', 'ヴァロキチ': '🎯', '二十日帰庫': '🖊️',
   '一日五食ガイジ': '🍽️', '赤ゆに': '🔴', 'エジプト壁画ガイジ': '🏺',
+  '国旗ニキ': '🏳️', 'カニ': '🦀', '草猫': '🐈',
   'おえちゃん': '🎁', 'onjs': '⚡'
 });
 
@@ -1869,7 +1895,7 @@ window.KusaGachaInventory = Object.freeze({
 
 function openDetail(name) {
   const detail = namedDetails[name];
-  detailTitle.textContent = name;
+  detailTitle.textContent = name === 'カニ' ? 'カニ（🦀）' : name;
   const type = getType(name);
   detailTypeBadge.className = `type-badge detail-type-badge type-${type}`;
   detailTypeBadge.textContent = typeMeta[type].label;
@@ -1915,10 +1941,11 @@ function filterNames() {
     const categoryHit = activeFilter === 'all'
       ? true
       : activeFilter === '情報不足'
-        ? !detail
+        ? !detail || Boolean(detail.classification?.includes('情報不足'))
         : Boolean(detail?.classification?.includes(activeFilter));
     const typeHit = activeTypeFilter === 'all' || getType(item.dataset.name) === activeTypeFilter;
-    const hit = item.dataset.name.toLowerCase().includes(q) && categoryHit && typeHit;
+    const searchText = `${item.dataset.name} ${item.dataset.searchAliases || ''}`.toLowerCase();
+    const hit = searchText.includes(q) && categoryHit && typeHit;
     item.style.display = hit ? '' : 'none';
     if (hit) visible++;
   });
@@ -5309,6 +5336,6 @@ filterNames();
     close.addEventListener('click', () => { if(globalThis.KusaCommemorativeUI)return; modal.hidden = true; });
   })();
 </script>
-<script src="kusa-profile.bundle.js?v=20261020-fishing-fullscreen"></script>
+<script src="kusa-profile.bundle.js?v=20261021-directory-expansion"></script>
 </body></html>
 
