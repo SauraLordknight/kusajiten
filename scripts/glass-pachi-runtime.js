@@ -2,13 +2,13 @@
 (function(root){
   'use strict';
   const config=Object.freeze({initialBalls:5000,maxBalls:16,maxHolds:4,shotInterval:.185,
-    normalOdds:159.8,highOdds:50,jackpotOdds:3000,modeTransitionSeconds:2.5,modeRevealSeconds:25/24,
+    normalOdds:43.3,highOdds:21.65,jackpotOdds:3000,modeTransitionSeconds:2.5,modeRevealSeconds:25/24,
     sideAward:1,startAward:1,premiumAward:500,premiumOdds:500,jackpotAward:1000,superJackpotAward:1500,spinSeconds:2.4,jackpotSpinSeconds:4.8,afterSeconds:.35,jackpotRevealSeconds:1.35,transitionSeconds:7.2,jackpotRoundSeconds:120,jackpotPayoutSettleSeconds:1,jackpotContinueChance:1/3,superJackpotContinueChance:.5,jackpotEndSeconds:1.5});
   const rates=Object.freeze([1,5,10]),validRate=value=>rates.includes(value)?value:1;
   const awardDistribution=Object.freeze({normal:Object.freeze([{award:100,cumulative:1/3},{award:150,cumulative:1}]),mode:Object.freeze([{award:150,cumulative:.2},{award:190,cumulative:.6},{award:250,cumulative:1}])});
   const sampleAward=(distribution,roll)=>distribution.find(item=>roll<item.cumulative)?.award||distribution[distribution.length-1].award;
-  // Same local JST date/hash and six probability tiers as Grass. No server pin tuning.
-  const settings=Object.freeze([null,...[[159.8,50],[80,50],[35,30],[25,20],[15,12],[8,8]].map(([normalOdds,highOdds])=>Object.freeze({normalOdds,highOdds}))]);
+  // Shared JST setting selection; cabinet-specific ordinary-play probability tiers.
+  const settings=Object.freeze([null,...[[43.3,21.65],[40.2,20.1],[38.2,19.1],[35.4,17.7],[32.5,16.25],[27.1,13.55]].map(([normalOdds,highOdds])=>Object.freeze({normalOdds,highOdds}))]);
   // Separate base probabilities; the selected jackpot tier is mutually exclusive.
   const normalJackpotOddsBySetting=Object.freeze([650,560,480,400,330,270]);
   const superJackpotOddsBySetting=Object.freeze([1000,900,800,700,600,500]);

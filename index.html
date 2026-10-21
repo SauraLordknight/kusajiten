@@ -2028,7 +2028,7 @@ filterNames();
 </script>
 <script src="scripts/debug-pachi-physics.js?v=20261017-unified-prize-field"></script>
 <script src="scripts/pachi-daily-counters.js?v=20261020-daily"></script>
-<script src="scripts/glass-pachi-runtime.js?v=20261019-player-isolation"></script>
+<script src="scripts/glass-pachi-runtime.js?v=20261021-setting-balance"></script>
 <script src="scripts/glass-pachi-wallet.js?v=20261018-unlimited-wallet"></script>
 <script src="scripts/glass-crystal-symbols.js?v=20261020-ios-memory"></script>
 <script src="scripts/glass-mechanism-art.js?v=20261020-ios-memory"></script>
@@ -2108,13 +2108,14 @@ filterNames();
   const jackpotOdds = 20000;
   const jackpotFestivalStartBonus = 10000;
   const pocketPayout = 1;
+  // Five-hour ordinary-play balance; jackpot probabilities and prizes are independent.
   const pachiSettings = [null,
-    {normal:1/159.8, high:1/50.0, normalLabel:'159.8', highLabel:'50.0'},
-    {normal:1/80, high:1/50, normalLabel:'80', highLabel:'50'},
-    {normal:1/35, high:1/30, normalLabel:'35', highLabel:'30'},
-    {normal:1/25, high:1/20, normalLabel:'25', highLabel:'20'},
-    {normal:1/15, high:1/12, normalLabel:'15', highLabel:'12'},
-    {normal:1/8, high:1/8, normalLabel:'8', highLabel:'8'}
+    {normal:1/81.2, high:1/40.6, normalLabel:'81.2', highLabel:'40.6'},
+    {normal:1/75.7, high:1/37.85, normalLabel:'75.7', highLabel:'37.85'},
+    {normal:1/72.5, high:1/36.25, normalLabel:'72.5', highLabel:'36.25'},
+    {normal:1/69.8, high:1/34.9, normalLabel:'69.8', highLabel:'34.9'},
+    {normal:1/65.4, high:1/32.7, normalLabel:'65.4', highLabel:'32.7'},
+    {normal:1/57.4, high:1/28.7, normalLabel:'57.4', highLabel:'28.7'}
   ];
   // 全訪問者で共通の日替わり設定。日本時間の日付を種に1〜6から均等に選ぶ。
   function dailyPachiSetting() {
