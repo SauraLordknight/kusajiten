@@ -540,11 +540,11 @@
             <li><strong>まずは発射：</strong>1・5・10草パチから掛け金を選び、ハンドルで強さを調整して発射します。1発につき掛け金と同じ数の球を消費します。</li>
             <li><strong>入賞と待機：</strong>左右の入賞口と中央のSTARTで球を獲得します。START受付は回転中を含め最大4個で、待機表示は個数と順番だけを示します。各回転の消化開始時に、その時点のモード・設定で抽選します。期待度演出は回転中の液晶だけに表示し、激アツ演出で外れた場合は受付時の掛け金1発分を返球します。未消化分と進行中の回転は保存され、再開時に引き継ぎます。</li>
             <li><strong>START連続入賞：</strong>10秒以内に続けてSTARTへ入れると継続。3回連続入賞達成時にSTART賞球が掛け金1球分増加し、5・10・20回連続入賞で演出が変化します。</li>
-            <li><strong>大当たり後：</strong>通常大当たり後は10回転の草ST。ST中の大当たり、超大当たり、ジャックポット後は15回転の草RUSHに入ります。終了後は5回転の草時短となり、START賞球が掛け金1球分増えます。1草パチの払い出しは通常4Rが100球・10Rが150球、RUSH中4Rが150球・8Rが190球・10Rが250球、超大当たりが500球です。5草・10草パチではそれぞれ5倍・10倍になります。</li>
+            <li><strong>大当たり後：</strong>通常大当たり後は10回転の草ST。ST中の大当たり、超大当たり、ジャックポット後は15回転の草RUSHに入ります。終了後は5回転の草時短となり、START賞球が掛け金1球分増えます。1草パチの払い出しは通常4Rが100球・10Rが150球、ST・RUSH中4Rが1,500球・8Rが1,900球・10Rが2,500球、超大当たりが2,500球です。5草・10草パチではそれぞれ5倍・10倍になります。ST中の引き戻し率は約65.8％、RUSHの継続率は約80％で、RUSH中に当たるたび残り15回転に戻ります。ジャックポットを除く当たりの1％が超大当たりです。</li>
             <li><strong>モード抽選：</strong>開始時は通常45％・夜25％・お祭り15％・闇鍋12％・ぷゆゆラッシュ3％で抽選。通常抽選中のSTARTを15回消化すると、次のSTARTで継続を判定します。</li>
             <li><strong>モード継続：</strong>継続率は通常35％、夜・お祭り・闇鍋50％、ぷゆゆラッシュ20％。成功すると同じモードを15回転延長し、継続回数を表示します。失敗すると現在以外のモードへ切り替わります。草ST・草RUSH・草時短・ジャックポット祭中は判定を休止し、終了後の次のSTARTで判定します。</li>
             <li><strong>各モードの効果：</strong>サイド入賞は掛け金1球分、STARTは基本1球分。夜の草むらはチャンス草ランプが少し出やすく、お祭りはSTART賞球が掛け金1球分増加。闇鍋はSTART賞球が掛け金0〜2球分変動します。ぷゆゆラッシュは球が🥺だけになり、START賞球が掛け金1球分増加。通常時の当たり確率は1.5倍、ST/RUSH中は高確率です。釘の配置はどのモードも同じです。</li>
-            <li><strong>ジャックポット：</strong>通常時のSTART抽選で1/20,000。1草パチで50万球、5草パチで150万球、10草パチで1,000万球を、発射50回に分けて払い出します。その後のジャックポット祭は10回転。祭中のSTART入賞には10,000球を上乗せし、10回とも超大当たりが確定します。</li>
+            <li><strong>ジャックポット：</strong>通常時のSTART抽選で1/20,000。1草パチで50万球、5草パチで150万球、10草パチで1,000万球を、発射50回に分けて払い出します。その後のジャックポット祭は10回転。祭中のSTART入賞には10,000球を上乗せし、10回とも超大当たりが確定します。祭中の超大当たり賞球は従来どおり、1草パチで500球（5草・10草パチでは5倍・10倍）です。</li>
             <li><strong>記録と交換：</strong>「結果を見る」で記録と称号を確認できます。持ち球は1球＝1草で交換でき、15,000草でガチャ券1枚と交換できます。球・草・記録はブラウザに自動保存されます。</li>
             <li><strong>24時間ランキング：</strong>発射ボタン下の「24時間ランキングを見る」を押すと、最新の順位を中央に表示します。1・5・10草パチ別に、日本時間の本日0:00〜23:59に遊技で増やした球数を競います。球の補充や交換は順位に含まれません。接続できない間の記録は端末に保存し、後で送信します。</li>
           </ul>
@@ -2113,13 +2113,14 @@ filterNames();
   const jackpotOdds = 20000;
   const jackpotFestivalStartBonus = 10000;
   const pocketPayout = 1;
+  // Side awards stay unchanged. Shared 80% RUSH continuation over 15 draws.
   const pachiSettings = [null,
-    {normal:1/159.8, high:1/50.0, normalLabel:'159.8', highLabel:'50.0'},
-    {normal:1/80, high:1/50, normalLabel:'80', highLabel:'50'},
-    {normal:1/35, high:1/30, normalLabel:'35', highLabel:'30'},
-    {normal:1/25, high:1/20, normalLabel:'25', highLabel:'20'},
-    {normal:1/15, high:1/12, normalLabel:'15', highLabel:'12'},
-    {normal:1/8, high:1/8, normalLabel:'8', highLabel:'8'}
+    {normal:1/12923, high:1-Math.pow(.2,1/15), normalLabel:'12923', highLabel:'9.829'},
+    {normal:1/4034, high:1-Math.pow(.2,1/15), normalLabel:'4034', highLabel:'9.829'},
+    {normal:1/2374, high:1-Math.pow(.2,1/15), normalLabel:'2374', highLabel:'9.829'},
+    {normal:1/2215, high:1-Math.pow(.2,1/15), normalLabel:'2215', highLabel:'9.829'},
+    {normal:1/2066, high:1-Math.pow(.2,1/15), normalLabel:'2066', highLabel:'9.829'},
+    {normal:1/1895, high:1-Math.pow(.2,1/15), normalLabel:'1895', highLabel:'9.829'}
   ];
   // 全訪問者で共通の日替わり設定。日本時間の日付を種に1〜6から均等に選ぶ。
   function dailyPachiSetting() {
@@ -2133,10 +2134,11 @@ filterNames();
     hash ^= hash >>> 15;
     return (hash >>> 0) % 6 + 1;
   }
-  const premiumPayout = 500;
+  const premiumPayout = 2500;
+  const jackpotFestivalPremiumPayout = 500;
   const roundPayoutTables = {
     normal: [{rounds:4,weight:1/3,payout:100},{rounds:10,weight:2/3,payout:150}],
-    rush: [{rounds:4,weight:.2,payout:150},{rounds:8,weight:.4,payout:190},{rounds:10,weight:.4,payout:250}]
+    rush: [{rounds:4,weight:.2,payout:1500},{rounds:8,weight:.4,payout:1900},{rounds:10,weight:.4,payout:2500}]
   };
   const rushSpins = 10;
   const rushBonusSpins = 15;
@@ -3797,9 +3799,10 @@ filterNames();
     const roll = Math.random();
     const setting = pachiSettings[dailyPachiSetting()] || pachiSettings[1];
     const puyuyuMultiplier = player.scene === 'puyuyu' && !rush ? 1.5 : 1;
-    const premiumChance = .001 * puyuyuMultiplier;
-    const premium = !jackpot && (jackpotFestivalSpin || roll < premiumChance);
     const hitChance = (rush ? setting.high : setting.normal * puyuyuMultiplier);
+    // Premium is 1% of ordinary hits, included in the hit probability above.
+    const premiumChance = hitChance * .01;
+    const premium = !jackpot && (jackpotFestivalSpin || roll < premiumChance);
     const hit = jackpot || premium || roll < hitChance;
     // 当たり賞球は抽選結果の表示が終わるまで保留する。
     let spinAward = 0;
@@ -3823,7 +3826,7 @@ filterNames();
         player.jackpotTotal += award;
       } else {
         const roundPrize = premium ? null : drawRoundPayout(rush, wager);
-        const award = premium ? premiumPayout * wager : roundPrize.award;
+        const award = premium ? (jackpotFestivalSpin ? jackpotFestivalPremiumPayout : premiumPayout) * wager : roundPrize.award;
         if (premium) player.premiumCount++;
         spinAward = award;
         spinRounds = roundPrize?.rounds || 0;
