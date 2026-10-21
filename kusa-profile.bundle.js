@@ -2095,9 +2095,27 @@ class FishingScene {
   if(this.moving){if(this.stepDistance>10){this.stepDistance=0;this.onStep?.(FishingWorld.surface(this.p));}this.onMove?.(this.p,FishingWorld.context(this.p));}
  }
  makeSprites(){
-  // Eight deterministic pixel-art frames, cached once as sprite sheets.
-  this.water=document.createElement('canvas');this.water.width=256;this.water.height=32;const c=this.water.getContext('2d');this.falls=document.createElement('canvas');this.falls.width=192;this.falls.height=32;const f=this.falls.getContext('2d');
-  for(let frame=0;frame<8;frame++){for(let i=0;i<13;i++){const x=(i*13+frame*(i%2?1:-1)+32)%32,y=(i*7+Math.floor(frame/3))%32;c.fillStyle=i%3?'#a4eee050':'#efffffa0';c.fillRect(frame*32+x,y,3+i%4,1);}for(let i=0;i<9;i++){f.fillStyle=['#b4f4f3b0','#f1ffffe0','#61cfe7a0'][i%3];f.fillRect(frame*24+i*3%23,(i*11+frame*4)%32,1+i%2,5+i%5);}f.fillStyle='#e2ffffa0';for(let i=0;i<6;i++)f.fillRect(frame*24+(i*7+frame)%23,27+(i+frame)%5,3,1);}
+  // Match each background with a visible, time-colored eight-frame water atlas.
+  // Small tile sheets are cached once; never fade the whole night animation out.
+  this.waterSprites={};
+  const palettes={
+   day:['#a4eee050','#efffffa0',['#b4f4f3b0','#f1ffffe0','#61cfe7a0'],'#e2ffffa0'],
+   sunset:['#edbc8b70','#fff0c2a0',['#eecda5b0','#fff5dce0','#e9aa84a0'],'#ffe4bda0'],
+   night:['#8bc9ed70','#d7edffa8',['#8cbce5b0','#dceeffe0','#689fd2a0'],'#c1e3ffa0'],
+   midnight:['#71addc70','#bddcffa0',['#77a6d2b0','#c9e2ffe0','#588ebfa0'],'#b1d5f8a0']
+  };
+  for(const [period,[ripple,glint,fallColors,foam]] of Object.entries(palettes)){
+   const water=document.createElement('canvas');water.width=256;water.height=32;
+   const falls=document.createElement('canvas');falls.width=192;falls.height=32;
+   const c=water.getContext('2d'),f=falls.getContext('2d');
+   for(let frame=0;frame<8;frame++){
+    for(let i=0;i<13;i++){const x=(i*13+frame*(i%2?1:-1)+32)%32,y=(i*7+Math.floor(frame/3))%32;c.fillStyle=i%3?ripple:glint;c.fillRect(frame*32+x,y,3+i%4,1);}
+    for(let i=0;i<9;i++){f.fillStyle=fallColors[i%3];f.fillRect(frame*24+i*3%23,(i*11+frame*4)%32,1+i%2,5+i%5);}
+    f.fillStyle=foam;for(let i=0;i<6;i++)f.fillRect(frame*24+(i*7+frame)%23,27+(i+frame)%5,3,1);
+   }
+   this.waterSprites[period]={water,falls};
+  }
+  this.water=this.waterSprites.day.water;this.falls=this.waterSprites.day.falls;
   this.overlay=document.createElement('canvas');this.overlay.width=384;this.overlay.height=256;
  }
  prepareActor(character,img){
@@ -2170,7 +2188,16 @@ class FishingScene {
  screenPoint(x,y){return {x:(x-Math.round(this.camera.x))*this.camera.zoom,y:(y-Math.round(this.camera.y))*this.camera.zoom};}
  diagnostics(){return {camera:{...this.camera},timeMap:{period:this.state.period,key:this.mapKey,ready:!!this.images[this.mapKey],loaded:Object.keys(this.images)},playerScreen:this.screenPoint(this.p.x,this.p.y),sprite:{...this.pose(performance.now()),ready:!!this.actors[this.state.character],scale:this.p.map==='house'?1.15:1},coffee:{ready:!!this.coffeeSprites,active:!!this.rest,...(this.rest?coffeePose(this.rest,performance.now()):{})},loadedActors:Object.keys(this.actors),actorErrors:[...this.actorErrors]};}
  draw(t){const c=this.ctx;c.imageSmoothingEnabled=false;c.clearRect(0,0,384,256);const house=this.p.map==='house',kind=house?'house':'map',period=this.state.period||'day';this.mapKey=period==='day'?kind:`${kind}-${period}`;const bg=this.images[this.mapKey];if(!bg){c.fillStyle={day:'#387e87',sunset:'#553c43',night:'#131e38',midnight:'#0a1024'}[period]||'#131e38';c.fillRect(0,0,384,256);c.fillStyle='#eee2bf';c.font='10px sans-serif';c.textAlign='center';c.fillText('水辺の景色を準備しています…',192,128);c.textAlign='start';return;}this.updateCamera(t);c.save();c.scale(this.camera.zoom,this.camera.zoom);c.translate(-Math.round(this.camera.x),-Math.round(this.camera.y));c.drawImage(bg,0,0);if(!house)this.waterLayer(c,t);if(house&&this.rest&&coffeePose(this.rest,t).col>0&&this.images.tableEmpty)c.drawImage(this.images.tableEmpty,49,64,15,13,49,64,15,13);this.avatar(c,t);this.tackle(c,t);if(house){c.fillStyle='#fff1bc';c.font='9px monospace';c.fillText('▼ 出口',174,228);}c.restore();this.lighting(c,t,house);}
- waterLayer(c,t){const frame=this.reduced?0:Math.floor(t/130)%8,o=this.overlay.getContext('2d'),period=this.state.period;const opacity={day:1,sunset:.65,night:.32,midnight:.2}[period]??1;o.clearRect(0,0,384,256);for(let y=0;y<256;y+=32)for(let x=0;x<384;x+=32){const offset=(frame+(x/32+y/32)%3)%8;o.drawImage(this.water,offset*32,0,32,32,x,y,32,32);}c.save();c.globalAlpha=opacity;if(this.images.land){o.globalCompositeOperation='destination-out';o.drawImage(this.images.land,0,0);o.globalCompositeOperation='source-over';c.drawImage(this.overlay,0,0);}for(const [x,y,w,h] of [[225,32,22,19],[372,3,12,15]])c.drawImage(this.falls,frame*24,0,24,32,x,y,w,h);c.restore();}
+ waterLayer(c,t){
+  const frame=this.reduced?0:Math.floor(t/130)%8,o=this.overlay.getContext('2d');
+  const sprites=this.waterSprites[this.state.period]||this.waterSprites.day;
+  o.clearRect(0,0,384,256);
+  for(let y=0;y<256;y+=32)for(let x=0;x<384;x+=32){const offset=(frame+(x/32+y/32)%3)%8;o.drawImage(sprites.water,offset*32,0,32,32,x,y,32,32);}
+  c.save();c.globalAlpha=1;
+  if(this.images.land){o.globalCompositeOperation='destination-out';o.drawImage(this.images.land,0,0);o.globalCompositeOperation='source-over';c.drawImage(this.overlay,0,0);}
+  for(const [x,y,w,h] of [[225,32,22,19],[372,3,12,15]])c.drawImage(sprites.falls,frame*24,0,24,32,x,y,w,h);
+  c.restore();
+ }
  drawActor(c,actor,row,col,p,scale){c.drawImage(actor,col*144,row*168,144,168,Math.round(p.x)-24*scale,Math.round(p.y)-50*scale,48*scale,56*scale);}
  avatar(c,t){if(this.rest){this.coffeeAvatar(c,t);return;}const actor=this.actors[this.state.character],{row,col}=this.pose(t),scale=this.p.map==='house'?1.15:1;if(actor){c.fillStyle='#102e3f44';c.beginPath();c.ellipse(Math.round(this.p.x),Math.round(this.p.y)+1,5*scale,1.5*scale,0,0,Math.PI*2);c.fill();this.drawActor(c,actor,row,col,this.p,scale);return;}
   // Loading-only silhouette; replaced as soon as the generated atlas loads.
