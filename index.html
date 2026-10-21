@@ -1192,6 +1192,11 @@ function addTypeBadges() {
 addTypeBadges();
 
 const gachaCooldown = 6 * 60 * 60 * 1000;
+// Invalid/future timestamps must never lock the free draw after a clock change or import.
+function freeGachaRemaining(lastDrawAt, now = Date.now()) {
+  if (!Number.isSafeInteger(lastDrawAt) || lastDrawAt <= 0 || lastDrawAt > now) return 0;
+  return Math.max(0, gachaCooldown - (now - lastDrawAt));
+}
 const gachaStorageKey = window.KusaRewards.gachaKey;
 const gachaExcludedSsrNames = new Set(['従来型コーディングガイジ', 'バイブコーディングガイジ']);
 const gachaExcludedLegacySsrIds = new Set([...gachaExcludedSsrNames].map(name => `named-SSR-${name}`));
@@ -1316,14 +1321,14 @@ function readGachaState() {
     }
     obtainedCards.forEach(id => { if (KusaCardCounts.compare(cardCounts[id], 1) < 0) cardCounts[id] = '1'; });
     const state = {
-      lastDrawAt: Number.isFinite(stored.lastDrawAt) ? stored.lastDrawAt : 0,
+      lastDrawAt: Number.isSafeInteger(stored.lastDrawAt) && stored.lastDrawAt >= 0 && stored.lastDrawAt <= Date.now() ? stored.lastDrawAt : 0,
       playerId,
       obtainedCards,
       cardCounts,
       favoriteCards: Array.isArray(stored.favoriteCards) ? [...new Set(stored.favoriteCards.filter(id => typeof id === 'string' && obtained.has(id)))].slice(0, 500) : [],
       grassPoint: KusaAmounts.normalize(stored.grassPoint)
     };
-    if (!stored.cardCounts || !Array.isArray(stored.favoriteCards) || (Array.isArray(stored.obtainedCards) && obtainedCards.length !== stored.obtainedCards.length)) {
+    if (stored.lastDrawAt !== state.lastDrawAt || !stored.cardCounts || !Array.isArray(stored.favoriteCards) || (Array.isArray(stored.obtainedCards) && obtainedCards.length !== stored.obtainedCards.length)) {
       try {
         if (window.KusaPlayerStore?.getSelectedId?.()) window.KusaPlayerStore.saveGachaState(state);
         else localStorage.setItem(gachaStorageKey, JSON.stringify(state));
@@ -1710,7 +1715,7 @@ function closeGachaCardDetail() {
 let gachaAllCards = [];
 function updateGachaAvailability() {
   const state = readGachaState();
-  const remaining = state.lastDrawAt ? gachaCooldown - (Date.now() - state.lastDrawAt) : 0;
+  const remaining = freeGachaRemaining(state.lastDrawAt);
   const available = remaining <= 0;
   const firstCollectionComplete = gachaAllCards.length > 0 && gachaAllCards.every(card => state.obtainedCards.includes(card.id));
   const remainingUnique = firstCollectionComplete ? 0 : gachaAllCards.filter(card => !state.obtainedCards.includes(card.id)).length;
@@ -1723,7 +1728,7 @@ function updateGachaAvailability() {
     ? (firstCollectionComplete
       ? '図鑑1周目コンプリート！ 2周目はカードが重複し、余剰分を草釣りなどで使用できます。'
       : `図鑑1周目：残り${remainingUnique}種。未所持カードだけが出ます。`)
-    : `無料分の次回まで：あと ${formatRemaining(remaining)}`;
+    : `無料ガチャは前回から6時間後に再び引けます（午前0時のリセットではありません）。あと ${formatRemaining(remaining)}`;
   return state;
 }
 
