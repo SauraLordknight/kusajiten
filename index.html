@@ -85,7 +85,7 @@
 <script defer src="scripts/game-windows.js?v=20261020-story-window"></script>
 <script defer src="scripts/pachi-layout.js?v=20261020-original-notice"></script>
 <link rel="stylesheet" href="styles/glass-howto.css?v=20261018-handle-copy-v2">
-<script defer src="scripts/glass-howto.js?v=20261020-original-notice"></script>
+<script defer src="scripts/glass-howto.js?v=20261022-current-odds"></script>
 <script src="scripts/glass-asset-bank.js?v=20261020-ios-memory"></script>
 <script defer src="scripts/pachi-download.js?v=20261020-download-v1"></script>
 <script defer src="scripts/glass-cabinet-skin.js?v=20261020-download-v1"></script>
@@ -540,14 +540,15 @@
             <li><strong>まずは発射：</strong>1・5・10草パチから掛け金を選び、ハンドルで強さを調整して発射します。1発につき掛け金と同じ数の球を消費します。</li>
             <li><strong>入賞と待機：</strong>左右の入賞口と中央のSTARTで球を獲得します。START受付は回転中を含め最大4個で、待機表示は個数と順番だけを示します。各回転の消化開始時に、その時点のモード・設定で抽選します。期待度演出は回転中の液晶だけに表示し、激アツ演出で外れた場合は受付時の掛け金1発分を返球します。未消化分と進行中の回転は保存され、再開時に引き継ぎます。</li>
             <li><strong>START連続入賞：</strong>10秒以内に続けてSTARTへ入れると継続。3回連続入賞達成時にSTART賞球が掛け金1球分増加し、5・10・20回連続入賞で演出が変化します。</li>
-            <li><strong>大当たり後：</strong>通常大当たり後は10回転の草ST。ST中の大当たり、超大当たり、ジャックポット後は15回転の草RUSHに入ります。終了後は5回転の草時短となり、START賞球が掛け金1球分増えます。1草パチの払い出しは通常4Rが100球・10Rが150球、ST・RUSH中4Rが1,500球・8Rが1,900球・10Rが2,500球、超大当たりが2,500球です。5草・10草パチではそれぞれ5倍・10倍になります。ST中の引き戻し率は約65.8％、RUSHの継続率は約80％で、RUSH中に当たるたび残り15回転に戻ります。ジャックポットを除く当たりの1％が超大当たりです。</li>
+            <li><strong>大当たり後：</strong>通常大当たり後は10回転の草ST。ST中の大当たり、超大当たり、ジャックポット後は15回転の草RUSHに入ります。終了後は5回転の草時短となり、START賞球が掛け金1球分増えます。1草パチの払い出しは通常4Rが100球・10Rが150球、ST・RUSH中4Rが1,500球・8Rが1,900球・10Rが2,500球、超大当たりが2,500球です。5草・10草パチではそれぞれ5倍・10倍になります。ST中の引き戻し率は約65.8％、RUSHの継続率は約80％で、RUSH中に当たるたび残り15回転に戻ります。JP祭以外では、ジャックポットを除く当たりの1％が超大当たりです。</li>
             <li><strong>モード抽選：</strong>開始時は通常45％・夜25％・お祭り15％・闇鍋12％・ぷゆゆラッシュ3％で抽選。通常抽選中のSTARTを15回消化すると、次のSTARTで継続を判定します。</li>
             <li><strong>モード継続：</strong>継続率は通常35％、夜・お祭り・闇鍋50％、ぷゆゆラッシュ20％。成功すると同じモードを15回転延長し、継続回数を表示します。失敗すると現在以外のモードへ切り替わります。草ST・草RUSH・草時短・ジャックポット祭中は判定を休止し、終了後の次のSTARTで判定します。</li>
             <li><strong>各モードの効果：</strong>サイド入賞は掛け金1球分、STARTは基本1球分。夜の草むらはチャンス草ランプが少し出やすく、お祭りはSTART賞球が掛け金1球分増加。闇鍋はSTART賞球が掛け金0〜2球分変動します。ぷゆゆラッシュは球が🥺だけになり、START賞球が掛け金1球分増加。通常時の当たり確率は1.5倍、ST/RUSH中は高確率です。釘の配置はどのモードも同じです。</li>
-            <li><strong>ジャックポット：</strong>通常時のSTART抽選で1/20,000。1草パチで50万球、5草パチで150万球、10草パチで1,000万球を、発射50回に分けて払い出します。その後のジャックポット祭は10回転。祭中のSTART入賞には10,000球を上乗せし、10回とも超大当たりが確定します。祭中の超大当たり賞球は従来どおり、1草パチで500球（5草・10草パチでは5倍・10倍）です。</li>
+            <li><strong>ジャックポット：</strong>JP祭を除くSTART抽選で1/20,000。通常時だけでなく、ST・RUSH・時短中も抽選します。1草パチで50万球、5草パチで150万球、10草パチで1,000万球を、発射50回に分けて払い出します。その後のジャックポット祭は10回転。祭中のSTART入賞には10,000球を上乗せし、10回とも超大当たりが確定します。祭中の超大当たり賞球は従来どおり、1草パチで500球（5草・10草パチでは5倍・10倍）です。</li>
             <li><strong>記録と交換：</strong>「結果を見る」で記録と称号を確認できます。持ち球は1球＝1草で交換でき、15,000草でガチャ券1枚と交換できます。球・草・記録はブラウザに自動保存されます。</li>
             <li><strong>24時間ランキング：</strong>発射ボタン下の「24時間ランキングを見る」を押すと、最新の順位を中央に表示します。1・5・10草パチ別に、日本時間の本日0:00〜23:59に遊技で増やした球数を競います。球の補充や交換は順位に含まれません。接続できない間の記録は端末に保存し、後で送信します。</li>
           </ul>
+          <details class="pachi-rule-probabilities"><summary>当たり確率と賞球の内訳を見る</summary><p id="pachiProbabilityHelp"></p><ul id="pachiProbabilityStages" class="pachi-rule-list"></ul><p id="pachiAwardHelp"></p></details>
         </div>
         <p id="pachiSaveMessage" class="pachi-save-message" role="status">持ち球・草・ガチャ券・記録・称号は自動保存されます。端末のデータを消す前にバックアップを残してください。</p>
       </div>
@@ -2163,6 +2164,7 @@ filterNames();
     return (hash >>> 0) % 6 + 1;
   }
   const premiumPayout = 2500;
+  const premiumShare = .01;
   const jackpotFestivalPremiumPayout = 500;
   const roundPayoutTables = {
     normal: [{rounds:4,weight:1/3,payout:100},{rounds:10,weight:2/3,payout:150}],
@@ -3833,7 +3835,7 @@ filterNames();
     const puyuyuMultiplier = player.scene === 'puyuyu' && !rush ? 1.5 : 1;
     const hitChance = (rush ? setting.high : setting.normal * puyuyuMultiplier);
     // Premium is 1% of ordinary hits, included in the hit probability above.
-    const premiumChance = hitChance * .01;
+    const premiumChance = hitChance * premiumShare;
     const premium = !jackpot && (jackpotFestivalSpin || roll < premiumChance);
     const hit = jackpot || premium || roll < hitChance;
     // 当たり賞球は抽選結果の表示が終わるまで保留する。
@@ -5233,6 +5235,22 @@ filterNames();
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) registerRankingVisit();
   });
+  // Build rule numbers from the same constants used by the actual draw.
+  function renderPachiProbabilityHelp(){
+    const rate=p=>'1/'+(1/p).toLocaleString('ja-JP',{maximumFractionDigits:3});
+    const percent=p=>(p*100).toLocaleString('ja-JP',{maximumFractionDigits:1})+'％';
+    const stages=$('pachiProbabilityStages');stages.replaceChildren();
+    pachiSettings.slice(1).forEach((tier,index)=>{
+      const li=document.createElement('li');
+      li.textContent='段階'+(index+1)+'：通常の基礎確率 '+rate(tier.normal)+' ／ ST・RUSH '+rate(tier.high);
+      stages.append(li);
+    });
+    const high=pachiSettings[1].high;
+    $('pachiProbabilityHelp').textContent='全段階の基礎確率です。今日適用中の段階は表示しません。通常の確率は超大当たりを含み、ジャックポットを含みません。ぷゆゆラッシュの通常時は1.5倍です。STは'+rushSpins+'回、RUSHは'+rushBonusSpins+'回で、通常抽選による引き戻し率はST '+percent(1-Math.pow(1-high,rushSpins))+'、RUSH '+percent(1-Math.pow(1-high,rushBonusSpins))+'です。毎回独立した抽選のため、当選や獲得球数は保証されません。';
+    const awards=table=>table.map(row=>row.rounds+'R '+row.payout.toLocaleString('ja-JP')+'球（'+percent(row.weight)+'）').join('、');
+    $('pachiAwardHelp').textContent='1草パチでの内訳：通常当たりは'+awards(roundPayoutTables.normal)+'。ST・RUSH中は'+awards(roundPayoutTables.rush)+'。JP祭以外ではジャックポットを除く当たりの'+percent(premiumShare)+'が超大当たりで'+premiumPayout.toLocaleString('ja-JP')+'球、JP祭の超大当たりは'+jackpotFestivalPremiumPayout.toLocaleString('ja-JP')+'球です。5草・10草パチでは賞球がそれぞれ5倍・10倍になります。';
+  }
+  renderPachiProbabilityHelp();
   renderProfiles(); drawBoardScenery();
   flushRankingQueue();
   registerRankingVisit();
