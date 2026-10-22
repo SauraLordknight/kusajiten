@@ -760,7 +760,7 @@
         低身長・陰キャ・コミュ力控えめの三拍子。ヴァイオリンのアイコンを高頻度で使用する。<br><br>
         キモくて草</p>
       </div>
-    </details></div></dialog><div class="screen-effects-layer" id="screenEffectsLayer" aria-hidden="true"></div><script src="scripts/gacha-card-counts.js?v=20261017-unlimited"></script><script src="kusa-player-store.js?v=20261020-launch-gift"></script>
+    </details></div></dialog><div class="screen-effects-layer" id="screenEffectsLayer" aria-hidden="true"></div><script src="scripts/gacha-card-counts.js?v=20261017-unlimited"></script><script src="kusa-player-store.js?v=20261022-ticket-exchange"></script>
 <script src="kusa-rewards.js?v=20261019-player-isolation"></script>
 <script>
 // 共有リンクに付く計測用UTMだけを整理する。ページのパスや未知のクエリは変更しない。
@@ -2118,6 +2118,7 @@ filterNames();
   const ballSprites = new Map();
   let activeMachine = 'kusa';
   let glassGame = null;
+  let ticketExchangePending=false;
   window.GlassPachiDiagnostics=Object.freeze({snapshot:()=>glassGame?JSON.parse(JSON.stringify({state:glassGame.state,liveBalls:glassGame.balls.length,busy:glassGame.busy,saveError:glassGame.saveError})):null});
   const debugStats = {shots:0, starts:0, sides:0, outs:0};
   let debugSaveTimer = 0;
@@ -3293,15 +3294,19 @@ filterNames();
     const walletBalls=activeMachine==='debug'&&glassGame?glassGame.state.balls:player.balls;
     const wager=activeMachine==='debug'&&glassGame?glassGame.state.rate:player.wager;
     const locked=activeMachine==='debug'&&glassGame&&(firing||!glassGame.canChangeRate);
-    const remaining = Math.max(0, rewards.exchangeCost - player.grass);
+    // UI and exchange use the persisted shared balance, not an old cabinet copy.
+    try { const p=JSON.parse(localStorage.getItem(profileKey)||'[]').find(p=>p.rankingId===player.rankingId);player.grass=KusaAmounts.normalize(p?.grass); }
+    catch { player.grass=0; }
+    const enoughGrass=KusaAmounts.cmp(player.grass,rewards.exchangeCost)>=0;
+    const remaining=enoughGrass?0:KusaAmounts.sub(rewards.exchangeCost,player.grass);
     $('pachiExchangeTitle').textContent='🌿 草の交換所';
     $('pachiWalletBalls').textContent = KusaAmounts.format(walletBalls);
     $('pachiWalletGrass').textContent = KusaAmounts.format(player.grass);
     $('pachiExchangeProgress').textContent = KusaAmounts.format(player.grass);
-    $('pachiExchangeRemaining').textContent = remaining.toLocaleString('ja-JP');
+    $('pachiExchangeRemaining').textContent = KusaAmounts.format(remaining);
     $('pachiExchangeTickets').textContent = KusaAmounts.format(state.tickets);
-    $('pachiExchangeBar').value = Math.min(player.grass, rewards.exchangeCost);
-    $('pachiExchangeButton').disabled = player.grass < rewards.exchangeCost;
+    $('pachiExchangeBar').value = enoughGrass?rewards.exchangeCost:Number(player.grass);
+    $('pachiExchangeButton').disabled = !enoughGrass || ticketExchangePending || window.KusaPlayerStore?.getSelectedId?.()!==player.rankingId;
     const amount = KusaAmounts.parse($('pachiGrassAmount').value);
     const valid = !locked && KusaAmounts.valid(amount) && amount > 0 && KusaAmounts.cmp(amount,walletBalls)<=0;
     $('pachiConvertButton').disabled = !valid;
@@ -5098,34 +5103,27 @@ filterNames();
     }
     updateUI();
   });
-  $('pachiExchangeButton').addEventListener('click', () => {
-    if (!player) return;
-    if (player.grass < rewards.exchangeCost) {
-      $('pachiExchangeMessage').textContent = '交換には15,000草必要です。';
+  $('pachiExchangeButton').addEventListener('click', async () => {
+    if (!player||ticketExchangePending) return;
+    const ownerId=player.rankingId;
+    ticketExchangePending=true;
+    $('pachiExchangeButton').disabled=true;
+    try {
+      const result=await window.KusaPlayerStore?.exchangeGrassForTicket?.(ownerId);
+      if(player?.rankingId!==ownerId)return;
+      if(!result?.ok){
+        const messages={balance:'交換には15,000草必要です。',player:'プレイヤーが変更されたため、交換を中止しました。',busy:'別の交換処理が終了してから、もう一度お試しください。'};
+        $('pachiExchangeMessage').textContent=messages[result?.reason]||'交換を保存できず、中止しました。ブラウザの保存設定を確認してください。';
+        return;
+      }
+      player.grass=result.grass;
+      updateUI();
+      $('pachiExchangeMessage').textContent='15,000草をガチャ券1枚に交換しました。草ガチャで使えます！';
+      playChime();
+    }finally{
+      ticketExchangePending=false;
       updateExchangeUI();
-      return;
     }
-    const previousGrass = player.grass;
-    player.grass=KusaAmounts.sub(player.grass,rewards.exchangeCost);
-    if (!saveProfiles(true)) {
-      player.grass = previousGrass;
-      updateUI();
-      $('pachiExchangeMessage').textContent = '草を保存できず、交換を中止しました。ブラウザの保存設定を確認してください。';
-      return;
-    }
-    const result = rewards.addTicket();
-    if (!result.ok) {
-      player.grass = previousGrass;
-      const restored = saveProfiles(true);
-      updateUI();
-      $('pachiExchangeMessage').textContent = restored
-        ? 'ガチャ券を保存できず、草を戻しました。ブラウザの保存設定を確認してください。'
-        : '交換を保存できませんでした。記録の復元が必要なため、ページを閉じずにバックアップしてください。';
-      return;
-    }
-    updateUI();
-    $('pachiExchangeMessage').textContent = '15,000草をガチャ券1枚に交換しました。草ガチャで使えます！';
-    playChime();
   });
   $('pachiBackupButton').addEventListener('click', exportBackup);
   $('pachiRestoreFile').addEventListener('change', event => importBackup(event.target.files[0], event.target));

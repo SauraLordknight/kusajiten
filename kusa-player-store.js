@@ -354,6 +354,54 @@
     return ok;
   }
 
+  // Read both balances and commit them under one exchange lock. Never route a
+  // shared-grass debit through a cabinet save that may reload its old balance.
+  async function exchangeGrassForTicket(expectedPlayerId) {
+    const transact=()=>{
+      try {
+        const fresh=normalizeStore(JSON.parse(localStorage.getItem(KEY)||'null'));
+        const target=fresh.players[expectedPlayerId];
+        if(!target||fresh.selectedPlayerId!==expectedPlayerId)return {ok:false,reason:'player'};
+        const profiles=JSON.parse(localStorage.getItem(PROFILE_KEY)||'null');
+        const profile=Array.isArray(profiles)&&profiles.find(p=>p.rankingId===expectedPlayerId);
+        if(!profile||!KusaAmounts.valid(profile.grass))return {ok:false,reason:'save'};
+        const cost=15000;
+        if(KusaAmounts.cmp(profile.grass,cost)<0)return {ok:false,reason:'balance'};
+        profile.grass=KusaAmounts.sub(profile.grass,cost);
+        target.grass=profile.grass;
+        target.rewards=normalizeRewards(target.rewards);
+        target.rewards.tickets=KusaAmounts.add(target.rewards.tickets,1);
+        target.updatedAt=new Date().toISOString();
+        if(!commitEntries([[PROFILE_KEY,JSON.stringify(profiles)],[KEY,JSON.stringify(fresh)]]))return {ok:false,reason:'save'};
+        state=fresh;
+        emit('kusa-pachi-profile-changed',{playerId:expectedPlayerId});
+        emit('kusa-player-changed',{playerId:expectedPlayerId,area:'rewards'});
+        emit('kusa-rewards-changed');
+        return {ok:true,grass:target.grass,tickets:target.rewards.tickets};
+      }catch{return {ok:false,reason:'save'};}
+    };
+    try {
+      if(navigator.locks?.request)return await navigator.locks.request('kusa-grass-ticket-exchange',transact);
+      // IndexedDB read/write transactions serialize other tabs when Web Locks
+      // are unavailable (including local previews).
+      return await new Promise(resolve=>{
+        let cancelled=false;
+        const request=indexedDB.open('kusaGrassTicketLocksV1',1);
+        request.onupgradeneeded=()=>request.result.createObjectStore('locks');
+        request.onerror=()=>resolve({ok:false,reason:'save'});
+        request.onblocked=()=>{cancelled=true;resolve({ok:false,reason:'busy'});};
+        request.onsuccess=()=>{
+          const db=request.result;if(cancelled){db.close();return;}
+          let result;
+          const tx=db.transaction('locks','readwrite'),store=tx.objectStore('locks');
+          store.get('exchange').onsuccess=()=>{result=transact();store.put(Date.now(),'exchange');};
+          tx.oncomplete=()=>{db.close();resolve(result||{ok:false,reason:'save'});};
+          tx.onabort=()=>{db.close();resolve(result||{ok:false,reason:'save'});};
+        };
+      });
+    }catch{return {ok:false,reason:'save'};}
+  }
+
   function exportData() {
     return JSON.parse(JSON.stringify(state));
   }
@@ -404,6 +452,7 @@
 
   window.KusaPlayerStore = Object.freeze({
     claimLaunchGift,
+    exchangeGrassForTicket,
     key: KEY,
     read: () => exportData(),
     listPlayers,
