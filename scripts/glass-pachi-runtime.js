@@ -19,6 +19,7 @@
   function dailySetting(timestamp=Date.now(),playerId){
     if(root.KusaSharedPachiSetting?.settingForJstDay)return root.KusaSharedPachiSetting.settingForJstDay(timestamp,playerId);
     const day=new Date(timestamp+9*3600000).toISOString().slice(0,10);
+    if(Number(day.slice(-2))%10===6)return 6;
     if(day==='2026-10-01')return 3;
     let hash=0x811c9dc5;
     for(let i=0;i<day.length;i++)hash=Math.imul(hash^day.charCodeAt(i),0x01000193);

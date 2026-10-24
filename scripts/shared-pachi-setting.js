@@ -4,6 +4,8 @@
   'use strict';
   function baseSettingForJstDay(timestamp = Date.now()) {
     const day = new Date(timestamp + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    // The 6th, 16th and 26th are setting-6 days, from midnight JST.
+    if (Number(day.slice(-2)) % 10 === 6) return 6;
     if (day === '2026-10-01') return 3;
     let hash = 0x811c9dc5;
     for (let index = 0; index < day.length; index += 1) hash = Math.imul(hash ^ day.charCodeAt(index), 0x01000193);

@@ -48,7 +48,7 @@
 <script src="scripts/backup-session.js?v=20261017-import-sync"></script>
 <script src="scripts/backup-flow.js?v=20261018-unlimited-wallet"></script>
 <script src="scripts/site-theme-bootstrap.js?v=20261019-prices-rewards"></script>
-<script src="scripts/shared-pachi-setting.js?v=20261018-fortune-1000"></script>
+<script src="scripts/shared-pachi-setting.js?v=20261024-six-days"></script>
 <script src="scripts/ranking-participation.js?v=20261017-opt-in"></script>
 <link rel="stylesheet" href="kusa-pachi.css?v=20261020-board-selection-fix">
 <link rel="stylesheet" href="kusa-profile.css?v=20261019-data-management">
@@ -2061,7 +2061,7 @@ filterNames();
 </script>
 <script src="scripts/debug-pachi-physics.js?v=20261017-unified-prize-field"></script>
 <script src="scripts/pachi-daily-counters.js?v=20261020-daily"></script>
-<script src="scripts/glass-pachi-runtime.js?v=20261019-player-isolation"></script>
+<script src="scripts/glass-pachi-runtime.js?v=20261024-six-days"></script>
 <script src="scripts/glass-pachi-wallet.js?v=20261018-unlimited-wallet"></script>
 <script src="scripts/glass-crystal-symbols.js?v=20261020-ios-memory"></script>
 <script src="scripts/glass-mechanism-art.js?v=20261020-ios-memory"></script>
@@ -2151,10 +2151,11 @@ filterNames();
     {normal:1/2066, high:1-Math.pow(.2,1/15), normalLabel:'2066', highLabel:'9.829'},
     {normal:1/1895, high:1-Math.pow(.2,1/15), normalLabel:'1895', highLabel:'9.829'}
   ];
-  // 全訪問者で共通の日替わり設定。日本時間の日付を種に1〜6から均等に選ぶ。
+  // 全訪問者で共通の日替わり設定。日本時間の6・16・26日は6、それ以外は日付から選ぶ。
   function dailyPachiSetting() {
     if (window.KusaSharedPachiSetting?.settingForJstDay) return window.KusaSharedPachiSetting.settingForJstDay(Date.now(),player?.rankingId);
     const dayKey = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    if (Number(dayKey.slice(-2)) % 10 === 6) return 6;
     if (dayKey === '2026-10-01') return 3;
     let hash = 0x811c9dc5;
     for (let i = 0; i < dayKey.length; i++) hash = Math.imul(hash ^ dayKey.charCodeAt(i), 0x01000193);
