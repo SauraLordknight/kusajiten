@@ -436,6 +436,9 @@ function normalizeAccount(value = {}, preserveBoard = false) {
     medals: KusaAmounts.add(wallet,refund),
     chips: KusaAmounts.add(chipBalance,charmRefund),
     fortuneKeys: KusaAmounts.normalize(value.fortuneKeys),
+    spoilerItems: KusaAmounts.normalize(value.spoilerItems),
+    settingRevealPurchaseDay: /^\d{4}-\d{2}-\d{2}$/.test(value.settingRevealPurchaseDay||'')?value.settingRevealPurchaseDay:'',
+    settingReveal: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.settingReveal?.day||'')?value.settingReveal.day:''},
     fortunePurchases: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.fortunePurchases?.day||'')?value.fortunePurchases.day:'',count:safeInt(value.fortunePurchases?.count,0,2)},
     fortuneBoost: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.fortuneBoost?.day||'')?value.fortuneBoost.day:'',levels:safeInt(value.fortuneBoost?.levels,0,2)},
     auroraKeys: KusaAmounts.normalize(value.auroraKeys),
@@ -1101,7 +1104,7 @@ const CAPSULE_EDITION='v2';
 const SHOP_ITEMS = Object.freeze([
   {id:'medals',name:'メダル補給',description:'所持メダルに30枚追加します。日本時間で1日5回まで。',chips:500,dailyLimit:5},
   {id:'paint',name:'草彩片パック',description:'草彩片100個。日本時間で1日5回まで。',chips:500},
-  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:10000,dailyLimit:1}
+  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:5000,dailyLimit:1}
 ]);
 // Permanent site themes only. Cabinet sales remain retired.
 const SHOP_SKINS = SITE_THEMES;
@@ -1543,6 +1546,7 @@ const {confirmAction}=load("kusa-action-ui.js");
 const {FORTUNE_KEY,AURORA_KEY,purchaseFortuneKey,useFortuneKey,fortuneStatus,auroraStatus,useAuroraKey}=load("kusa-fortune-economy.js");
 const {CAPSULES,CAPSULE_EDITIONS,SHOP_ITEMS,SHOP_SKINS,capsuleTotal,japanDay,economyLock,openCapsules,purchaseSupply,craftSkin,equipSkin,skinOwned}=load("kusa-medal/medal-capsule-economy.js");
 
+globalThis.KusaEconomyLock=economyLock;
 const save=new MedalSave(),$=id=>document.getElementById(id),fmt=n=>KusaAmounts.format(n || 0);
 const shop=$('kusaShopDialog'),opening=$('capsuleOpenDialog'),list=$('capsuleInventoryList');
 let tab='supplies',busy=false,selected=null,playerId=save.selectedPlayerId,lastSummary='';
@@ -1552,6 +1556,8 @@ const fortuneBanner=node('p',undefined,'fortune-status');fortuneBanner.id='fortu
 $('kusaProfile').append(fortuneBanner);
 const cabinetFortune=node('p',undefined,'fortune-status fortune-cabinet-status');$('pachiGame').prepend(cabinetFortune);
 const auroraBanner=node('p',undefined,'fortune-status aurora-status');auroraBanner.id='auroraStatus';auroraBanner.setAttribute('role','status');$('kusaProfile').append(auroraBanner);
+const revealBanner=node('p',undefined,'fortune-status');revealBanner.id='settingRevealStatus';$('kusaProfile').append(revealBanner);
+const cabinetReveal=node('p',undefined,'fortune-status fortune-cabinet-status');$('pachiGame').prepend(cabinetReveal);
 const cabinetAurora=node('p',undefined,'fortune-status fortune-cabinet-status aurora-status');$('pachiGame').prepend(cabinetAurora);
 let fortuneDayTimer;
 const inventoryTools=node('div',undefined,'capsule-inventory-tools');
@@ -1608,17 +1614,27 @@ function render(){
   const content=$('shopContent');
   const fortune=fortuneStatus(save,playerId);
   const aurora=auroraStatus(save,playerId);
+  const spoiler=KusaPlayerStore.spoilerStatus(playerId);
+  for(const b of [revealBanner,cabinetReveal]){b.hidden=!playerId||!spoiler.active;b.textContent=spoiler.active?`🔍 ネタバレで草：本日の台設定 ${spoiler.setting}（両台共通・フォーチュンキー反映済み）`:'';}
   const statusText=`🔑 フォーチュンキー発動中：本日の台設定が＋${fortune.boost}｜ 残り ${countdown(fortune.expiresAt-Date.now())}`;
   for(const banner of [fortuneBanner,cabinetFortune]){banner.hidden=!playerId||!fortune.active;banner.textContent=statusText;banner.classList.toggle('is-active',fortune.active);}
   const auroraText=`🌌 オーロラキー発動中：UR・GODR・Ωレアのみ抽選｜残り ${countdown(aurora.expiresAt-Date.now())}`;
   for(const banner of [auroraBanner,cabinetAurora]){banner.hidden=!playerId||!aurora.active;banner.textContent=auroraText;banner.classList.toggle('is-active',aurora.active);}
   const gachaAurora=$('gachaAuroraStatus');if(gachaAurora){gachaAurora.hidden=!aurora.active;gachaAurora.textContent=aurora.active?`🌌 オーロラキー発動中　UR・GODR・Ωレアのみ出現　残り ${countdown(aurora.expiresAt-Date.now())}`:'';}
   clearTimeout(fortuneDayTimer);fortuneDayTimer=setTimeout(()=>{shopSignature='';render();},Math.max(20,Math.min(2147483647,Math.min(fortune.expiresAt,aurora.expiresAt)-Date.now()+30)));
-  const shopKey=JSON.stringify([playerId,tab,busy,a.chips,a.paintFragments,a.dailyShop,a.auroraKeys,a.auroraBoost,a.ownedSkins,a.equippedSkins,a.unlockedThemes,a.selectedTheme,japanDay(),fortune,aurora]);
+  const shopKey=JSON.stringify([playerId,tab,busy,a.chips,a.paintFragments,a.dailyShop,a.auroraKeys,a.auroraBoost,a.ownedSkins,a.equippedSkins,a.unlockedThemes,a.selectedTheme,japanDay(),fortune,aurora,spoiler,KusaPlayerStore.getSelected()?.grass]);
   if(shopSignature!==shopKey){shopSignature=shopKey;content.replaceChildren();
   document.querySelectorAll('[data-shop-tab]').forEach(b=>{const active=b.dataset.shopTab===tab;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
   content.setAttribute('aria-labelledby',tab==='supplies'?'shopSuppliesTab':'shopSkinsTab');
   if(tab==='supplies'){
+    const reveal=node('article',undefined,'shop-product');reveal.dataset.product='spoiler';
+    reveal.append(node('h3','🔍 ネタバレで草'),node('p','使うと本日の台設定が分かります。草パチ・ガラスの少女共通。次の午前0時（日本時間）まで確認でき、フォーチュンキーの効果も反映します。'),node('p','草10,000／個','shop-product-cost'),node('small',`所持 ${fmt(spoiler.inventory)}個 ｜ 日本時間で1日1個まで購入${spoiler.active?' ｜ 本日の設定を確認できます':''}`));
+    const revealBuy=button('購入する',async()=>{const id=save.selectedPlayerId;if(await confirmAction({title:'ネタバレで草を購入',lines:['草10,000で1個購入します。','購入後に「使う」で本日の設定を確認できます。'],action:'購入する',expectedPlayerId:id}))await run(()=>KusaPlayerStore.purchaseSpoiler(id),'ネタバレで草を1個購入しました。',true);});
+    revealBuy.dataset.shopBuy='spoiler';revealBuy.disabled=busy||!playerId||spoiler.purchased||KusaAmounts.cmp(KusaPlayerStore.getSelected()?.grass||0,10000)<0;
+    const revealUse=button('使う（設定を見る）',async()=>{const id=save.selectedPlayerId;if(await confirmAction({title:'ネタバレで草を使う',lines:['1個消費して本日の台設定を表示します。','次の午前0時（日本時間）まで確認できます。'],action:'使う',expectedPlayerId:id}))await run(()=>KusaPlayerStore.useSpoiler(id),'本日の設定をプロフィールと台の上部に表示しました。',true);});
+    revealUse.dataset.spoilerUse='';revealUse.disabled=busy||!playerId||spoiler.active||KusaAmounts.cmp(spoiler.inventory,1)<0;
+    reveal.append(revealBuy,revealUse);content.append(reveal);
+
     const card=node('article',undefined,'shop-product fortune-product');card.dataset.product=FORTUNE_KEY.id;
     card.append(node('h3','🔑 フォーチュンキー'),node('p','使うと本日の台設定が1段階アップ。草パチとガラスの少女の両方に有効です。効果は次の午前0時（日本時間）まで。'),node('p',`${fmt(FORTUNE_KEY.chips)}チップ／個`,'shop-product-cost'));
     const fortuneNote=node('small',`所持 ${fmt(fortune.inventory)}個 ｜ 本日使用 ${fortune.boost}/2回 ｜ 本日の購入残り ${fortune.remainingPurchases}個`);fortuneNote.dataset.fortuneCountdown='';card.append(fortuneNote);
@@ -1733,8 +1749,8 @@ return {};
 "kusa-fortune-economy.js":function(load){
 const {economyLock, japanDay}=load("kusa-medal/medal-capsule-economy.js");
 
-const FORTUNE_KEY=Object.freeze({id:'fortune-key',name:'フォーチュンキー',chips:1000,dailyLimit:2});
-const AURORA_KEY=Object.freeze({id:'aurora-key',name:'オーロラキー',chips:10000,dailyLimit:1});
+const FORTUNE_KEY=Object.freeze({id:'fortune-key',name:'フォーチュンキー',chips:200,dailyLimit:2});
+const AURORA_KEY=Object.freeze({id:'aurora-key',name:'オーロラキー',chips:5000,dailyLimit:1});
 
 // A plain status read also works before the commerce window has been opened.
 function fortuneStatus(save, playerId, now=Date.now()) {
