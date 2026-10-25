@@ -81,7 +81,9 @@
 <script defer src="scripts/site-bgm.js?v=20261020-bgm-menu-reading"></script>
 
 <script defer src="scripts/screen-layout.js?v=20261020-policy-surface-v2"></script>
-<script defer src="scripts/site-announcements.js?v=20261020-launch-gift"></script>
+<script defer src="scripts/site-announcements.js?v=20261025-economy-patch"></script>
+<script defer src="scripts/welcome-bonus.js?v=20261025-economy-patch"></script>
+<link rel="stylesheet" href="styles/welcome-bonus.css?v=20261025-economy-patch">
 <script defer src="scripts/game-windows.js?v=20261020-story-window"></script>
 <script defer src="scripts/pachi-layout.js?v=20261020-original-notice"></script>
 <link rel="stylesheet" href="styles/glass-howto.css?v=20261018-handle-copy-v2">
@@ -761,7 +763,7 @@
         低身長・陰キャ・コミュ力控えめの三拍子。ヴァイオリンのアイコンを高頻度で使用する。<br><br>
         キモくて草</p>
       </div>
-    </details></div></dialog><div class="screen-effects-layer" id="screenEffectsLayer" aria-hidden="true"></div><script src="scripts/gacha-card-counts.js?v=20261017-unlimited"></script><script src="kusa-player-store.js?v=20261022-ticket-exchange"></script>
+    </details></div></dialog><div class="screen-effects-layer" id="screenEffectsLayer" aria-hidden="true"></div><script src="scripts/gacha-card-counts.js?v=20261017-unlimited"></script><script src="kusa-player-store.js?v=20261025-economy-patch"></script>
 <script src="kusa-rewards.js?v=20261019-player-isolation"></script>
 <script>
 // 共有リンクに付く計測用UTMだけを整理する。ページのパスや未知のクエリは変更しない。
@@ -3533,7 +3535,7 @@ filterNames();
       try { localStorage.setItem(profileKey, JSON.stringify(profiles)); }
       catch { player=null;profiles=readProfiles();$('pachiEntryMessage').textContent='新しいデータを保存できませんでした。';return; }
     }
-    window.KusaPlayerStore?.syncPachiProfiles?.(profiles);
+    window.KusaPlayerStore?.syncPachiProfiles?.(profiles, existing ? '' : player.rankingId);
     window.KusaPlayerStore?.select?.(player.rankingId);
     const now = Date.now();
     const idleReset = resetPlayerAfterIdle();
@@ -5353,6 +5355,6 @@ filterNames();
     close.addEventListener('click', () => { if(globalThis.KusaCommemorativeUI)return; modal.hidden = true; });
   })();
 </script>
-<script src="kusa-profile.bundle.js?v=20261021-water-animation"></script>
+<script src="kusa-profile.bundle.js?v=20261025-economy-patch"></script>
 </body></html>
 

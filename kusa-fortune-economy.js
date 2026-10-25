@@ -1,7 +1,7 @@
 import {economyLock, japanDay} from './kusa-medal/medal-capsule-economy.js';
 
-export const FORTUNE_KEY=Object.freeze({id:'fortune-key',name:'フォーチュンキー',chips:1000,dailyLimit:2});
-export const AURORA_KEY=Object.freeze({id:'aurora-key',name:'オーロラキー',chips:10000,dailyLimit:1});
+export const FORTUNE_KEY=Object.freeze({id:'fortune-key',name:'フォーチュンキー',chips:200,dailyLimit:2});
+export const AURORA_KEY=Object.freeze({id:'aurora-key',name:'オーロラキー',chips:5000,dailyLimit:1});
 
 // A plain status read also works before the commerce window has been opened.
 export function fortuneStatus(save, playerId, now=Date.now()) {

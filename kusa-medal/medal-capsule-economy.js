@@ -12,7 +12,7 @@ export const CAPSULE_EDITION='v2';
 export const SHOP_ITEMS = Object.freeze([
   {id:'medals',name:'メダル補給',description:'所持メダルに30枚追加します。日本時間で1日5回まで。',chips:500,dailyLimit:5},
   {id:'paint',name:'草彩片パック',description:'草彩片100個。日本時間で1日5回まで。',chips:500},
-  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:10000,dailyLimit:1}
+  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:5000,dailyLimit:1}
 ]);
 // Permanent site themes only. Cabinet sales remain retired.
 export const SHOP_SKINS = SITE_THEMES;

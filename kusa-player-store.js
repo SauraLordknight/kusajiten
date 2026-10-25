@@ -74,6 +74,7 @@
   function normalizePlayer(value = {}, id) {
     return {
       id,
+      welcomeBonus: {eligible:value.welcomeBonus?.eligible===true, claimed:value.welcomeBonus?.claimed===true},
       claimedAnnouncements: Array.isArray(value.claimedAnnouncements) ? [...new Set(value.claimedAnnouncements.filter(id => typeof id === 'string' && id.length < 100))] : [],
       name: typeof value.name === 'string' ? value.name.trim().slice(0, 20) : 'プレイヤー',
       grass: KusaAmounts.normalize(value.grass),
@@ -233,7 +234,7 @@
     return Object.values(state.players).map(player => ({id: player.id, name: player.name, grass: player.grass, balls: player.balls, totalBalls: getBallBalances(player.id).total}));
   }
 
-  function syncPachiProfiles(profiles) {
+  function syncPachiProfiles(profiles, createdPlayerId = '') {
     if (!Array.isArray(profiles)) return false;
     state = readRawStore();
     let changed = false;
@@ -242,6 +243,7 @@
       const previous = state.players[profile.rankingId];
       const next = normalizePlayer({
         ...previous,
+        welcomeBonus: previous?.welcomeBonus || {eligible:profile.rankingId===createdPlayerId,claimed:false},
         name: profile.name,
         grass: profile.grass,
         balls: profile.balls,
@@ -313,7 +315,7 @@
     state = migrate();
     if (Object.values(state.players).some(player => player.name === name)) return {ok:false, message:'同じ名前のデータが既にあります。別の名前にしてください。'};
     const id = newId(), now = new Date().toISOString();
-    const player = normalizePlayer({name, grass:0, balls:5000, createdAt:now, gacha:blankGacha(), rewards:normalizeRewards()}, id);
+    const player = normalizePlayer({name, grass:0, balls:5000, createdAt:now, welcomeBonus:{eligible:true,claimed:false}, gacha:blankGacha(), rewards:normalizeRewards()}, id);
     const next = normalizeStore({...state, selectedPlayerId:id, players:{...state.players, [id]:player}});
     const profiles = readProfiles();
     profiles.push({name, rankingId:id, grass:0, balls:5000, firstPlayedAt:now, lastPlayedAt:now});
@@ -426,31 +428,74 @@
     }
   });
 
-  function claimLaunchGift() {
-    state = readRawStore();
-    const player = selected(), giftId = '20261020-launch';
-    if (!player) return {ok:false, message:'育成・カード管理からデータを選択または作成してください。'};
-    if (player.claimedAnnouncements.includes(giftId)) return {ok:false, message:'このデータでは受け取り済みです。'};
-    const next = normalizeStore(state), target = next.players[player.id];
-    target.grass = KusaAmounts.add(target.grass, 10000);
-    target.claimedAnnouncements.push(giftId);
-    const profiles = readProfiles();
-    const profile = profiles.find(p => p.rankingId === player.id);
-    if (profile) profile.grass = target.grass;
-    const medal = readJson('kusaMedalSaveV1', {});
-    if (!medal.accounts || typeof medal.accounts !== 'object') medal.accounts = {};
-    const account = medal.accounts[player.id] || {};
-    account.chips = KusaAmounts.add(KusaAmounts.normalize(account.chips), 1000);
-    medal.accounts[player.id] = account;
-    if (!commitEntries([[PROFILE_KEY, JSON.stringify(profiles)], ['kusaMedalSaveV1', JSON.stringify(medal)], [KEY, JSON.stringify(next)]])) return {ok:false, message:'保存できませんでした。もう一度お試しください。'};
-    state = next;
-    emit('kusa-player-changed', {playerId:player.id});
-    emit('kusa-pachi-profile-changed', {playerId:player.id});
-    emit('kusa-medal-save-changed', {playerId:player.id});
-    return {ok:true, message:'草10,000とチップ1,000を受け取りました！'};
+  function claimLaunchGift(id = state.selectedPlayerId) {return patchTransaction(id,(p,a)=>{
+    const giftId='20261020-launch';
+    if(p.claimedAnnouncements.includes(giftId))return 'このデータでは受け取り済みです。';
+    p.grass=KusaAmounts.add(p.grass,10000);a.chips=KusaAmounts.add(KusaAmounts.normalize(a.chips),1000);p.claimedAnnouncements.push(giftId);
+  });}
+
+  // Every reward and shop mutation shares the same cross-tab economy lock.
+  function patchTransaction(expectedId, mutate) {
+    const run=()=>{
+      if(window.KusaBackupSession?.isCurrent()===false)return {ok:false,message:'保存データが更新されました。再読み込みしてください。'};
+      const next=readRawStore(),target=next.players[expectedId];
+      if(!target||next.selectedPlayerId!==expectedId)return {ok:false,message:'データが切り替わりました。操作し直してください。'};
+      const profiles=readProfiles(),profile=profiles.find(p=>p.rankingId===expectedId);
+      if(!profile)return {ok:false,message:'データを読み込めませんでした。'};
+      const medal=readJson('kusaMedalSaveV1',{});medal.accounts ||= {};
+      const account=medal.accounts[expectedId] ||= {};
+      target.grass=KusaAmounts.normalize(profile.grass);
+      const error=mutate(target,account);
+      if(error)return {ok:false,message:error};
+      profile.grass=target.grass;target.updatedAt=new Date().toISOString();
+      if(!commitEntries([[PROFILE_KEY,JSON.stringify(profiles)],['kusaMedalSaveV1',JSON.stringify(medal)],[KEY,JSON.stringify(next)]]))return {ok:false,message:'保存できませんでした。所持品は変更していません。'};
+      state=next;
+      emit('kusa-player-changed',{playerId:expectedId});emit('kusa-pachi-profile-changed',{playerId:expectedId});emit('kusa-medal-save-changed',{playerId:expectedId});
+      return {ok:true};
+    };
+    if(window.KusaEconomyLock)return window.KusaEconomyLock(run);
+    if(navigator.locks?.request)return navigator.locks.request('kusa-economy',run);
+    return new Promise((resolve,reject)=>{
+      const request=indexedDB.open('kusaEconomyLocksV1',1);
+      request.onupgradeneeded=()=>request.result.createObjectStore('locks');
+      request.onerror=()=>reject(new Error('保存の安全確認ができません。'));
+      request.onblocked=()=>reject(new Error('ほかのタブを閉じて再試行してください。'));
+      request.onsuccess=()=>{const db=request.result,tx=db.transaction('locks','readwrite');let result;
+        tx.objectStore('locks').get('economy').onsuccess=()=>{try{result=run();tx.objectStore('locks').put(Date.now(),'economy');}catch{tx.abort();}};
+        tx.oncomplete=()=>{db.close();resolve(result||{ok:false,message:'保存できませんでした。'});};
+        tx.onabort=()=>{db.close();resolve(result||{ok:false,message:'保存できませんでした。'});};
+      };
+    });
   }
+  const patchDay=()=>new Date(Date.now()+9*3600000).toISOString().slice(0,10);
+  function spoilerStatus(id=state.selectedPlayerId) {
+    const a=readJson('kusaMedalSaveV1',{}).accounts?.[id]||{},day=patchDay();
+    const active=a.settingReveal?.day===day;
+    return {inventory:KusaAmounts.normalize(a.spoilerItems),purchased:a.settingRevealPurchaseDay===day,active,
+      setting:active?window.KusaSharedPachiSetting.settingForJstDay(Date.now(),id):null};
+  }
+  function purchaseSpoiler(id) {return patchTransaction(id,(p,a)=>{
+    if(a.settingRevealPurchaseDay===patchDay())return 'ネタバレで草は日本時間で1日1個まで購入できます。';
+    if(KusaAmounts.cmp(p.grass,10000)<0)return '草が足りません。';
+    p.grass=KusaAmounts.sub(p.grass,10000);a.spoilerItems=KusaAmounts.add(KusaAmounts.normalize(a.spoilerItems),1);a.settingRevealPurchaseDay=patchDay();
+  });}
+  function useSpoiler(id) {return patchTransaction(id,(_p,a)=>{
+    if(a.settingReveal?.day===patchDay())return '本日の設定はすでに確認できます。アイテムは消費しません。';
+    if(KusaAmounts.cmp(KusaAmounts.normalize(a.spoilerItems),1)<0)return 'ネタバレで草を持っていません。';
+    a.spoilerItems=KusaAmounts.sub(a.spoilerItems,1);a.settingReveal={day:patchDay()};
+  });}
+  function claimPatchGift(id) {return patchTransaction(id,(p,a)=>{
+    const giftId='20261025-economy-patch';
+    if(p.claimedAnnouncements.includes(giftId))return 'このデータでは受け取り済みです。';
+    a.chips=KusaAmounts.add(KusaAmounts.normalize(a.chips),3000);p.claimedAnnouncements.push(giftId);
+  });}
+  function claimWelcomeBonus(id) {return patchTransaction(id,(p,a)=>{
+    if(!p.welcomeBonus.eligible||p.welcomeBonus.claimed)return '初回ボーナスの対象ではないか、すでに受け取り済みです。';
+    p.grass=KusaAmounts.add(p.grass,1000);a.chips=KusaAmounts.add(KusaAmounts.normalize(a.chips),500);p.welcomeBonus.claimed=true;
+  });}
 
   window.KusaPlayerStore = Object.freeze({
+    spoilerStatus,purchaseSpoiler,useSpoiler,claimPatchGift,claimWelcomeBonus,
     claimLaunchGift,
     exchangeGrassForTicket,
     key: KEY,
