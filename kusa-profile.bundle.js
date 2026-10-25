@@ -1555,6 +1555,8 @@ let inventoryFilter='owned';
 const fortuneBanner=node('p',undefined,'fortune-status');fortuneBanner.id='fortuneStatus';fortuneBanner.setAttribute('role','status');
 $('kusaProfile').append(fortuneBanner);
 const cabinetFortune=node('p',undefined,'fortune-status fortune-cabinet-status');$('pachiGame').prepend(cabinetFortune);
+const sixDayBanner=node('p',undefined,'fortune-status');sixDayBanner.id='sixDayStatus';sixDayBanner.setAttribute('role','status');$('kusaProfile').append(sixDayBanner);
+const cabinetSixDay=node('p',undefined,'fortune-status fortune-cabinet-status');cabinetSixDay.id='pachiSixDayStatus';cabinetSixDay.setAttribute('role','status');$('pachiGame').prepend(cabinetSixDay);
 const auroraBanner=node('p',undefined,'fortune-status aurora-status');auroraBanner.id='auroraStatus';auroraBanner.setAttribute('role','status');$('kusaProfile').append(auroraBanner);
 const revealBanner=node('p',undefined,'fortune-status');revealBanner.id='settingRevealStatus';$('kusaProfile').append(revealBanner);
 const cabinetReveal=node('p',undefined,'fortune-status fortune-cabinet-status');$('pachiGame').prepend(cabinetReveal);
@@ -1615,6 +1617,8 @@ function render(){
   const fortune=fortuneStatus(save,playerId);
   const aurora=auroraStatus(save,playerId);
   const spoiler=KusaPlayerStore.spoilerStatus(playerId);
+  const sixDay=Number(japanDay().slice(-2))%10===6;
+  for(const banner of [sixDayBanner,cabinetSixDay]){banner.hidden=!sixDay;banner.textContent=sixDay?'🎉 本日は6の日！ 草パチ・ガラスの少女は設定6で遊べます（日本時間の本日限り）。':'';}
   for(const b of [revealBanner,cabinetReveal]){b.hidden=!playerId||!spoiler.active;b.textContent=spoiler.active?`🔍 ネタバレで草：本日の台設定 ${spoiler.setting}（両台共通・フォーチュンキー反映済み）`:'';}
   const statusText=`🔑 フォーチュンキー発動中：本日の台設定が＋${fortune.boost}｜ 残り ${countdown(fortune.expiresAt-Date.now())}`;
   for(const banner of [fortuneBanner,cabinetFortune]){banner.hidden=!playerId||!fortune.active;banner.textContent=statusText;banner.classList.toggle('is-active',fortune.active);}
@@ -1728,6 +1732,7 @@ $('capsuleAnimationSkip').addEventListener('click',()=>{$('capsuleOpenAnimation'
 for(const d of [shop,opening])d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
 for(const event of ['kusa-medal-save-changed','kusa-player-changed','kusa-pachi-profile-changed','kusa-fortune-changed'])window.addEventListener(event,render);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)render();});
+window.addEventListener('pageshow',render);
 window.addEventListener('kusa-capsule-acquired',event=>{
   const badge=$('capsuleInventoryBadge');badge.animate?.([{filter:'brightness(1)'},{filter:'brightness(2)'},{filter:'brightness(1)'}],{duration:800});
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
