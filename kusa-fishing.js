@@ -64,7 +64,7 @@ scene.onCoffeeEnd=()=>{soundscape.stopSip();setPhase('idle');status('あたた�
 async function persistPosition(){if(!positionDirty||!playerId||busy||positionSaving)return;positionSaving=true;const id=playerId,nav=scene.snapshot();positionDirty=false;try{const r=await fishingTransaction(save,id,(p,a)=>{a.fishing.navigation=nav;});if(!r?.ok)positionDirty=true;}catch{positionDirty=true;}finally{positionSaving=false;lastPositionSave=Date.now();}}
 const media=new Set();
 const rewardSoundTimers=new Set();
-function clearRewardEffects(){for(const timeout of rewardSoundTimers)clearTimeout(timeout);rewardSoundTimers.clear();dialog.querySelectorAll('.fishing-token').forEach(node=>node.remove());}
+function clearRewardEffects(){for(const timeout of rewardSoundTimers)clearTimeout(timeout);rewardSoundTimers.clear();dialog.querySelectorAll('.fishing-token').forEach(node=>{node.getAnimations().forEach(animation=>animation.cancel());node.remove();});}
 const audioFiles={cast:'cast.ogg',splash:'splash.ogg',bite:'bite-soft-v2.ogg',catch:'catch.ogg',reward:'reward.ogg',confirm:'reward.ogg',message:'bite-soft-v2.ogg',crunch:'plant-crack-v4.mp3',rainbow:'plant-rainbow.ogg',heart:'plant-heart.ogg',crystal:'crystal-blessing.ogg'};
 function play(name,rate=1){
   if(!sound||document.hidden||!dialog.open||media.size>=8)return;
@@ -179,14 +179,14 @@ $('fishingCrystalUse').onclick=useCrystal;
 function rewardParticles(rewards){
   clearRewardEffects();const owner=playerId;
   const host=$('fishingParticles');host.replaceChildren();let index=0;
-  const from=$('fishingCanvas').getBoundingClientRect(),root=dialog.getBoundingClientRect(),origin=scene.screenPoint(scene.p.x,scene.p.y-12);
+  const from=$('fishingCanvas').getBoundingClientRect(),origin=scene.screenPoint(scene.p.x,scene.p.y-12);
   for(const [k,n] of Object.entries(rewards)){
     const dest=$(`fishing-${icons[k]==='🎁'?'capsules':k}`)?.getBoundingClientRect();if(!dest)continue;
     const count=Math.min(n,Math.min(5,Math.max(0,25-index)));
     for(let j=0;j<count;j++,index++){
       const node=document.createElement('span');node.textContent=icons[k];node.className='fishing-token';dialog.append(node);
-      const anim=node.animate([{transform:`translate(${from.left-root.left+from.width*origin.x/384}px,${from.top-root.top+from.height*origin.y/256}px) scale(1)`,opacity:1},{transform:`translate(${dest.left-root.left+dest.width/2}px,${dest.top-root.top}px) scale(.5)`,opacity:0}],{duration:matchMedia('(prefers-reduced-motion: reduce)').matches?100:800,delay:index*75,easing:'ease-in-out'});
-      anim.finished.then(()=>node.remove()).catch(()=>node.remove());if(index<5){const delay=index*85;const timeout=setTimeout(()=>{rewardSoundTimers.delete(timeout);if(dialog.open&&playerId===owner&&globalThis.KusaPlayerStore?.getSelectedId()===owner)play('reward',1+delay/3000);},delay);rewardSoundTimers.add(timeout);}
+      const animation=node.animate([{transform:`translate(${from.left+from.width*origin.x/384}px,${from.top+from.height*origin.y/256}px) scale(1)`,opacity:1},{transform:`translate(${dest.left+dest.width/2}px,${dest.top}px) scale(.5)`,opacity:0}],{duration:matchMedia('(prefers-reduced-motion: reduce)').matches?100:800,delay:index*75,easing:'ease-in-out'});
+      animation.finished.then(()=>node.remove(),()=>node.remove());if(index<5){const delay=index*85;const timeout=setTimeout(()=>{rewardSoundTimers.delete(timeout);if(dialog.open&&playerId===owner&&globalThis.KusaPlayerStore?.getSelectedId()===owner)play('reward',1+delay/3000);},delay);rewardSoundTimers.add(timeout);}
     }
     const target=$(`fishing-${icons[k]==='🎁'?'capsules':k}`);target?.animate([{color:'#467a5d'},{color:'#d59332'},{color:'#467a5d'}],{duration:1200});
   }
