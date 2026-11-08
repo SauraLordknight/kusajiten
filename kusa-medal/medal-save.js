@@ -196,6 +196,8 @@ function normalizeAccount(value = {}, preserveBoard = false) {
     fortuneBoost: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.fortuneBoost?.day||'')?value.fortuneBoost.day:'',levels:safeInt(value.fortuneBoost?.levels,0,2)},
     auroraKeys: KusaAmounts.normalize(value.auroraKeys),
     auroraBoost: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.auroraBoost?.day||'')?value.auroraBoost.day:'',active:value.auroraBoost?.active===true},
+    commonKeys: KusaAmounts.normalize(value.commonKeys),
+    commonBoost: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.commonBoost?.day||'')?value.commonBoost.day:'',active:value.commonBoost?.active===true},
     retiredComboCharms: {
       count: Math.min(Number.MAX_SAFE_INTEGER,safeInt(retiredComboCharms.count,0,Number.MAX_SAFE_INTEGER)+charmCount),
       refunded: Math.min(Number.MAX_SAFE_INTEGER,safeInt(retiredComboCharms.refunded,0,Number.MAX_SAFE_INTEGER)+charmRefund),
@@ -247,7 +249,7 @@ function normalizeAccount(value = {}, preserveBoard = false) {
     pendingCapsules: Object.fromEntries(Object.entries(value.pendingCapsules||{}).filter(([token,c])=>token.length<=100&&c&&['bronze','silver','gold','rainbow','special','premium'].includes(c.quality)&&/^v\d+$/.test(c.edition)).slice(0,64)),
     comboCharms: 0,
     comboCharmSeconds: 0,
-    dailyShop: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.dailyShop?.day||'')?value.dailyShop.day:'',paint:safeInt(value.dailyShop?.paint,0,5),medals:safeInt(value.dailyShop?.medals,0,5),aurora:safeInt(value.dailyShop?.aurora,0,1)},
+    dailyShop: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.dailyShop?.day||'')?value.dailyShop.day:'',paint:safeInt(value.dailyShop?.paint,0,5),medals:safeInt(value.dailyShop?.medals,0,5),aurora:safeInt(value.dailyShop?.aurora,0,1),common:safeInt(value.dailyShop?.common,0,1)},
     rushPaidMarker:safeInt(value.rushPaidMarker,0,Number.MAX_SAFE_INTEGER),
     ownedSkins: union(['kusa-theme-1'],list(value.ownedSkins).filter(id=>id.length<=80&&!retiredIds.includes(id))),
     equippedSkins: {profile:'',site:typeof value.equippedSkins?.site==='string'&&list(value.ownedSkins).includes(value.equippedSkins.site)&&!retiredIds.includes(value.equippedSkins.site)?value.equippedSkins.site:'kusa-theme-1',cabinet:''},

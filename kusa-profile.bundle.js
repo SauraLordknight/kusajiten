@@ -443,6 +443,8 @@ function normalizeAccount(value = {}, preserveBoard = false) {
     fortuneBoost: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.fortuneBoost?.day||'')?value.fortuneBoost.day:'',levels:safeInt(value.fortuneBoost?.levels,0,2)},
     auroraKeys: KusaAmounts.normalize(value.auroraKeys),
     auroraBoost: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.auroraBoost?.day||'')?value.auroraBoost.day:'',active:value.auroraBoost?.active===true},
+    commonKeys: KusaAmounts.normalize(value.commonKeys),
+    commonBoost: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.commonBoost?.day||'')?value.commonBoost.day:'',active:value.commonBoost?.active===true},
     retiredComboCharms: {
       count: Math.min(Number.MAX_SAFE_INTEGER,safeInt(retiredComboCharms.count,0,Number.MAX_SAFE_INTEGER)+charmCount),
       refunded: Math.min(Number.MAX_SAFE_INTEGER,safeInt(retiredComboCharms.refunded,0,Number.MAX_SAFE_INTEGER)+charmRefund),
@@ -494,7 +496,7 @@ function normalizeAccount(value = {}, preserveBoard = false) {
     pendingCapsules: Object.fromEntries(Object.entries(value.pendingCapsules||{}).filter(([token,c])=>token.length<=100&&c&&['bronze','silver','gold','rainbow','special','premium'].includes(c.quality)&&/^v\d+$/.test(c.edition)).slice(0,64)),
     comboCharms: 0,
     comboCharmSeconds: 0,
-    dailyShop: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.dailyShop?.day||'')?value.dailyShop.day:'',paint:safeInt(value.dailyShop?.paint,0,5),medals:safeInt(value.dailyShop?.medals,0,5),aurora:safeInt(value.dailyShop?.aurora,0,1)},
+    dailyShop: {day:/^\d{4}-\d{2}-\d{2}$/.test(value.dailyShop?.day||'')?value.dailyShop.day:'',paint:safeInt(value.dailyShop?.paint,0,5),medals:safeInt(value.dailyShop?.medals,0,5),aurora:safeInt(value.dailyShop?.aurora,0,1),common:safeInt(value.dailyShop?.common,0,1)},
     rushPaidMarker:safeInt(value.rushPaidMarker,0,Number.MAX_SAFE_INTEGER),
     ownedSkins: union(['kusa-theme-1'],list(value.ownedSkins).filter(id=>id.length<=80&&!retiredIds.includes(id))),
     equippedSkins: {profile:'',site:typeof value.equippedSkins?.site==='string'&&list(value.ownedSkins).includes(value.equippedSkins.site)&&!retiredIds.includes(value.equippedSkins.site)?value.equippedSkins.site:'kusa-theme-1',cabinet:''},
@@ -1104,7 +1106,8 @@ const CAPSULE_EDITION='v2';
 const SHOP_ITEMS = Object.freeze([
   {id:'medals',name:'メダル補給',description:'所持メダルに30枚追加します。日本時間で1日5回まで。',chips:500,dailyLimit:5},
   {id:'paint',name:'草彩片パック',description:'草彩片100個。日本時間で1日5回まで。',chips:500},
-  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:5000,dailyLimit:1}
+  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:5000,dailyLimit:1},
+  {id:'common-key',name:'コモンキー',description:'使用中は草ガチャの抽選がN・R・SRの3種類だけになり、各レアリティが均等に抽選されます。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:1000,dailyLimit:1}
 ]);
 // Permanent site themes only. Cabinet sales remain retired.
 const SHOP_SKINS = SITE_THEMES;
@@ -1188,9 +1191,10 @@ function purchaseSupply(save,id,expectedPlayerId,now=Date.now()) {
     if(id==='paint'&&a.dailyShop.day===day&&a.dailyShop.paint>=5)throw new Error('草彩片パックは日本時間で1日5回までです。');
     if(id==='medals'&&a.dailyShop.day===day&&a.dailyShop.medals>=5)throw new Error('メダル補給は1日5回までです。草からの交換も利用できます。');
     if(id==='aurora-key'&&a.dailyShop.day===day&&a.dailyShop.aurora>=1)throw new Error('オーロラキーは日本時間で1日1個まで購入できます。');
-    const key=id==='medals'?'medals':id==='aurora-key'?'auroraKeys':'paintFragments',gain=id==='medals'?30:id==='aurora-key'?1:100;
+    if(id==='common-key'&&a.dailyShop.day===day&&a.dailyShop.common>=1)throw new Error('コモンキーは日本時間で1日1個まで購入できます。');
+    const key=id==='medals'?'medals':id==='aurora-key'?'auroraKeys':id==='common-key'?'commonKeys':'paintFragments',gain=id==='medals'?30:['aurora-key','common-key'].includes(id)?1:100;
     a.chips=KusaAmounts.sub(a.chips,item.chips);a[key]=KusaAmounts.add(a[key],gain);
-    if(['paint','medals','aurora-key'].includes(id)){if(a.dailyShop.day!==day)a.dailyShop={day,paint:0,medals:0,aurora:0};a.dailyShop[id==='paint'?'paint':id==='medals'?'medals':'aurora']++;}
+    if(['paint','medals','aurora-key','common-key'].includes(id)){if(a.dailyShop.day!==day)a.dailyShop={day,paint:0,medals:0,aurora:0,common:0};a.dailyShop[id==='paint'?'paint':id==='medals'?'medals':id==='aurora-key'?'aurora':'common']++;}
   });
 }
 function skinOwned(account,skin) {return skin.starter===true||account.ownedSkins.includes(skin.id)||(skin.theme&&account.unlockedThemes.includes(skin.theme));}
@@ -1543,7 +1547,7 @@ return {DISMANTLE,PROCESS_CHIPS,AWAKEN_CHIPS,effectFor,workshopAction};
 "kusa-commerce-ui.js":function(load){
 const {MedalSave}=load("kusa-medal/medal-save.js");
 const {confirmAction}=load("kusa-action-ui.js");
-const {FORTUNE_KEY,AURORA_KEY,purchaseFortuneKey,useFortuneKey,fortuneStatus,auroraStatus,useAuroraKey}=load("kusa-fortune-economy.js");
+const {FORTUNE_KEY,AURORA_KEY,COMMON_KEY,purchaseFortuneKey,useFortuneKey,fortuneStatus,auroraStatus,commonStatus,useAuroraKey,useCommonKey}=load("kusa-fortune-economy.js");
 const {CAPSULES,CAPSULE_EDITIONS,SHOP_ITEMS,SHOP_SKINS,capsuleTotal,japanDay,economyLock,openCapsules,purchaseSupply,craftSkin,equipSkin,skinOwned}=load("kusa-medal/medal-capsule-economy.js");
 
 globalThis.KusaEconomyLock=economyLock;
@@ -1561,6 +1565,8 @@ const auroraBanner=node('p',undefined,'fortune-status aurora-status');auroraBann
 const revealBanner=node('p',undefined,'fortune-status');revealBanner.id='settingRevealStatus';$('kusaProfile').append(revealBanner);
 const cabinetReveal=node('p',undefined,'fortune-status fortune-cabinet-status');$('pachiGame').prepend(cabinetReveal);
 const cabinetAurora=node('p',undefined,'fortune-status fortune-cabinet-status aurora-status');$('pachiGame').prepend(cabinetAurora);
+const commonBanner=node('p',undefined,'fortune-status common-status');commonBanner.id='commonKeyStatus';$('kusaProfile').append(commonBanner);
+const cabinetCommon=node('p',undefined,'fortune-status fortune-cabinet-status common-status');$('pachiGame').prepend(cabinetCommon);
 let fortuneDayTimer;
 const inventoryTools=node('div',undefined,'capsule-inventory-tools');
 const inventorySummary=node('span',undefined,'capsule-inventory-summary');
@@ -1616,6 +1622,7 @@ function render(){
   const content=$('shopContent');
   const fortune=fortuneStatus(save,playerId);
   const aurora=auroraStatus(save,playerId);
+  const common=commonStatus(save,playerId);
   const spoiler=KusaPlayerStore.spoilerStatus(playerId);
   const sixDay=Number(japanDay().slice(-2))%10===6;
   for(const banner of [sixDayBanner,cabinetSixDay]){banner.hidden=!sixDay;banner.textContent=sixDay?'🎉 本日は6の日！ 草パチ・ガラスの少女は設定6で遊べます（日本時間の本日限り）。':'';}
@@ -1624,9 +1631,12 @@ function render(){
   for(const banner of [fortuneBanner,cabinetFortune]){banner.hidden=!playerId||!fortune.active;banner.textContent=statusText;banner.classList.toggle('is-active',fortune.active);}
   const auroraText=`🌌 オーロラキー発動中：UR・GODR・Ωレアのみ抽選｜残り ${countdown(aurora.expiresAt-Date.now())}`;
   for(const banner of [auroraBanner,cabinetAurora]){banner.hidden=!playerId||!aurora.active;banner.textContent=auroraText;banner.classList.toggle('is-active',aurora.active);}
+  const commonText=`🗝️ コモンキー発動中：N・R・SRのみ各1/3で抽選｜残り ${countdown(common.expiresAt-Date.now())}`;
+  for(const banner of [commonBanner,cabinetCommon]){banner.hidden=!playerId||!common.active;banner.textContent=commonText;banner.classList.toggle('is-active',common.active);}
   const gachaAurora=$('gachaAuroraStatus');if(gachaAurora){gachaAurora.hidden=!aurora.active;gachaAurora.textContent=aurora.active?`🌌 オーロラキー発動中　UR・GODR・Ωレアのみ出現　残り ${countdown(aurora.expiresAt-Date.now())}`:'';}
-  clearTimeout(fortuneDayTimer);fortuneDayTimer=setTimeout(()=>{shopSignature='';render();},Math.max(20,Math.min(2147483647,Math.min(fortune.expiresAt,aurora.expiresAt)-Date.now()+30)));
-  const shopKey=JSON.stringify([playerId,tab,busy,a.chips,a.paintFragments,a.dailyShop,a.auroraKeys,a.auroraBoost,a.ownedSkins,a.equippedSkins,a.unlockedThemes,a.selectedTheme,japanDay(),fortune,aurora,spoiler,KusaPlayerStore.getSelected()?.grass]);
+  const gachaCommon=$('gachaCommonStatus');if(gachaCommon){gachaCommon.hidden=!common.active;gachaCommon.textContent=common.active?`🗝️ コモンキー発動中　N・R・SRのみ各1/3で出現　残り ${countdown(common.expiresAt-Date.now())}`:'';}
+  clearTimeout(fortuneDayTimer);fortuneDayTimer=setTimeout(()=>{shopSignature='';render();},Math.max(20,Math.min(2147483647,Math.min(fortune.expiresAt,aurora.expiresAt,common.expiresAt)-Date.now()+30)));
+  const shopKey=JSON.stringify([playerId,tab,busy,a.chips,a.paintFragments,a.dailyShop,a.auroraKeys,a.auroraBoost,a.commonKeys,a.commonBoost,a.ownedSkins,a.equippedSkins,a.unlockedThemes,a.selectedTheme,japanDay(),fortune,aurora,common,spoiler,KusaPlayerStore.getSelected()?.grass]);
   if(shopSignature!==shopKey){shopSignature=shopKey;content.replaceChildren();
   document.querySelectorAll('[data-shop-tab]').forEach(b=>{const active=b.dataset.shopTab===tab;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
   content.setAttribute('aria-labelledby',tab==='supplies'?'shopSuppliesTab':'shopSkinsTab');
@@ -1652,13 +1662,21 @@ function render(){
     const auroraNote=node('small',`所持 ${fmt(aurora.inventory)}個 ｜ 本日購入残り ${aurora.remainingPurchases}個${aurora.active?` ｜ 発動中 残り ${countdown(aurora.expiresAt-Date.now())}`:''}`);auroraNote.dataset.auroraCountdown='';auroraCard.append(auroraNote);
     const auroraBuy=button('購入する',async()=>{const id=save.selectedPlayerId;if(await confirmAction({title:'オーロラキーを購入',lines:[`${fmt(AURORA_KEY.chips)}チップで1個購入します。`,'使用中はUR・GODR・Ωレアが各1/3の確率で抽選されます。','日本時間で1日1個まで購入できます。'],action:'購入する',expectedPlayerId:id}))await run(()=>purchaseSupply(save,AURORA_KEY.id,id), 'オーロラキーを1個購入しました。');});
     auroraBuy.dataset.shopBuy=AURORA_KEY.id;auroraBuy.disabled=busy||!playerId||!aurora.remainingPurchases||KusaAmounts.cmp(a.chips,AURORA_KEY.chips)<0;
-    const auroraUse=button('キーを使う',async()=>{const id=save.selectedPlayerId;if(await confirmAction({title:'オーロラキーを使う',lines:['UR・GODR・Ωレアが各1/3の確率で抽選されます。','効果は次の午前0時（日本時間）までです。'],action:'使う',expectedPlayerId:id}))await run(()=>useAuroraKey(save,id),'オーロラキー発動！ UR・GODR・Ωレアが各1/3で抽選されます。',true);});
-    auroraUse.dataset.auroraUse='';auroraUse.disabled=busy||!playerId||aurora.active||KusaAmounts.cmp(aurora.inventory,1)<0;
+    const auroraUse=button('キーを使う',async()=>{const id=save.selectedPlayerId;if(await confirmAction({title:'オーロラキーを使う',lines:['UR・GODR・Ωレアが各1/3の確率で抽選されます。','コモンキー発動中は使用できません。','効果は次の午前0時（日本時間）までです。'],action:'使う',expectedPlayerId:id}))await run(()=>useAuroraKey(save,id),'オーロラキー発動！ UR・GODR・Ωレアが各1/3で抽選されます。',true);});
+    auroraUse.dataset.auroraUse='';auroraUse.disabled=busy||!playerId||aurora.active||common.active||KusaAmounts.cmp(aurora.inventory,1)<0;
     auroraCard.append(auroraBuy,auroraUse);content.append(auroraCard);
+    const commonCard=node('article',undefined,'shop-product fortune-product common-product');commonCard.dataset.product=COMMON_KEY.id;
+    commonCard.append(node('h3','🗝️ コモンキー'),node('p','使用中は草ガチャがN（草・用語）・R・SRだけの抽選になり、3つのレアリティが各1/3で出現します。オーロラキーとは同時に使えません。次の午前0時（日本時間）まで有効です。'),node('p',`${fmt(COMMON_KEY.chips)}チップ／個`,'shop-product-cost'));
+    const commonNote=node('small',`所持 ${fmt(common.inventory)}個 ｜ 本日購入残り ${common.remainingPurchases}個${common.active?` ｜ 発動中 残り ${countdown(common.expiresAt-Date.now())}`:''}`);commonNote.dataset.commonCountdown='';commonCard.append(commonNote);
+    const commonBuy=button('購入する',async()=>{const id=save.selectedPlayerId;if(await confirmAction({title:'コモンキーを購入',lines:[`${fmt(COMMON_KEY.chips)}チップで1個購入します。`,'日本時間で1日1個まで購入できます。','使用中はN・R・SRが各1/3の確率で抽選されます。'],action:'購入する',expectedPlayerId:id}))await run(()=>purchaseSupply(save,COMMON_KEY.id,id),'コモンキーを1個購入しました。');});
+    commonBuy.dataset.shopBuy=COMMON_KEY.id;commonBuy.disabled=busy||!playerId||!common.remainingPurchases||KusaAmounts.cmp(a.chips,COMMON_KEY.chips)<0;
+    const commonUse=button('キーを使う',async()=>{const id=save.selectedPlayerId;if(await confirmAction({title:'コモンキーを使う',lines:['N（草・用語）・R・SRだけが各1/3の確率で抽選されます。','オーロラキー発動中は使用できません。','効果は次の午前0時（日本時間）までです。'],action:'使う',expectedPlayerId:id}))await run(()=>useCommonKey(save,id),'コモンキー発動！ N・R・SRが各1/3で抽選されます。',true);});
+    commonUse.dataset.commonUse='';commonUse.disabled=busy||!playerId||common.active||aurora.active||KusaAmounts.cmp(common.inventory,1)<0;
+    commonCard.append(commonBuy,commonUse,node('small',common.active?'オーロラキーは使用できません。':'日本時間で1日1個まで購入できます。'));content.append(commonCard);
   }
   // Medal supply is a legacy game-only product. Keep the shared economy data
   // for old saves, but do not expose medal currency in the site shop.
-  for(const item of tab==='supplies'?SHOP_ITEMS.filter(item=>!['charm','medals','aurora-key'].includes(item.id)):SHOP_SKINS){
+  for(const item of tab==='supplies'?SHOP_ITEMS.filter(item=>!['charm','medals','aurora-key','common-key'].includes(item.id)):SHOP_SKINS){
     const skin=tab==='skins',owned=skin&&skinOwned(a,item),active=skin&&(item.theme?a.selectedTheme===item.theme:a.equippedSkins[item.category]===item.id);
     const card=node('article',undefined,'shop-product');card.dataset.product=item.id;
     const title=node('h3',item.name),description=node('p',item.description);
@@ -1745,8 +1763,9 @@ window.addEventListener('kusa-capsule-acquired',event=>{
 window.addEventListener('storage',e=>{if(['kusaMedalSaveV1','kusaPlayerStoreV1'].includes(e.key)){globalThis.KusaPlayerStore?.refresh?.();render();}});
 globalThis.KusaCommerce=Object.freeze({save,refresh:render,openCapsules:(q,n)=>economyLock(()=>openCapsules(save,q,n,save.selectedPlayerId)),equipSiteTheme(id){save.reload();const player=save.selectedPlayerId;return run(()=>equipSkin(save,id,'site',player),'テーマを適用しました。');}});
 globalThis.KusaAuroraKey=Object.freeze({isActive:()=>{save.reload();return auroraStatus(save,save.selectedPlayerId).active;}});
+globalThis.KusaCommonKey=Object.freeze({isActive:()=>{save.reload();return commonStatus(save,save.selectedPlayerId).active;}});
 render();economyLock(()=>{save.reload();return {ok:true};}).then(render).catch(e=>{$('shopMessage').textContent=e.message;});
-setInterval(()=>{if(!document.hidden){const fortune=fortuneStatus(save,save.selectedPlayerId),aurora=auroraStatus(save,save.selectedPlayerId);for(const banner of [fortuneBanner,cabinetFortune])if(!banner.hidden&&fortune.active)banner.textContent=`🔑 フォーチュンキー発動中：本日の台設定が＋${fortune.boost}｜ 残り ${countdown(fortune.expiresAt-Date.now())}`;for(const banner of [auroraBanner,cabinetAurora])if(!banner.hidden&&aurora.active)banner.textContent=`🌌 オーロラキー発動中：UR・GODR・Ωレアのみ抽選｜残り ${countdown(aurora.expiresAt-Date.now())}`;const gachaAurora=$('gachaAuroraStatus');if(gachaAurora){gachaAurora.hidden=!aurora.active;gachaAurora.textContent=aurora.active?`🌌 オーロラキー発動中　UR・GODR・Ωレアのみ出現　残り ${countdown(aurora.expiresAt-Date.now())}`:'';}const fortuneNote=document.querySelector('[data-fortune-countdown]'),auroraNote=document.querySelector('[data-aurora-countdown]');if(fortuneNote&&fortune.active)fortuneNote.textContent=`所持 ${fmt(fortune.inventory)}個 ｜ 本日使用 ${fortune.boost}/2回 ｜ 残り ${countdown(fortune.expiresAt-Date.now())}`;if(auroraNote)auroraNote.textContent=`所持 ${fmt(aurora.inventory)}個 ｜ 本日購入残り ${aurora.remainingPurchases}個${aurora.active?` ｜ 発動中 残り ${countdown(aurora.expiresAt-Date.now())}`:''}`;}},1000);
+setInterval(()=>{if(!document.hidden){const fortune=fortuneStatus(save,save.selectedPlayerId),aurora=auroraStatus(save,save.selectedPlayerId),common=commonStatus(save,save.selectedPlayerId);for(const banner of [fortuneBanner,cabinetFortune])if(!banner.hidden&&fortune.active)banner.textContent=`🔑 フォーチュンキー発動中：本日の台設定が＋${fortune.boost}｜ 残り ${countdown(fortune.expiresAt-Date.now())}`;for(const banner of [auroraBanner,cabinetAurora])if(!banner.hidden&&aurora.active)banner.textContent=`🌌 オーロラキー発動中：UR・GODR・Ωレアのみ抽選｜残り ${countdown(aurora.expiresAt-Date.now())}`;for(const banner of [commonBanner,cabinetCommon])if(!banner.hidden&&common.active)banner.textContent=`🗝️ コモンキー発動中：N・R・SRのみ各1/3で抽選｜残り ${countdown(common.expiresAt-Date.now())}`;const gachaAurora=$('gachaAuroraStatus');if(gachaAurora){gachaAurora.hidden=!aurora.active;gachaAurora.textContent=aurora.active?`🌌 オーロラキー発動中　UR・GODR・Ωレアのみ出現　残り ${countdown(aurora.expiresAt-Date.now())}`:'';}const gachaCommon=$('gachaCommonStatus');if(gachaCommon){gachaCommon.hidden=!common.active;gachaCommon.textContent=common.active?`🗝️ コモンキー発動中　N・R・SRのみ各1/3で出現　残り ${countdown(common.expiresAt-Date.now())}`:'';}const fortuneNote=document.querySelector('[data-fortune-countdown]'),auroraNote=document.querySelector('[data-aurora-countdown]'),commonNote=document.querySelector('[data-common-countdown]');if(fortuneNote&&fortune.active)fortuneNote.textContent=`所持 ${fmt(fortune.inventory)}個 ｜ 本日使用 ${fortune.boost}/2回 ｜ 残り ${countdown(fortune.expiresAt-Date.now())}`;if(auroraNote)auroraNote.textContent=`所持 ${fmt(aurora.inventory)}個 ｜ 本日購入残り ${aurora.remainingPurchases}個${aurora.active?` ｜ 発動中 残り ${countdown(aurora.expiresAt-Date.now())}`:''}`;if(commonNote)commonNote.textContent=`所持 ${fmt(common.inventory)}個 ｜ 本日購入残り ${common.remainingPurchases}個${common.active?` ｜ 発動中 残り ${countdown(common.expiresAt-Date.now())}`:''}`;}},1000);
 setInterval(()=>{if(shop.open&&!document.hidden)render();},60000);
 
 return {};
@@ -1756,6 +1775,7 @@ const {economyLock, japanDay}=load("kusa-medal/medal-capsule-economy.js");
 
 const FORTUNE_KEY=Object.freeze({id:'fortune-key',name:'フォーチュンキー',chips:200,dailyLimit:2});
 const AURORA_KEY=Object.freeze({id:'aurora-key',name:'オーロラキー',chips:5000,dailyLimit:1});
+const COMMON_KEY=Object.freeze({id:'common-key',name:'コモンキー',chips:1000,dailyLimit:1});
 
 // A plain status read also works before the commerce window has been opened.
 function fortuneStatus(save, playerId, now=Date.now()) {
@@ -1785,9 +1805,22 @@ function auroraStatus(save,playerId,now=Date.now()) {
   else {try{const state=JSON.parse(localStorage.getItem('kusaMedalSaveV1')||'{}');playerId=playerId??globalThis.KusaPlayerStore?.getSelectedId?.()??state.selectedPlayerId;account=state.accounts?.[playerId];}catch{}}
   account=account||{};
   const day=japanDay(now),purchased=account.dailyShop?.day===day?Math.min(1,Math.max(0,Number(account.dailyShop.aurora)||0)):0;
-  const active=account.auroraBoost?.day===day&&account.auroraBoost.active===true;
+  const otherActive=account.commonBoost?.day===day&&account.commonBoost.active===true;
+  const active=account.auroraBoost?.day===day&&account.auroraBoost.active===true&&!otherActive;
   const expiresAt=Date.parse(`${day}T00:00:00+09:00`)+86400000;
   return {playerId,day,inventory:globalThis.KusaAmounts.normalize(account.auroraKeys),purchased,remainingPurchases:1-purchased,active,expiresAt,remainingMs:active?Math.max(0,expiresAt-now):0};
+}
+
+function commonStatus(save,playerId,now=Date.now()) {
+  let account;
+  if(save?.getAccount){playerId=playerId??save.selectedPlayerId;account=save.state?.accounts?.[playerId]||(save.selectedPlayerId===playerId?save.getAccount():{});}
+  else {try{const state=JSON.parse(localStorage.getItem('kusaMedalSaveV1')||'{}');playerId=playerId??globalThis.KusaPlayerStore?.getSelectedId?.()??state.selectedPlayerId;account=state.accounts?.[playerId];}catch{}}
+  account=account||{};
+  const day=japanDay(now),purchased=account.dailyShop?.day===day?Math.min(1,Math.max(0,Number(account.dailyShop.common)||0)):0;
+  const otherActive=account.auroraBoost?.day===day&&account.auroraBoost.active===true;
+  const active=account.commonBoost?.day===day&&account.commonBoost.active===true&&!otherActive;
+  const expiresAt=Date.parse(`${day}T00:00:00+09:00`)+86400000;
+  return {playerId,day,inventory:globalThis.KusaAmounts.normalize(account.commonKeys),purchased,remainingPurchases:1-purchased,active,expiresAt,remainingMs:active?Math.max(0,expiresAt-now):0};
 }
 
 function transaction(save,playerId,now,mutate) {
@@ -1831,6 +1864,7 @@ function useFortuneKey(save,playerId,now) {
 function useAuroraKey(save,playerId,now) {
   return transaction(save,playerId,now,(account,status)=>{
     const aurora=auroraStatus(save,playerId,now??Date.now());
+    if(account.commonBoost?.day===status.day&&account.commonBoost.active===true)return 'コモンキー発動中はオーロラキーを使用できません。';
     if(aurora.active)return 'オーロラキーはすでに発動中です。';
     if(KusaAmounts.cmp(account.auroraKeys||0,1)<0)return 'オーロラキーを持っていません。';
     account.auroraKeys=KusaAmounts.sub(account.auroraKeys,1);
@@ -1838,7 +1872,18 @@ function useAuroraKey(save,playerId,now) {
   });
 }
 
-return {FORTUNE_KEY,AURORA_KEY,fortuneStatus,auroraStatus,purchaseFortuneKey,useFortuneKey,useAuroraKey};
+function useCommonKey(save,playerId,now) {
+  return transaction(save,playerId,now,(account,status)=>{
+    const common=commonStatus(save,playerId,now??Date.now());
+    if(account.auroraBoost?.day===status.day&&account.auroraBoost.active===true)return 'オーロラキー発動中はコモンキーを使用できません。';
+    if(common.active)return 'コモンキーはすでに発動中です。';
+    if(KusaAmounts.cmp(account.commonKeys||0,1)<0)return 'コモンキーを持っていません。';
+    account.commonKeys=KusaAmounts.sub(account.commonKeys,1);
+    account.commonBoost={day:status.day,active:true};
+  });
+}
+
+return {FORTUNE_KEY,AURORA_KEY,COMMON_KEY,fortuneStatus,auroraStatus,commonStatus,purchaseFortuneKey,useFortuneKey,useAuroraKey,useCommonKey};
 },
 "kusa-fishing.js":function(load){
 const {MedalSave}=load("kusa-medal/medal-save.js");

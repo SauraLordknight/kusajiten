@@ -489,13 +489,20 @@
     if(p.claimedAnnouncements.includes(giftId))return 'このデータでは受け取り済みです。';
     a.chips=KusaAmounts.add(KusaAmounts.normalize(a.chips),3000);p.claimedAnnouncements.push(giftId);
   });}
+  function claimCommonKeyGift(id) {return patchTransaction(id,(p,a)=>{
+    const giftId='20261108-common-key';
+    if(p.claimedAnnouncements.includes(giftId))return 'このデータでは受け取り済みです。';
+    p.grass=KusaAmounts.add(p.grass,10000);
+    a.commonKeys=KusaAmounts.add(KusaAmounts.normalize(a.commonKeys),1);
+    p.claimedAnnouncements.push(giftId);
+  });}
   function claimWelcomeBonus(id) {return patchTransaction(id,(p,a)=>{
     if(!p.welcomeBonus.eligible||p.welcomeBonus.claimed)return '初回ボーナスの対象ではないか、すでに受け取り済みです。';
     p.grass=KusaAmounts.add(p.grass,1000);a.chips=KusaAmounts.add(KusaAmounts.normalize(a.chips),500);p.welcomeBonus.claimed=true;
   });}
 
   window.KusaPlayerStore = Object.freeze({
-    spoilerStatus,purchaseSpoiler,useSpoiler,claimPatchGift,claimWelcomeBonus,
+    spoilerStatus,purchaseSpoiler,useSpoiler,claimPatchGift,claimCommonKeyGift,claimWelcomeBonus,
     claimLaunchGift,
     exchangeGrassForTicket,
     key: KEY,

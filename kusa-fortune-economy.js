@@ -2,6 +2,7 @@ import {economyLock, japanDay} from './kusa-medal/medal-capsule-economy.js';
 
 export const FORTUNE_KEY=Object.freeze({id:'fortune-key',name:'フォーチュンキー',chips:200,dailyLimit:2});
 export const AURORA_KEY=Object.freeze({id:'aurora-key',name:'オーロラキー',chips:5000,dailyLimit:1});
+export const COMMON_KEY=Object.freeze({id:'common-key',name:'コモンキー',chips:1000,dailyLimit:1});
 
 // A plain status read also works before the commerce window has been opened.
 export function fortuneStatus(save, playerId, now=Date.now()) {
@@ -31,9 +32,22 @@ export function auroraStatus(save,playerId,now=Date.now()) {
   else {try{const state=JSON.parse(localStorage.getItem('kusaMedalSaveV1')||'{}');playerId=playerId??globalThis.KusaPlayerStore?.getSelectedId?.()??state.selectedPlayerId;account=state.accounts?.[playerId];}catch{}}
   account=account||{};
   const day=japanDay(now),purchased=account.dailyShop?.day===day?Math.min(1,Math.max(0,Number(account.dailyShop.aurora)||0)):0;
-  const active=account.auroraBoost?.day===day&&account.auroraBoost.active===true;
+  const otherActive=account.commonBoost?.day===day&&account.commonBoost.active===true;
+  const active=account.auroraBoost?.day===day&&account.auroraBoost.active===true&&!otherActive;
   const expiresAt=Date.parse(`${day}T00:00:00+09:00`)+86400000;
   return {playerId,day,inventory:globalThis.KusaAmounts.normalize(account.auroraKeys),purchased,remainingPurchases:1-purchased,active,expiresAt,remainingMs:active?Math.max(0,expiresAt-now):0};
+}
+
+export function commonStatus(save,playerId,now=Date.now()) {
+  let account;
+  if(save?.getAccount){playerId=playerId??save.selectedPlayerId;account=save.state?.accounts?.[playerId]||(save.selectedPlayerId===playerId?save.getAccount():{});}
+  else {try{const state=JSON.parse(localStorage.getItem('kusaMedalSaveV1')||'{}');playerId=playerId??globalThis.KusaPlayerStore?.getSelectedId?.()??state.selectedPlayerId;account=state.accounts?.[playerId];}catch{}}
+  account=account||{};
+  const day=japanDay(now),purchased=account.dailyShop?.day===day?Math.min(1,Math.max(0,Number(account.dailyShop.common)||0)):0;
+  const otherActive=account.auroraBoost?.day===day&&account.auroraBoost.active===true;
+  const active=account.commonBoost?.day===day&&account.commonBoost.active===true&&!otherActive;
+  const expiresAt=Date.parse(`${day}T00:00:00+09:00`)+86400000;
+  return {playerId,day,inventory:globalThis.KusaAmounts.normalize(account.commonKeys),purchased,remainingPurchases:1-purchased,active,expiresAt,remainingMs:active?Math.max(0,expiresAt-now):0};
 }
 
 function transaction(save,playerId,now,mutate) {
@@ -77,9 +91,21 @@ export function useFortuneKey(save,playerId,now) {
 export function useAuroraKey(save,playerId,now) {
   return transaction(save,playerId,now,(account,status)=>{
     const aurora=auroraStatus(save,playerId,now??Date.now());
+    if(account.commonBoost?.day===status.day&&account.commonBoost.active===true)return 'コモンキー発動中はオーロラキーを使用できません。';
     if(aurora.active)return 'オーロラキーはすでに発動中です。';
     if(KusaAmounts.cmp(account.auroraKeys||0,1)<0)return 'オーロラキーを持っていません。';
     account.auroraKeys=KusaAmounts.sub(account.auroraKeys,1);
     account.auroraBoost={day:status.day,active:true};
+  });
+}
+
+export function useCommonKey(save,playerId,now) {
+  return transaction(save,playerId,now,(account,status)=>{
+    const common=commonStatus(save,playerId,now??Date.now());
+    if(account.auroraBoost?.day===status.day&&account.auroraBoost.active===true)return 'オーロラキー発動中はコモンキーを使用できません。';
+    if(common.active)return 'コモンキーはすでに発動中です。';
+    if(KusaAmounts.cmp(account.commonKeys||0,1)<0)return 'コモンキーを持っていません。';
+    account.commonKeys=KusaAmounts.sub(account.commonKeys,1);
+    account.commonBoost={day:status.day,active:true};
   });
 }

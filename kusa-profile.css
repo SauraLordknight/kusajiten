@@ -38,7 +38,9 @@
 .fortune-status{box-sizing:border-box;margin:8px 0 0;padding:7px 10px;border:1px solid #8b9b76;border-radius:5px;background:#f5f4e7;color:#263923;font:600 12px/1.6 system-ui;overflow-wrap:anywhere}
 .fortune-status.is-active{border-color:#b48d28;background:#fff4c6;color:#493508}
 .fortune-status.aurora-status.is-active{border-color:#267da5;background:#e4f8ff;color:#123d55}
+.fortune-status.common-status.is-active{border-color:#5b8a50;background:#e9f6df;color:#23452a}
 .gacha-aurora-status{margin:8px 0;padding:8px 10px;border:1px solid #267da5;border-radius:6px;background:#e4f8ff;color:#123d55;font:700 13px/1.5 system-ui;text-align:center}
+.gacha-aurora-status.common-status{border-color:#5b8a50;background:#e9f6df;color:#23452a}
 .gacha-aurora-status[hidden]{display:none!important}
 .fortune-cabinet-status{width:min(100%,720px);margin:0 auto 8px}
 .fortune-product button+button{margin-top:8px}

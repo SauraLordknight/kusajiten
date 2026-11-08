@@ -51,7 +51,7 @@
 <script src="scripts/shared-pachi-setting.js?v=20261024-six-days"></script>
 <script src="scripts/ranking-participation.js?v=20261017-opt-in"></script>
 <link rel="stylesheet" href="kusa-pachi.css?v=20261020-board-selection-fix">
-<link rel="stylesheet" href="kusa-profile.css?v=20261019-data-management">
+<link rel="stylesheet" href="kusa-profile.css?v=20261108-common-key">
 <link rel="stylesheet" href="kusa-commerce.css?v=20261018-wallet-window">
 <link rel="stylesheet" href="styles/fishing.css?v=20261020-fullscreen-messages">
 <link rel="stylesheet" href="assets/gacha-frames/frames.css?v=20261016-local-art">
@@ -81,7 +81,7 @@
 <script defer src="scripts/site-bgm.js?v=20261020-bgm-menu-reading"></script>
 
 <script defer src="scripts/screen-layout.js?v=20261020-policy-surface-v2"></script>
-<script defer src="scripts/site-announcements.js?v=20261025-economy-patch"></script>
+<script defer src="scripts/site-announcements.js?v=20261108-common-key-gift"></script>
 <script defer src="scripts/welcome-bonus.js?v=20261025-economy-patch"></script>
 <link rel="stylesheet" href="styles/welcome-bonus.css?v=20261025-economy-patch">
 <script defer src="scripts/game-windows.js?v=20261020-story-window"></script>
@@ -206,13 +206,13 @@
     <header class="theme-window-head"><h2 id="gachaRatesTitle">草ガチャの排出率</h2><button id="gachaRatesClose" type="button" autofocus>× 閉じる</button></header>
     <div class="gacha-rates-content">
       <p>無料ガチャとガチャ券は同じ抽選です。まずレアリティを選び、その中の対象カードから1枚を等確率で選びます。</p>
-      <table class="gacha-rates-table"><caption>全レアリティに対象カードがある場合の基準確率</caption><thead><tr><th scope="col">レアリティ</th><th scope="col">通常時</th><th scope="col">オーロラキー中</th></tr></thead><tbody id="gachaBaseRates"></tbody></table>
+      <table class="gacha-rates-table"><caption>全レアリティに対象カードがある場合の基準確率</caption><thead><tr><th scope="col">レアリティ</th><th scope="col">通常時</th><th scope="col">オーロラキー中</th><th scope="col">コモンキー中</th></tr></thead><tbody id="gachaBaseRates"></tbody></table>
       <p class="gacha-rates-note">小数第4位まで表示しています。丸めにより合計が100%と異なる場合があります。</p>
       <p id="gachaRatesStatus" class="gacha-rates-status" role="status"></p>
       <details><summary>次の抽選での実際の排出率を見る</summary><table class="gacha-rates-table"><caption>現在の所持カードとキーの効果を反映した確率</caption><thead><tr><th scope="col">レアリティ</th><th scope="col">次の1回</th></tr></thead><tbody id="gachaCurrentRates"></tbody></table></details>
       <h3>未獲得カードの優先について</h3>
       <p>図鑑が完成するまでは、未獲得カードを優先します。通常時は、未獲得カードがないレアリティが抽選対象から外れるため、実際の排出率が変わります。図鑑完成後は、獲得済みカードも含めて抽選します。</p>
-      <p>オーロラキー中は???・???・???を各1/3で抽選します。選ばれたレアリティ内に未獲得カードがない場合は、そのレアリティの獲得済みカードも対象になります。</p>
+      <p>オーロラキー中は???・???・???を各1/3で抽選します。コモンキー中はN（草・用語）・R・SRを各1/3で抽選します。選ばれたレアリティ内に未獲得カードがない場合は、そのレアリティの獲得済みカードも対象になります。2種類のキーは同時に使えません。</p>
       <p class="gacha-rates-note">表示は1回ごとの確率です。一定回数での獲得を保証するものではありません。</p>
     </div>
   </dialog>
@@ -369,7 +369,7 @@
       <p>6時間に1回、草むらからカードを1枚発見できます。抽選結果はこのブラウザ内にだけ保存されます。</p>
       <button id="gachaButton" class="gacha-button" type="button">🌿 無料ガチャを引く</button>
       <span id="gachaTimer" class="gacha-timer" aria-live="polite"></span>
-      <p id="gachaAuroraStatus" class="gacha-aurora-status" role="status" aria-live="polite" hidden></p>
+      <p id="gachaAuroraStatus" class="gacha-aurora-status" role="status" aria-live="polite" hidden></p><p id="gachaCommonStatus" class="gacha-aurora-status common-status" role="status" aria-live="polite" hidden></p>
       <div class="gacha-ticket-row">
         <span>🎟️ 所持ガチャ券 <strong id="gachaTicketCount">0</strong>枚</span>
         <button id="gachaTicketButton" type="button" disabled="">券で1回引く</button>
@@ -763,7 +763,7 @@
         低身長・陰キャ・コミュ力控えめの三拍子。ヴァイオリンのアイコンを高頻度で使用する。<br><br>
         キモくて草</p>
       </div>
-    </details></div></dialog><div class="screen-effects-layer" id="screenEffectsLayer" aria-hidden="true"></div><script src="scripts/gacha-card-counts.js?v=20261017-unlimited"></script><script src="kusa-player-store.js?v=20261025-economy-patch"></script>
+    </details></div></dialog><div class="screen-effects-layer" id="screenEffectsLayer" aria-hidden="true"></div><script src="scripts/gacha-card-counts.js?v=20261017-unlimited"></script><script src="kusa-player-store.js?v=20261108-common-key-gift"></script>
 <script src="kusa-rewards.js?v=20261019-player-isolation"></script>
 <script>
 // 共有リンクに付く計測用UTMだけを整理する。ページのパスや未知のクエリは変更しない。
@@ -1144,13 +1144,13 @@ const namedDetails = Object.freeze({
     source: '本人から提供された説明をもとに整理。'
   },
   'しそ': {
-    description: 'UTAU音源を用いたMML投稿や、「ネームドおぼえうた」などを作るコテハン。kusa内の出来事や空気感を題材にした短文投稿も行っている。',
+    description: 'UTAU音源を用いたMML投稿を行うコテハン。kusa内の出来事や空気感を題材にした短文投稿も行っている。',
     classification: '音楽投稿型・雑談型',
-    topics: 'つくよみちゃんUTAU音源を用いたMML、ネームドを題材にした歌、kusa内の話題や短文投稿。',
+    topics: 'つくよみちゃんUTAU音源を用いたMML、kusa内の話題や短文投稿。',
     preferences: '好き嫌いは未確認。',
     activity: 'MMLによる歌唱投稿と、kusa内の話題への投稿を確認。',
     confidence: '公開プロフィール・投稿で確認',
-    summary: 'UTAU音源を用いたMML投稿や、ネームドおぼえうたを作るコテハン。',
+    summary: 'UTAU音源を用いたMML投稿を行うコテハン。',
     iconTendency: '継続したアイコン傾向は未整理。',
     source: '公開プロフィールと公開投稿をもとに整理。個別の匿名IDやURLは記録していない。'
   },
@@ -5355,6 +5355,6 @@ filterNames();
     close.addEventListener('click', () => { if(globalThis.KusaCommemorativeUI)return; modal.hidden = true; });
   })();
 </script>
-<script src="kusa-profile.bundle.js?v=20261026-six-day-notice"></script>
+<script src="kusa-profile.bundle.js?v=20261108-common-key"></script>
 </body></html>
 

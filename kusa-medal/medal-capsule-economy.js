@@ -12,7 +12,8 @@ export const CAPSULE_EDITION='v2';
 export const SHOP_ITEMS = Object.freeze([
   {id:'medals',name:'メダル補給',description:'所持メダルに30枚追加します。日本時間で1日5回まで。',chips:500,dailyLimit:5},
   {id:'paint',name:'草彩片パック',description:'草彩片100個。日本時間で1日5回まで。',chips:500},
-  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:5000,dailyLimit:1}
+  {id:'aurora-key',name:'オーロラキー',description:'使用中は草ガチャの抽選がUR・GODR・Ωレアの3種類だけになります。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:5000,dailyLimit:1},
+  {id:'common-key',name:'コモンキー',description:'使用中は草ガチャの抽選がN・R・SRの3種類だけになり、各レアリティが均等に抽選されます。次の午前0時（日本時間）まで有効。日本時間で1日1個まで。',chips:1000,dailyLimit:1}
 ]);
 // Permanent site themes only. Cabinet sales remain retired.
 export const SHOP_SKINS = SITE_THEMES;
@@ -96,9 +97,10 @@ export function purchaseSupply(save,id,expectedPlayerId,now=Date.now()) {
     if(id==='paint'&&a.dailyShop.day===day&&a.dailyShop.paint>=5)throw new Error('草彩片パックは日本時間で1日5回までです。');
     if(id==='medals'&&a.dailyShop.day===day&&a.dailyShop.medals>=5)throw new Error('メダル補給は1日5回までです。草からの交換も利用できます。');
     if(id==='aurora-key'&&a.dailyShop.day===day&&a.dailyShop.aurora>=1)throw new Error('オーロラキーは日本時間で1日1個まで購入できます。');
-    const key=id==='medals'?'medals':id==='aurora-key'?'auroraKeys':'paintFragments',gain=id==='medals'?30:id==='aurora-key'?1:100;
+    if(id==='common-key'&&a.dailyShop.day===day&&a.dailyShop.common>=1)throw new Error('コモンキーは日本時間で1日1個まで購入できます。');
+    const key=id==='medals'?'medals':id==='aurora-key'?'auroraKeys':id==='common-key'?'commonKeys':'paintFragments',gain=id==='medals'?30:['aurora-key','common-key'].includes(id)?1:100;
     a.chips=KusaAmounts.sub(a.chips,item.chips);a[key]=KusaAmounts.add(a[key],gain);
-    if(['paint','medals','aurora-key'].includes(id)){if(a.dailyShop.day!==day)a.dailyShop={day,paint:0,medals:0,aurora:0};a.dailyShop[id==='paint'?'paint':id==='medals'?'medals':'aurora']++;}
+    if(['paint','medals','aurora-key','common-key'].includes(id)){if(a.dailyShop.day!==day)a.dailyShop={day,paint:0,medals:0,aurora:0,common:0};a.dailyShop[id==='paint'?'paint':id==='medals'?'medals':id==='aurora-key'?'aurora':'common']++;}
   });
 }
 export function skinOwned(account,skin) {return skin.starter===true||account.ownedSkins.includes(skin.id)||(skin.theme&&account.unlockedThemes.includes(skin.theme));}
