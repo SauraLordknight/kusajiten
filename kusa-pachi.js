@@ -274,13 +274,17 @@
   function renderProfiles() {
     const area = $('pachiProfiles');
     area.replaceChildren();
+    const sharedPlayers = window.KusaPlayerStore?.listPlayers?.() || [];
     profiles.slice().reverse().forEach(profile => {
       const item = document.createElement('div');
       item.className = 'pachi-profile-item';
       const select = document.createElement('button');
       select.type = 'button';
       select.className = 'pachi-profile-select';
-      select.textContent = `${profile.name} · ${KusaAmounts.format(KusaAmounts.add(profile.balls,profile.inFlightValue))}球 · ${KusaAmounts.format(profile.grass)}草${profile.pendingJackpot ? `（JP残り${profile.pendingJackpot.toLocaleString('ja-JP')}球）` : ''}`;
+      const sharedPlayer = sharedPlayers.find(player => player.name === profile.name);
+      const displayedBalls = sharedPlayer ? window.KusaPlayerStore.getBallBalances(sharedPlayer.id).total : profile.balls;
+      const displayedGrass = sharedPlayer?.grass ?? profile.grass;
+      select.textContent = `${profile.name} · ${KusaAmounts.format(displayedBalls)}球 · ${KusaAmounts.format(displayedGrass)}草${profile.pendingJackpot ? `（JP残り${profile.pendingJackpot.toLocaleString('ja-JP')}球）` : ''}`;
       select.addEventListener('click', () => { $('pachiName').value = profile.name; startPlayer(); });
       const remove = document.createElement('button');
       remove.type = 'button';
